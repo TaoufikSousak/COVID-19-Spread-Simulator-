@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 
 public class SimulationDriver {
 
-	public static void main(String[] args) {
+	public static void start() {
 
 		Scanner scan = new Scanner(System.in);
 		boolean done = false;
@@ -26,5 +26,7 @@ public class SimulationDriver {
 
 		Room room = new Room(width, length);
 	}
+
+
 
 }
