@@ -14,11 +14,13 @@ public class Room {
 
 	}
 
-	public  void drawGrid() {
-		StdDraw.setXscale(0, width ); // afino ena perithosio gia na einai kathara orato olo to grid kai na min
-												// ftanei sto telos tou kanva
-		StdDraw.setYscale(0, length );
+	public void drawGrid() {
+		StdDraw.setCanvasSize(800,800);
 		
+		StdDraw.setXscale(0, width); // afino ena perithosio gia na einai kathara orato olo to grid kai na min
+										// ftanei sto telos tou kanva
+		StdDraw.setYscale(0, length);
+
 		StdDraw.setPenColor(StdDraw.GRAY);
 		StdDraw.setPenRadius(0.2 / width); // ekana dokimes gia na vro to sosto megethos penas
 

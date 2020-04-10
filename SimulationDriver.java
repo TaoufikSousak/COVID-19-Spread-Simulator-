@@ -15,12 +15,12 @@ public class SimulationDriver {
 
 		try {
 				done = true;
-				System.out.println("width of room: ");
+				System.out.print("Width of room: ");
 				width = scan.nextInt();
-				System.out.println("length of room: ");
+				System.out.print("Wength of room: ");
 				length = scan.nextInt();
 			} catch (InputMismatchException e) {
-				System.out.println("you need to give 2 integers, try again");
+				System.out.print("You need to give 2 integers, try again");
 				done = false;
 			}
 
