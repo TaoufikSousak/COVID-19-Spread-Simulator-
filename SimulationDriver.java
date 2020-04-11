@@ -8,25 +8,53 @@ public class SimulationDriver {
 	public static void start() {
 
 		Scanner scan = new Scanner(System.in);
-		boolean done = false;
+		boolean error = true;
 
 		int width = 0;
 		int length = 0;
+		int time=0;
+		String input;
 
-		try {
-				done = true;
-				System.out.print("Width of room: ");
-				width = scan.nextInt();
-				System.out.print("Wength of room: ");
-				length = scan.nextInt();
-			} catch (InputMismatchException e) {
-				System.out.print("You need to give 2 integers, try again");
-				done = false;
+		while (error) {
+			error = false;
+			System.out.print("Give the length: ");	
+			input =scan.nextLine();
+			try {
+				length=Integer.parseInt(input);
+			} catch (NumberFormatException e) {
+				System.out.print("Give a positive integer: ");
+				error = true;
 			}
+		}
+		
+		error=true;
+		
+		while (error) {
+			error = false;
+			System.out.print("Give the width: ");	
+			input =scan.nextLine();
+			try {
+				width=Integer.parseInt(input);
+			} catch (NumberFormatException e) {
+				System.out.print("Give a positive integer: ");
+				error = true;
+			}
+		}
+		
+		error=true;
+		while (error) {
+			error = false;
+			System.out.print("Give the time (in minutes): ");	
+			input =scan.nextLine();
+			try {
+				time=Integer.parseInt(input);
+			} catch (NumberFormatException e) {
+				System.out.print("Give a positive integer: ");
+				error = true;
+			}
+		}
 
 		Room room = new Room(width, length);
 	}
-
-
 
 }
