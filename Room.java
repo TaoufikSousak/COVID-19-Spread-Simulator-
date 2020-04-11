@@ -2,7 +2,7 @@ package tsousa01.hw5;
 
 import edu.princeton.cs.introcs.StdDraw;
 
-public class Room {
+public class Room { 
 
 	private int width;
 	private int length;
