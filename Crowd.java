@@ -4,4 +4,42 @@ public class Crowd {
 	
 	
 
+	private Human[] humans;
+	private Room room;
+	
+	public Crowd(int duration, int width, int length, int people) {
+		room= new Room(width, length, duration);
+		humans= new Human[people];
+		int xpos=0;
+		int ypos=0;
+		for(int i=0; i<people; i++) {
+			do {
+			 xpos= (int)(Math.random() * ((width ) + 1));
+			 ypos= (int)(Math.random() * ((length ) + 1));
+			}while(room.isOccupied(xpos, ypos));
+			
+			humans[i]= new HealthyHuman(xpos,ypos);
+			room.occupy(xpos, ypos);
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
