@@ -23,32 +23,42 @@ public class SimulationDriver {
 			input = scan.nextLine();
 			try {
 				length = Integer.parseInt(input);
+				if (length < 0) {
+					error = true;
+					System.out.println("Must be positive");
+				}
+
 			} catch (NumberFormatException e) {
-				System.out.println("Must be a positive integer");
+				System.out.println("Must be an integer");
 				error = true;
 			}
 		} while (error);
-
+		System.out.println();
 		do {
 			error = false;
 			System.out.print("Give the width: ");
 			input = scan.nextLine();
 			try {
 				width = Integer.parseInt(input);
+				if (width < 0) {
+					error = true;
+					System.out.println("Must be positive");
+				}
+
 			} catch (NumberFormatException e) {
 				System.out.println("Must be a positive integer");
 				error = true;
 			}
 		} while (error);
-
+		System.out.println();
 		do {
 			error = false;
 			System.out.print("Give the time amount of people: ");
 			input = scan.nextLine();
 			try {
 				people = Integer.parseInt(input);
-				if (people > length * width) {
-					System.out.println("Cannot have more people than available spaces");
+				if (people > length * width || people < 0) {
+					System.out.println("Cannot have more than " + length * width + " people or less than 0");
 					error = true;
 				}
 			} catch (NumberFormatException e) {
@@ -56,32 +66,45 @@ public class SimulationDriver {
 				error = true;
 			}
 		} while (error);
-
+		System.out.println();
 		do {
 			error = false;
 			System.out.print("Give the time (in minutes): ");
 			input = scan.nextLine();
 			try {
 				time = Integer.parseInt(input);
+				if (time < 0) {
+					error = true;
+					System.out.println("Must be positive");
+				}
+
 			} catch (NumberFormatException e) {
 				System.out.println("Must be a positive integer");
 				error = true;
 			}
 		} while (error);
-		
+		System.out.println();
 		do {
 			error = false;
-			System.out.print("Is the disease fatal? ");
+			System.out.print("Is the disease fatal?(y/n) ");
 			input = scan.nextLine();
-			try {
-				fatal = Boolean.parseBoolean(input);
-			} catch (NumberFormatException e) {
-				System.out.println("Must be a true or false");
+			if (!input.equals("Y") && !input.equals("y") && !input.equals("n") && !input.equals("N")) {
 				error = true;
+				System.out.println("Must be either 'y' or 'n'");
 			}
+
 		} while (error);
 
-		System.out.println("Created a board of dimentions ");
+		if (input.equals("Y") || input.equals("y"))
+			fatal = true;
+		else
+			fatal = false;
+
+		System.out.print("\n\nCreated a board of dimentions " + length + "x" + width + " and " + people);
+		if (people == 1)
+			System.out.println(" person");
+		else
+			System.out.println(" people");
 
 		Room room = new Room(width, length);
 	}
