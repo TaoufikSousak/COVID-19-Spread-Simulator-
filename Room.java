@@ -7,23 +7,33 @@ public class Room {
 	private int width;
 	private int length;
 	private boolean occupied[][];
-	private boolean infected[][];
-
-	public Room(int width, int length) {
+	private int infected[][];
+	private int duration;
+	
+	public Room(int width, int length, int dduration) {
 		this.width = width;
 		this.length = length;
 		occupied=new boolean[length][width];
-		infected=new boolean[length][width];
+		infected=new int[length][width];
 		this.drawGrid();
 	}
 	
-	public boolean isInfected(int i,int j) {
+	public int isInfected(int i,int j) {
 		return infected[i][j];
 	}
 	
 	public boolean isOccupied(int i,int j) {
 		return occupied[i][j];
 	}
+	
+	public void indfect(int i, int j) {
+		infected[i][j]=duration;
+	}
+	
+	public void occupy(int i,int j) {
+		occupied[i][j]=true;
+	}
+
 
 	public void drawGrid() {
 		StdDraw.setCanvasSize(800,800);

@@ -135,8 +135,8 @@ public class SimulationDriver {
 		System.out.println("fatal and " + infect + "% infetcious");
 		
 		
-		
-		Room room = new Room(width, length);
+		int duration=10; //how much time people need to recover and blocks to be dissinfected
+		Crowd crowd = new Crowd(duration, width, length, people);
 	}
 
 }
