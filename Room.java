@@ -6,12 +6,23 @@ public class Room {
 
 	private int width;
 	private int length;
+	private boolean occupied[][];
+	private boolean infected[][];
 
 	public Room(int width, int length) {
 		this.width = width;
 		this.length = length;
+		occupied=new boolean[length][width];
+		infected=new boolean[length][width];
 		this.drawGrid();
-
+	}
+	
+	public boolean isInfected(int i,int j) {
+		return infected[i][j];
+	}
+	
+	public boolean isOccupied(int i,int j) {
+		return occupied[i][j];
 	}
 
 	public void drawGrid() {
