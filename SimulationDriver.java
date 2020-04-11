@@ -14,9 +14,11 @@ public class SimulationDriver {
 		int length = 0;
 		int time = 0;
 		int people = 0;
+		int infect = 0;
 		boolean fatal;
 		String input;
 
+		//get length
 		do {
 			error = false;
 			System.out.print("Give the length: ");
@@ -34,6 +36,7 @@ public class SimulationDriver {
 			}
 		} while (error);
 		System.out.println();
+		//get width
 		do {
 			error = false;
 			System.out.print("Give the width: ");
@@ -51,6 +54,7 @@ public class SimulationDriver {
 			}
 		} while (error);
 		System.out.println();
+		//get the amount of people
 		do {
 			error = false;
 			System.out.print("Give the time amount of people: ");
@@ -67,6 +71,7 @@ public class SimulationDriver {
 			}
 		} while (error);
 		System.out.println();
+		//get the time
 		do {
 			error = false;
 			System.out.print("Give the time (in minutes): ");
@@ -84,6 +89,7 @@ public class SimulationDriver {
 			}
 		} while (error);
 		System.out.println();
+		//is the disease fatal
 		do {
 			error = false;
 			System.out.print("Is the disease fatal?(y/n) ");
@@ -94,18 +100,42 @@ public class SimulationDriver {
 			}
 
 		} while (error);
-
+		System.out.println();
+		//get how infectious is the disease
+		do {
+			error = false;
+			System.out.print("How infectious is the disease?(%): ");
+			input = scan.nextLine();
+			try {
+				infect = Integer.parseInt(input);
+				if (infect > 100 || infect < 0) {
+					error = true;
+					System.out.println("Must be between 0 and 100");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Must be an integer");
+				error = true;
+			}
+		} while (error);
 		if (input.equals("Y") || input.equals("y"))
 			fatal = true;
 		else
 			fatal = false;
 
+		//print out the details of the simulation
 		System.out.print("\n\nCreated a board of dimentions " + length + "x" + width + " and " + people);
+
 		if (people == 1)
 			System.out.println(" person");
 		else
 			System.out.println(" people");
-
+		System.out.print("The disease is ");
+		if (!fatal)
+			System.out.print("non-");
+		System.out.println("fatal and " + infect + "% infetcious");
+		
+		
+		
 		Room room = new Room(width, length);
 	}
 
