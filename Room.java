@@ -41,7 +41,7 @@ public class Room {
 	}
 
 	public void drawGrid() {
-		StdDraw.setCanvasSize(800, 800);
+		StdDraw.setCanvasSize(800, 700);
 		StdDraw.setXscale(0, width);
 		StdDraw.setYscale(length, 0);
 		int rad;

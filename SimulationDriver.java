@@ -25,7 +25,7 @@ public class SimulationDriver {
 			input = scan.nextLine();
 			try {
 				length = Integer.parseInt(input);
-				if (length < 0) {
+				if (length <= 0) {
 					error = true;
 					System.out.println("Must be positive");
 				}
@@ -43,7 +43,7 @@ public class SimulationDriver {
 			input = scan.nextLine();
 			try {
 				width = Integer.parseInt(input);
-				if (width < 0) {
+				if (width <= 0) {
 					error = true;
 					System.out.println("Must be positive");
 				}

@@ -12,20 +12,16 @@ public class Crowd {
 		int ypos = 0;
 		for (int i = 0; i < people; i++) {
 			do {
-<<<<<<< Updated upstream
-				xpos = (int) (Math.random() * ((width) ));
-				ypos = (int) (Math.random() * ((length) ));
-=======
-				xpos = (int) (Math.random() * ((width)+1));
-				ypos = (int) (Math.random() * ((length)+1));
->>>>>>> Stashed changes
+				xpos = (int) (Math.random() * ((width)));
+				ypos = (int) (Math.random() * ((length)));
+
 			} while (room.isOccupied(ypos, xpos)); // ypos <--> xpos because the methods in Room work with (int y, int
 													// x)
 
 			humans[i] = new HealthyHuman(xpos, ypos);
 			room.occupy(ypos, xpos); // ypos <--> xpos because the methods in Room work with (int y, int x)
-
 		}
+		room.drawGrid();
 
 	}
 
