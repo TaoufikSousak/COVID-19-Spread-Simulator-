@@ -57,7 +57,7 @@ public class Room {
 
 		infected[0][0] = 10;// test
 		occupied[0][0]=true; //test
-		System.out.println(isInfected(0, 0));
+		occupied[1][1]=true; //test
 
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
@@ -65,7 +65,7 @@ public class Room {
 					StdDraw.setPenColor(StdDraw.RED);
 					StdDraw.filledRectangle(x, y, 0.47, 0.47);
 				}
-				if (isOccupied((int) x, (int) y)) {
+				if (isOccupied((int) y, (int) x)) {
 					StdDraw.setPenColor(StdDraw.BLACK);
 					StdDraw.filledCircle(x, y, 0.25);
 				}
