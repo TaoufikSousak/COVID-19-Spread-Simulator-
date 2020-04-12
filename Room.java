@@ -46,6 +46,7 @@ public class Room {
 		StdDraw.setYscale(length, 0);
 		StdDraw.setPenColor(StdDraw.GRAY);
 		StdDraw.setPenRadius(0.2 / ((width + length) / 2));
+		int rad;
 
 		// draw lines
 		for (int y = 0; y <= length; y++) {
@@ -58,6 +59,7 @@ public class Room {
 		infected[0][0] = 10;// test
 		occupied[0][0]=true; //test
 		occupied[1][1]=true; //test
+		
 
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
@@ -65,9 +67,13 @@ public class Room {
 					StdDraw.setPenColor(StdDraw.RED);
 					StdDraw.filledRectangle(x, y, 0.47, 0.47);
 				}
+				if(length<width)
+					rad=length;
+				else rad=width;
 				if (isOccupied((int) y, (int) x)) {
 					StdDraw.setPenColor(StdDraw.BLACK);
-					StdDraw.filledCircle(x, y, 0.25);
+					StdDraw.setPenRadius();
+					StdDraw.point(x, y);
 				}
 
 			}
