@@ -63,6 +63,11 @@ public class Crowd {
 				} while (room.isOccupied(newypos, newxpos) != 0);
 			}
 			humans[i].moveTo(newxpos, newypos);
+
+			if (humans[i] instanceof InfectedHuman)
+				if (humans[i].getTimeLeft() == 0)
+					humans[i] = new RecoveredHuman(humans[i].getXpos(), humans[i].getYpos());
+
 			if (humans[i] instanceof HealthyHuman)
 				room.occupy(newypos, newxpos, 1);
 			else if (humans[i] instanceof InfectedHuman)

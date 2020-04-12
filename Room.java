@@ -58,7 +58,7 @@ public class Room {
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
 				if (isInfected((int) y, (int) x) > 0) {
-					StdDraw.setPenColor(StdDraw.RED);
+					StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 				}
 				if (length > width)
