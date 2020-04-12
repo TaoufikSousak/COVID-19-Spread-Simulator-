@@ -6,7 +6,7 @@ public class Crowd {
 	private Room room;
 	private double howLikelyToMove;
 
-	public Crowd(int duration, int width, int length, int people, int howLikelyToMove) {
+	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick) {
 		room = new Room(width, length, duration);
 		humans = new Human[people];
 		this.howLikelyToMove = (double) howLikelyToMove / 100;
@@ -20,8 +20,10 @@ public class Crowd {
 
 			} while (room.isOccupied(ypos, xpos)); // ypos <--> xpos because the methods in Room work with (int y, int
 													// x)
-
-			humans[i] = new HealthyHuman(xpos, ypos);
+			if (i < sick)
+				humans[i] = new InfectedHuman(xpos, ypos);
+			else
+				humans[i] = new HealthyHuman(xpos, ypos);
 			room.occupy(ypos, xpos); // ypos <--> xpos because the methods in Room work with (int y, int x)
 		}
 		room.drawGrid();
@@ -43,23 +45,25 @@ public class Crowd {
 					newypos = humans[i].getYpos();
 
 					direction = Randomizer.getDirection();
-					System.out.println("direction: " + direction + " contains u: " + direction.contains("u"));
-					if (direction.contains("u") && humans[i].getYpos()!=room.getLength()-1) {
+					// System.out.println("direction: " + direction + " contains u: " +
+					// direction.contains("u"));
+					if (direction.contains("u") && humans[i].getYpos() != room.getLength() - 1) {
 						newypos++;
-						System.out.println("ITS AN UP");}
-					if (direction.contains("d") && humans[i].getYpos()!=0)
+						// System.out.println("ITS AN UP");
+					}
+					if (direction.contains("d") && humans[i].getYpos() != 0)
 						newypos--;
-					if (direction.contains("r") && humans[i].getXpos()!=room.getWidth()-1)
+					if (direction.contains("r") && humans[i].getXpos() != room.getWidth() - 1)
 						newxpos++;
-					if (direction.contains("l") && humans[i].getXpos()!=0)
+					if (direction.contains("l") && humans[i].getXpos() != 0)
 						newxpos--;
-				}while (room.isOccupied(newypos, newxpos));
+				} while (room.isOccupied(newypos, newxpos));
 			}
 			humans[i].moveTo(newxpos, newypos);
 			room.occupy(newypos, newxpos);
-			room.drawGrid();
 
 		}
+		room.drawGrid();
 
 		try {
 			Thread.sleep(500); // wait a second between every move to represent time passing
