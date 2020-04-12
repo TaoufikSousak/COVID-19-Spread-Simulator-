@@ -6,18 +6,18 @@ public class Room {
 
 	private int width;
 	private int length;
-	private boolean occupied[][];
+	private int occupied[][]; // 0=no | 1=with healthy human | 2=with infected human | 3=with recovered human
 	private int infected[][];
 	private int duration;
 
 	public Room(int width, int length, int duration) {
 		this.width = width;
 		this.length = length;
-		occupied = new boolean[length][width];
+		occupied = new int[length][width];
 		infected = new int[length][width];
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < width; j++) {
-				occupied[i][j] = false;
+				occupied[i][j] = 0;
 				infected[i][j] = 0;
 			}
 		}
@@ -27,16 +27,16 @@ public class Room {
 	public int getLength() {
 		return length;
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
-	
+
 	public int isInfected(int y, int x) {
 		return infected[y][x];
 	}
 
-	public boolean isOccupied(int y, int x) {
+	public int isOccupied(int y, int x) {
 		return occupied[y][x];
 	}
 
@@ -44,12 +44,8 @@ public class Room {
 		infected[y][x] = duration;
 	}
 
-	public void occupy(int y, int x) {
-		occupied[y][x] = true;
-	}
-	
-	public void unoccupy(int y, int x) {
-		occupied[y][x]=false;
+	public void occupy(int y, int x, int status) {
+		occupied[y][x] = status;
 	}
 
 	public void drawGrid() {
@@ -57,9 +53,8 @@ public class Room {
 		StdDraw.setXscale(0, width);
 		StdDraw.setYscale(length, 0);
 		int rad;
-		
 
-		//draw infected spaces and people
+		// draw infected spaces and people
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
 				if (isInfected((int) y, (int) x) > 0) {
@@ -70,7 +65,7 @@ public class Room {
 					rad = length;
 				else
 					rad = width;
-				if (isOccupied((int) y, (int) x)) {
+				if (isOccupied((int) y, (int) x)==1) {
 					StdDraw.setPenColor(StdDraw.BLUE);
 					StdDraw.setPenRadius(0.255 / (rad * 0.3));
 					StdDraw.point(x, y);
@@ -78,7 +73,7 @@ public class Room {
 
 			}
 		}
-		
+
 		// draw lines
 		StdDraw.setPenColor(StdDraw.GRAY);
 		StdDraw.setPenRadius(0.2 / ((width + length) / 2));

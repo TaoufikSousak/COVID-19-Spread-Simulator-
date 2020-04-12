@@ -18,13 +18,13 @@ public class Crowd {
 				xpos = (int) (Math.random() * ((width)));
 				ypos = (int) (Math.random() * ((length)));
 
-			} while (room.isOccupied(ypos, xpos)); // ypos <--> xpos because the methods in Room work with (int y, int
+			} while (room.isOccupied(ypos, xpos)!=0); // ypos <--> xpos because the methods in Room work with (int y, int
 													// x)
 			if (i < sick)
 				humans[i] = new InfectedHuman(xpos, ypos);
 			else
 				humans[i] = new HealthyHuman(xpos, ypos);
-			room.occupy(ypos, xpos); // ypos <--> xpos because the methods in Room work with (int y, int x)
+			room.occupy(ypos, xpos,1); // ypos <--> xpos because the methods in Room work with (int y, int x)
 		}
 		room.drawGrid();
 
@@ -38,7 +38,7 @@ public class Crowd {
 			int newypos = humans[i].getYpos();
 			String direction = null;
 			if (Randomizer.getBoolean(howLikelyToMove)) {
-				room.unoccupy(humans[i].getYpos(), humans[i].getXpos());
+				room.occupy(humans[i].getYpos(), humans[i].getXpos(),0);
 				do {
 
 					newxpos = humans[i].getXpos();
@@ -57,10 +57,10 @@ public class Crowd {
 						newxpos++;
 					if (direction.contains("l") && humans[i].getXpos() != 0)
 						newxpos--;
-				} while (room.isOccupied(newypos, newxpos));
+				} while (room.isOccupied(newypos, newxpos)!=0);
 			}
 			humans[i].moveTo(newxpos, newypos);
-			room.occupy(newypos, newxpos);
+			room.occupy(newypos, newxpos,1);
 
 		}
 		room.drawGrid();

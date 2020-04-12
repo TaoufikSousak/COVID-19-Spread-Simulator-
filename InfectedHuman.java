@@ -6,4 +6,5 @@ public class InfectedHuman extends Human{
 		super(xpos,ypos);
 	}
 
+	
 }
