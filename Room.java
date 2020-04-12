@@ -44,39 +44,37 @@ public class Room {
 		StdDraw.setCanvasSize(800, 800);
 		StdDraw.setXscale(0, width);
 		StdDraw.setYscale(length, 0);
-		StdDraw.setPenColor(StdDraw.GRAY);
-		StdDraw.setPenRadius(0.2 / ((width + length) / 2));
 		int rad;
+		
 
-		// draw lines
-		for (int y = 0; y <= length; y++) {
-			StdDraw.line(0, y, width, y);
-		}
-		for (int x = 0; x <= width; x++) {
-			StdDraw.line(x, 0, x, length);
-		}
-
-		infected[5][5] = 10;// test
-		occupied[0][0] = true; // test
-		occupied[1][1] = true; // test
-
+		//draw infected spaces and people
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
 				if (isInfected((int) y, (int) x) > 0) {
 					StdDraw.setPenColor(StdDraw.RED);
-					StdDraw.filledRectangle(x, y, 0.47, 0.47);
+					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 				}
-				if (length < width)
+				if (length > width)
 					rad = length;
 				else
 					rad = width;
 				if (isOccupied((int) y, (int) x)) {
 					StdDraw.setPenColor(StdDraw.BLUE);
-					StdDraw.setPenRadius(0.255 / (rad + 1));
+					StdDraw.setPenRadius(0.255 / (rad * 0.3));
 					StdDraw.point(x, y);
 				}
 
 			}
+		}
+		
+		// draw lines
+		StdDraw.setPenColor(StdDraw.GRAY);
+		StdDraw.setPenRadius(0.2 / ((width + length) / 2));
+		for (int y = 0; y <= length; y++) {
+			StdDraw.line(0, y, width, y);
+		}
+		for (int x = 0; x <= width; x++) {
+			StdDraw.line(x, 0, x, length);
 		}
 
 	}
