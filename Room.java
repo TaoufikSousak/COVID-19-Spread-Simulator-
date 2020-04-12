@@ -24,6 +24,14 @@ public class Room {
 		this.drawGrid();
 	}
 
+	public int getLength() {
+		return length;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
 	public int isInfected(int y, int x) {
 		return infected[y][x];
 	}

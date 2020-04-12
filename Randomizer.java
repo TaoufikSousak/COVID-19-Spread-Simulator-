@@ -10,10 +10,8 @@ public class Randomizer {
 	
 	
 	
-	public static String getDirection(double howLikelyToMove) {
+	public static String getDirection() {
 		
-		if(!getBoolean(howLikelyToMove))
-			return "stationary"; //for stationary
 		
 		double ran=Math.random();
 		ran*=100;
@@ -36,7 +34,7 @@ public class Randomizer {
 			return "ul"; //up left
 					
 		
-		return "error"; //for error
+		return "e"; //for error
 	}
 
 }
