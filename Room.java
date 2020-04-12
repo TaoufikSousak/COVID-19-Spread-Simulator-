@@ -47,6 +47,10 @@ public class Room {
 	public void occupy(int y, int x) {
 		occupied[y][x] = true;
 	}
+	
+	public void unoccupy(int y, int x) {
+		occupied[y][x]=false;
+	}
 
 	public void drawGrid() {
 		StdDraw.setCanvasSize(800, 700);

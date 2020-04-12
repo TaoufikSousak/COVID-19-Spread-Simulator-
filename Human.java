@@ -23,6 +23,7 @@ abstract class Human {
 	public void moveTo(int newxpos, int newypos) {
 		 xpos=newxpos;
 		 ypos=newypos;
+		 System.out.println("human moved");
 	}
 	
 	

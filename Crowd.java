@@ -35,30 +35,34 @@ public class Crowd {
 			int newxpos = humans[i].getXpos();
 			int newypos = humans[i].getYpos();
 			String direction = null;
-			if (Randomizer.getBoolean(howLikelyToMove))
-				while (room.isOccupied(newypos, newxpos)) {
+			if (Randomizer.getBoolean(howLikelyToMove)) {
+				room.unoccupy(humans[i].getYpos(), humans[i].getXpos());
+				do {
 
 					newxpos = humans[i].getXpos();
 					newypos = humans[i].getYpos();
 
 					direction = Randomizer.getDirection();
-
-					if (direction.contains("u") && humans[i].getYpos()!=room.getLength())
+					System.out.println("direction: " + direction + " contains u: " + direction.contains("u"));
+					if (direction.contains("u") && humans[i].getYpos()!=room.getLength()-1) {
 						newypos++;
+						System.out.println("ITS AN UP");}
 					if (direction.contains("d") && humans[i].getYpos()!=0)
 						newypos--;
-					if (direction.contains("r") && humans[i].getXpos()!=room.getWidth())
+					if (direction.contains("r") && humans[i].getXpos()!=room.getWidth()-1)
 						newxpos++;
 					if (direction.contains("l") && humans[i].getYpos()!=0)
 						newypos--;
-				}
-
+				}while (room.isOccupied(newypos, newxpos));
+			}
 			humans[i].moveTo(newxpos, newypos);
+			room.occupy(newypos, newxpos);
+			room.drawGrid();
 
 		}
 
 		try {
-			Thread.sleep(1000); // wait a second between every move to represent time passing
+			Thread.sleep(500); // wait a second between every move to represent time passing
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
