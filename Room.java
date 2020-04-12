@@ -65,8 +65,15 @@ public class Room {
 					rad = length;
 				else
 					rad = width;
-				if (isOccupied((int) y, (int) x)==1) {
-					StdDraw.setPenColor(StdDraw.BLUE);
+				if (isOccupied((int) y, (int) x) != 0) {
+					if (isOccupied((int) y, (int) x) == 1)
+						StdDraw.setPenColor(StdDraw.BLUE);
+					else if (isOccupied((int) y, (int) x) == 2)
+						StdDraw.setPenColor(StdDraw.RED);
+
+					else if (isOccupied((int) y, (int) x) == 3)
+						StdDraw.setPenColor(StdDraw.GREEN);
+
 					StdDraw.setPenRadius(0.255 / (rad * 0.3));
 					StdDraw.point(x, y);
 				}
