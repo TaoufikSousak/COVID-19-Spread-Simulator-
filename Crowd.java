@@ -52,7 +52,7 @@ public class Crowd {
 					if (direction.contains("r") && humans[i].getXpos()!=room.getWidth()-1)
 						newxpos++;
 					if (direction.contains("l") && humans[i].getXpos()!=0)
-						newypos--;
+						newxpos--;
 				}while (room.isOccupied(newypos, newxpos));
 			}
 			humans[i].moveTo(newxpos, newypos);
