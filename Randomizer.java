@@ -8,16 +8,11 @@ public class Randomizer {
 		return false;
 	}
 	
-	private static boolean willMove(double howLikelyToMove) {
-		if (Math.random()>howLikelyToMove)
-			return true;
-		return false;
-	}
 	
 	
 	public static String getDirection(double howLikelyToMove) {
 		
-		if(!willMove(howLikelyToMove))
+		if(!getBoolean(howLikelyToMove))
 			return "stationary"; //for stationary
 		
 		double ran=Math.random();
