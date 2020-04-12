@@ -43,13 +43,13 @@ public class Crowd {
 
 					direction = Randomizer.getDirection();
 
-					if (direction.contains("u") && ypos!=room.getLength())
+					if (direction.contains("u") && humans[i].getYpos()!=room.getLength())
 						newypos++;
-					if (direction.contains("d"))
+					if (direction.contains("d") && humans[i].getYpos()!=0)
 						newypos--;
-					if (direction.contains("r"))
+					if (direction.contains("r") && humans[i].getXpos()!=room.getWidth())
 						newxpos++;
-					if (direction.contains("l"))
+					if (direction.contains("l") && humans[i].getYpos()!=0)
 						newypos--;
 				}
 
