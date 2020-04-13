@@ -15,11 +15,11 @@ public class SimulationDriver {
 		int time = 0;
 		int people = 0;
 		int infect = 0;
-		int sick=0;
+		int sick = 0;
 		boolean fatal;
 		String input;
 
-		//get length
+		// get length
 		do {
 			error = false;
 			System.out.print("Give the length: ");
@@ -37,7 +37,7 @@ public class SimulationDriver {
 			}
 		} while (error);
 		System.out.println();
-		//get width
+		// get width
 		do {
 			error = false;
 			System.out.print("Give the width: ");
@@ -55,7 +55,7 @@ public class SimulationDriver {
 			}
 		} while (error);
 		System.out.println();
-		//get the amount of people
+		// get the amount of people
 		do {
 			error = false;
 			System.out.print("Give the amount of people: ");
@@ -72,8 +72,8 @@ public class SimulationDriver {
 			}
 		} while (error);
 		System.out.println();
-		
-		//get number of initially sick people
+
+		// get number of initially sick people
 		do {
 			error = false;
 			System.out.print("Give the amount of INITIALLY INFECTED people: ");
@@ -90,9 +90,8 @@ public class SimulationDriver {
 			}
 		} while (error);
 		System.out.println();
-		
-		
-		//get the time
+
+		// get the time
 		do {
 			error = false;
 			System.out.print("Give the time (in minutes): ");
@@ -110,7 +109,7 @@ public class SimulationDriver {
 			}
 		} while (error);
 		System.out.println();
-		//is the disease fatal
+		// is the disease fatal
 		do {
 			error = false;
 			System.out.print("Is the disease fatal?(y/n) ");
@@ -122,7 +121,7 @@ public class SimulationDriver {
 
 		} while (error);
 		System.out.println();
-		//get how infectious is the disease
+		// get how infectious is the disease
 		do {
 			error = false;
 			System.out.print("How infectious is the disease?(%): ");
@@ -143,7 +142,7 @@ public class SimulationDriver {
 		else
 			fatal = false;
 
-		//print out the details of the simulation
+		// print out the details of the simulation
 		System.out.print("\n\nCreated a board of dimentions " + length + "x" + width + " and " + people);
 
 		if (people == 1)
@@ -154,17 +153,16 @@ public class SimulationDriver {
 		if (!fatal)
 			System.out.print("non-");
 		System.out.println("fatal and " + infect + "% infetcious");
-		
-		
-		int howLikelyToMove=50;
-		int duration=10; //how much time people need to recover and blocks to be dissinfected
+
+		int howLikelyToMove = 50;
+		int duration = 10; // how much time people need to recover and blocks to be dissinfected
 		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick);
-		
-		while(time>0) {
+
+		while (time > 0) {
 			crowd.move();
 			time--;
 		}
-		
+
 	}
 
 }
