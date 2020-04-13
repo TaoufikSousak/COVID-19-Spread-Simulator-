@@ -21,6 +21,7 @@ public class Room {
 				infected[i][j] = 0;
 			}
 		}
+		this.gridSetup();
 		this.drawGrid();
 	}
 
@@ -48,12 +49,17 @@ public class Room {
 		occupied[y][x] = status;
 	}
 
-	public void drawGrid() {
+	private void gridSetup() {
+		StdDraw.enableDoubleBuffering();
 		StdDraw.setCanvasSize(800, 700);
 		StdDraw.setXscale(0, width);
 		StdDraw.setYscale(length, 0);
-		int rad;
+	}
 
+	public void drawGrid() {
+		int rad;
+		StdDraw.show(300);
+		StdDraw.clear();
 		// draw infected spaces and people
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
@@ -82,14 +88,14 @@ public class Room {
 		}
 
 		// draw lines
-		StdDraw.setPenColor(StdDraw.GRAY);
-		StdDraw.setPenRadius(0.2 / ((width + length) / 2));
-		for (int y = 0; y <= length; y++) {
-			StdDraw.line(0, y, width, y);
-		}
-		for (int x = 0; x <= width; x++) {
-			StdDraw.line(x, 0, x, length);
-		}
+//		StdDraw.setPenColor(StdDraw.GRAY);
+//		StdDraw.setPenRadius(0.2 / ((width + length) / 2));
+//		for (int y = 0; y <= length; y++) {
+//			StdDraw.line(0, y, width, y);
+//		}
+//		for (int x = 0; x <= width; x++) {
+//			StdDraw.line(x, 0, x, length);
+//		}
 
 	}
 
