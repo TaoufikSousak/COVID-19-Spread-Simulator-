@@ -9,12 +9,14 @@ public class Room {
 	private int occupied[][]; // 0=no | 1=with healthy human | 2=with infected human | 3=with recovered human
 	private int infected[][];
 	private int duration;
+	private boolean drawgrid;
 
-	public Room(int width, int length, int duration) {
+	public Room(int width, int length, int duration, boolean drawgrid) {
 		this.width = width;
 		this.length = length;
 		occupied = new int[length][width];
 		infected = new int[length][width];
+		this.drawgrid = drawgrid;
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < width; j++) {
 				occupied[i][j] = 0;
@@ -55,23 +57,23 @@ public class Room {
 		StdDraw.setXscale(0, width);
 		StdDraw.setYscale(length, 0);
 	}
-	
-	private void drawMask(double y,double x) {
+
+	private void drawMask(double y, double x) {
 		StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-		double rect_x[]=new double[4];
-		double rect_y[]=new double[4];
-		rect_x[0]=x;
-		rect_y[0]=y;
-		
-		rect_x[1]=x+0.1;
-		rect_y[1]=y-0.1;
-		
-		rect_x[2]=x+0.2;
-		rect_y[2]=y+0.1;
-		
-		rect_x[3]=x+0.1;
-		rect_y[3]=y-0.1;
-		StdDraw.filledRectangle(x, y+0.12, 0.18,0.1);
+		double rect_x[] = new double[4];
+		double rect_y[] = new double[4];
+		rect_x[0] = x;
+		rect_y[0] = y;
+
+		rect_x[1] = x + 0.1;
+		rect_y[1] = y - 0.1;
+
+		rect_x[2] = x + 0.2;
+		rect_y[2] = y + 0.1;
+
+		rect_x[3] = x + 0.1;
+		rect_y[3] = y - 0.1;
+		StdDraw.filledRectangle(x, y + 0.12, 0.18, 0.1);
 		StdDraw.filledPolygon(rect_x, rect_y);
 
 	}
@@ -99,7 +101,7 @@ public class Room {
 
 					else if (isOccupied((int) y, (int) x) == 3)
 						StdDraw.setPenColor(StdDraw.GREEN);
-					
+
 					StdDraw.setPenRadius(0.255 / (rad * 0.3));
 					StdDraw.point(x, y);
 				}
@@ -108,14 +110,16 @@ public class Room {
 		}
 
 		// draw lines
-//		StdDraw.setPenColor(StdDraw.GRAY);
-//		StdDraw.setPenRadius(0.2 / ((width + length) / 2));
-//		for (int y = 0; y <= length; y++) {
-//			StdDraw.line(0, y, width, y);
-//		}
-//		for (int x = 0; x <= width; x++) {
-//			StdDraw.line(x, 0, x, length);
-//		}
+		if (drawgrid) {
+			StdDraw.setPenColor(StdDraw.GRAY);
+			StdDraw.setPenRadius(0.2 / ((width + length) / 2));
+			for (int y = 0; y <= length; y++) {
+				StdDraw.line(0, y, width, y);
+			}
+			for (int x = 0; x <= width; x++) {
+				StdDraw.line(x, 0, x, length);
+			}
+		}
 
 	}
 

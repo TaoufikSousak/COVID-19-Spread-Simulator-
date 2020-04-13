@@ -6,8 +6,8 @@ public class Crowd {
 	private Room room;
 	private double howLikelyToMove;
 
-	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick) {
-		room = new Room(width, length, duration);
+	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick, boolean drawgrid) {
+		room = new Room(width, length, duration, drawgrid);
 		humans = new Human[people];
 		this.howLikelyToMove = (double) howLikelyToMove / 100;
 		int xpos = 0;
