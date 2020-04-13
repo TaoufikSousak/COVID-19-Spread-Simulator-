@@ -193,7 +193,7 @@ public class SimulationDriver {
 		}
 
 		// print out the details of the simulation
-		System.out.print("\n\nCreated a board of dimentions " + length + "x" + width + " and " + people);
+		System.out.print("\nCreated a board of dimentions " + length + "x" + width + " and " + people);
 
 		if (people == 1)
 			System.out.println(" person");
