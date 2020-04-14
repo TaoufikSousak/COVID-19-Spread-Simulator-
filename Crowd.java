@@ -11,7 +11,7 @@ public class Crowd {
 
 	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick, boolean drawgrid,
 			int fatal, int infectius) {
-		room = new Room(width, length, duration, drawgrid);
+		room = new Room(width, length, duration, drawgrid, infectius);
 		humans = new Human[people];
 		this.howLikelyToMove = (double) howLikelyToMove / 100;
 		int xpos = 0;
@@ -102,59 +102,70 @@ public class Crowd {
 	}
 
 	public static boolean possibleInfection(int x, int y) {
+		if (humanTransmition(x, y))
+			return true;
 
+		if (roomTransmition(x, y))
+			return true;
+
+		return false;
+	}
+
+	public static boolean roomTransmition(int x, int y) {
+		if(room.isInfected(y, x)>0)
+			if(Randomizer.getBoolean(inf/2))
+				return true;
+		return false;
+	}
+	public static boolean humanTransmition(int x, int y) {
 		try {
 			if (room.isOccupied(y - 1, x + 1) == 2)
-				if(Randomizer.getBoolean(inf))
+				if (Randomizer.getBoolean(inf))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y, x + 1) == 2)
-				if(Randomizer.getBoolean(inf))
+				if (Randomizer.getBoolean(inf))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y + 1, x + 1) == 2)
-				if(Randomizer.getBoolean(inf))
+				if (Randomizer.getBoolean(inf))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y - 1, x) == 2)
-				if(Randomizer.getBoolean(inf))
+				if (Randomizer.getBoolean(inf))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y + 1, x) == 2)
-				if(Randomizer.getBoolean(inf))
+				if (Randomizer.getBoolean(inf))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y - 1, x - 1) == 2)
-				if(Randomizer.getBoolean(inf))
+				if (Randomizer.getBoolean(inf))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y, x - 1) == 2)
-				if(Randomizer.getBoolean(inf))
+				if (Randomizer.getBoolean(inf))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y + 1, x - 1) == 2)
-				if(Randomizer.getBoolean(inf))
+				if (Randomizer.getBoolean(inf))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
-		
-
-
 		return false;
 	}
-
 }

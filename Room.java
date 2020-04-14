@@ -10,13 +10,17 @@ public class Room {
 	private int infected[][];
 	private int duration;
 	private boolean drawgrid;
+	private double inf;
 
-	public Room(int width, int length, int duration, boolean drawgrid) {
+	public Room(int width, int length, int duration, boolean drawgrid, int infectious) {
 		this.width = width;
 		this.length = length;
 		occupied = new int[length][width];
 		infected = new int[length][width];
+		this.duration=duration;
 		this.drawgrid = drawgrid;
+		this.inf=(double) infectious/100;
+		inf/=3;		//less likely than human transmition
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < width; j++) {
 				occupied[i][j] = 0;
@@ -47,6 +51,9 @@ public class Room {
 		infected[y][x] = duration;
 	}
 
+	public void disinfect(int y, int x) {
+		infected[y][x]--;
+	}
 	public void occupy(int y, int x, int status) {
 		occupied[y][x] = status;
 	}
@@ -86,8 +93,9 @@ public class Room {
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
 				if (isInfected((int) y, (int) x) > 0) {
-					StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
+					StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE.brighter());
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
+					this.disinfect((int) y, (int) x);
 				}
 				if (length > width)
 					rad = length;
@@ -96,9 +104,10 @@ public class Room {
 				if (isOccupied((int) y, (int) x) != 0) {
 					if (isOccupied((int) y, (int) x) == 1)
 						StdDraw.setPenColor(StdDraw.BLUE);
-					else if (isOccupied((int) y, (int) x) == 2)
+					else if (isOccupied((int) y, (int) x) == 2) {
 						StdDraw.setPenColor(StdDraw.RED);
-
+						possibleInfection((int)y,(int)x);
+					}
 					else if (isOccupied((int) y, (int) x) == 3)
 						StdDraw.setPenColor(StdDraw.GREEN);
 
@@ -121,6 +130,11 @@ public class Room {
 			}
 		}
 
+	}
+	
+	public void possibleInfection(int y, int x) {
+		if(Randomizer.getBoolean(inf))
+			this.infect(y, x);
 	}
 
 }
