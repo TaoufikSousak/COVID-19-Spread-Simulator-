@@ -6,7 +6,7 @@ public class Crowd {
 	private static Room room;
 	private double howLikelyToMove;
 	private double fatal;
-	private double inf;
+	private static double inf;
 	private int duration;
 
 	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick, boolean drawgrid,
@@ -102,48 +102,57 @@ public class Crowd {
 	}
 
 	public static boolean possibleInfection(int x, int y) {
-		int surrCount = 0;
 
 		try {
 			if (room.isOccupied(y - 1, x + 1) == 2)
-				surrCount++;
+				if(Randomizer.getBoolean(inf))
+					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y, x + 1) == 2)
-				surrCount++;
+				if(Randomizer.getBoolean(inf))
+					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y + 1, x + 1) == 2)
-				surrCount++;
+				if(Randomizer.getBoolean(inf))
+					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y - 1, x) == 2)
-				surrCount++;
+				if(Randomizer.getBoolean(inf))
+					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y + 1, x) == 2)
-				surrCount++;
+				if(Randomizer.getBoolean(inf))
+					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y - 1, x - 1) == 2)
-				surrCount++;
+				if(Randomizer.getBoolean(inf))
+					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y, x - 1) == 2)
-				surrCount++;
+				if(Randomizer.getBoolean(inf))
+					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (room.isOccupied(y + 1, x - 1) == 2)
-				surrCount++;
+				if(Randomizer.getBoolean(inf))
+					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
+		
+
 
 		return false;
 	}

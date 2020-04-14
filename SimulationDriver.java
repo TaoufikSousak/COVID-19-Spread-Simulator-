@@ -211,7 +211,7 @@ public class SimulationDriver {
 		System.out.println("The simulation will run for " + time + " steps");
 
 		int howLikelyToMove = 70;
-		int duration = 20; // how much time people need to recover and blocks to be dissinfected
+		int duration = 50; // how much time people need to recover and blocks to be dissinfected
 		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, grid, fatal, infect);
 
 		while (time > 0) {
