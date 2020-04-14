@@ -4,10 +4,15 @@ public class InfectedHuman extends Human {
 
 	int timeLeft;
 	static int  total=0;
-	public InfectedHuman(int xpos, int ypos, int duration) {
+	
+	public InfectedHuman(int xpos, int ypos, int duration, boolean measures) {
 		super(xpos, ypos);
 		timeLeft = duration;
 		total++;
+	}
+	
+	public InfectedHuman(int xpos, int ypos, int duration) {
+		this(xpos,ypos,duration,false);
 	}
 
 	public void moveTo(int newxpos, int newypos) {

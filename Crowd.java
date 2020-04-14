@@ -29,13 +29,14 @@ public class Crowd {
 														// int
 														// x)
 			if (i < sick) {
+				
 				humans[i] = new InfectedHuman(xpos, ypos, duration);
 				room.occupy(ypos, xpos, 2);
 			} else {
-				if(i-sick<caref)
-					humans[i]=new HealthyHuman(xpos,ypos,true);
-				else
-				humans[i] = new HealthyHuman(xpos, ypos);
+				boolean msrs=false;
+				if(i<caref)
+					msrs=true;
+				humans[i] = new HealthyHuman(xpos, ypos, msrs);
 				room.occupy(ypos, xpos, 1); // ypos <--> xpos because the methods in Room work with (int y, int x)}
 			}
 			room.drawGrid();
@@ -94,7 +95,12 @@ public class Crowd {
 					room.setMeasures(newypos, newxpos, true);
 				
 				if (possibleInfection(humans[i].getXpos(), humans[i].getYpos(), humans[i].takesMeasures()))
-					humans[i] = new InfectedHuman(humans[i].getXpos(), humans[i].getYpos(), duration);
+					if(humans[i].takesMeasures()) 
+						humans[i] = new InfectedHuman(humans[i].getXpos(), humans[i].getYpos(), duration, true);
+					else
+						humans[i] = new InfectedHuman(humans[i].getXpos(), humans[i].getYpos(), duration);
+
+				
 
 			} else if (humans[i] instanceof InfectedHuman)
 				room.occupy(newypos, newxpos, 2);

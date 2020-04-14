@@ -4,12 +4,18 @@ abstract class Human implements Movable {
 
 	private int xpos;
 	private int ypos;
+	private boolean measures;
 
-	public Human(int xpos, int ypos) {
+	public Human(int xpos, int ypos, boolean measures) {
 		this.xpos = xpos;
 		this.ypos = ypos;
+		this.measures = measures;
 	}
 
+	public Human(int xpos, int ypos) {
+		this(xpos, ypos, false);
+	}
+	
 	public int getXpos() {
 		return xpos;
 	}
