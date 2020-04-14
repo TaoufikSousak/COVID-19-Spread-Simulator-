@@ -133,7 +133,7 @@ public class SimulationDriver {
 			// is the disease fatal
 			do {
 				error = false;
-				System.out.print("Is the disease fatal?(y/n) ");
+				System.out.print("Is the disease fatal?(y/n): ");
 				input = scan.nextLine();
 				if (!input.equals("Y") && !input.equals("y") && !input.equals("n") && !input.equals("N")) {
 					error = true;
@@ -200,7 +200,7 @@ public class SimulationDriver {
 		else
 			System.out.println(" people");
 		System.out.print("The disease is ");
-		if (!fatal)
+		if (fatal)
 			System.out.print("non-");
 		System.out.println("fatal and " + infect + "% infetcious");
 
