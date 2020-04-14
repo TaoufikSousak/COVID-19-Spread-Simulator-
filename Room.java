@@ -80,7 +80,7 @@ public class Room {
 
 	public void drawGrid() {
 		int rad;
-		StdDraw.show(300);
+		StdDraw.show(40);
 		StdDraw.clear();
 		// draw infected spaces and people
 		for (double y = 0.5; y < length; y++) {

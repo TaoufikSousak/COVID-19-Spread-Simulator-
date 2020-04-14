@@ -18,4 +18,12 @@ public class InfectedHuman extends Human {
 		return timeLeft;
 	}
 
+
+
+	
+
+
+
+	
+
 }

@@ -1,6 +1,6 @@
 package tsousa01.hw5;
 
-abstract class Human {
+abstract class Human implements Movable {
 
 	private int xpos;
 	private int ypos;
