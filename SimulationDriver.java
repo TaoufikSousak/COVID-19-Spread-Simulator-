@@ -19,6 +19,7 @@ public class SimulationDriver {
 		int choice = 0;
 		boolean grid = true;
 		int fatal = 0;
+		int careful=0;
 		String input;
 
 		// get length
@@ -110,6 +111,26 @@ public class SimulationDriver {
 					error = true;
 				}
 			} while (error);
+			
+			
+			System.out.println();
+			
+			//get num of people that take measures
+			do {
+				error = false;
+				System.out.print("Give the amount that take protective measures(like wear masks): ");
+				input = scan.nextLine();
+				try {
+					careful = Integer.parseInt(input);
+					if (careful > people || careful < 0) {
+						System.out.println("Cannot have more than " + people + " sick people or less than 0");
+						error = true;
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Must be a positive integer");
+					error = true;
+				}
+			} while (error);
 			System.out.println();
 
 			// get the time
@@ -189,9 +210,10 @@ public class SimulationDriver {
 
 		} else {
 			sick = (int) ((double) people * 0.1);
+			careful=(int) ((double) people * 0.1);
 			time = 100;
 			fatal = 4;
-			infect = 80;
+			infect = 60;
 		}
 
 		// print out the details of the simulation
@@ -212,7 +234,7 @@ public class SimulationDriver {
 
 		int howLikelyToMove = 70;
 		int duration = 50; // how much time people need to recover and blocks to be dissinfected
-		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, grid, fatal, infect);
+		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, grid, fatal, infect, careful);
 
 		while (time > 0) {
 			crowd.move();

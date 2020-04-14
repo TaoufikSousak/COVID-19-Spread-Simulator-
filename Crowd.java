@@ -10,7 +10,7 @@ public class Crowd {
 	private int duration;
 
 	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick, boolean drawgrid,
-			int fatal, int infectius) {
+			int fatal, int infectius, int caref) {
 		room = new Room(width, length, duration, drawgrid, infectius);
 		humans = new Human[people];
 		this.howLikelyToMove = (double) howLikelyToMove / 100;
@@ -32,6 +32,9 @@ public class Crowd {
 				humans[i] = new InfectedHuman(xpos, ypos, duration);
 				room.occupy(ypos, xpos, 2);
 			} else {
+				if(i-sick<caref)
+					humans[i]=new HealthyHuman(xpos,ypos,true);
+				else
 				humans[i] = new HealthyHuman(xpos, ypos);
 				room.occupy(ypos, xpos, 1); // ypos <--> xpos because the methods in Room work with (int y, int x)}
 			}
@@ -86,7 +89,7 @@ public class Crowd {
 
 			if (humans[i] instanceof HealthyHuman) {
 				room.occupy(newypos, newxpos, 1);
-				if (possibleInfection(humans[i].getXpos(), humans[i].getYpos()))
+				if (possibleInfection(humans[i].getXpos(), humans[i].getYpos(), humans[i].takesMeasures()))
 					humans[i] = new InfectedHuman(humans[i].getXpos(), humans[i].getYpos(), duration);
 
 			} else if (humans[i] instanceof InfectedHuman)
@@ -104,7 +107,7 @@ public class Crowd {
 		}
 	}
 
-	public static boolean possibleInfection(int x, int y) {
+	public static boolean possibleInfection(int x, int y, boolean measures) {
 		if (humanTransmition(x, y))
 			return true;
 
