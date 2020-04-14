@@ -79,7 +79,7 @@ public class Crowd {
 		room.drawGrid();
 
 		try {
-			Thread.sleep(500); // wait a second between every move to represent time passing
+			Thread.sleep(150); // wait a second between every move to represent time passing
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
