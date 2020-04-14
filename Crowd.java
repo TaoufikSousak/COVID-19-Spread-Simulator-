@@ -51,6 +51,9 @@ public class Crowd {
 				room.occupy(humans[i].getYpos(), humans[i].getXpos(), 0);
 				do {
 
+					if (noPossibleMove(humans[i].getXpos(), humans[i].getYpos()))
+						break;
+
 					newxpos = humans[i].getXpos();
 					newypos = humans[i].getYpos();
 
@@ -111,12 +114,36 @@ public class Crowd {
 		return false;
 	}
 
+	public static boolean noPossibleMove(int x, int y) {
+
+		int cnt=0;
+		
+		if (room.isOccupied(y - 1, x + 1) >0)
+			cnt++;
+		if (room.isOccupied(y, x + 1) >0)
+			cnt++;
+		if (room.isOccupied(y + 1, x + 1) >0)
+			cnt++;
+		if (room.isOccupied(y - 1, x) >0)
+			cnt++;
+		if (room.isOccupied(y + 1, x)>0)
+			cnt++;
+		if (room.isOccupied(y - 1, x - 1) >0)
+			cnt++;
+		if (room.isOccupied(y, x - 1) >0)
+			cnt++;
+		if (room.isOccupied(y + 1, x - 1) >0)
+			cnt++;
+		return (cnt==8);
+	}
+
 	public static boolean roomTransmition(int x, int y) {
-		if(room.isInfected(y, x)>0)
-			if(Randomizer.getBoolean(inf/2))
+		if (room.isInfected(y, x) > 0)
+			if (Randomizer.getBoolean(inf / 2))
 				return true;
 		return false;
 	}
+
 	public static boolean humanTransmition(int x, int y) {
 		try {
 			if (room.isOccupied(y - 1, x + 1) == 2)
