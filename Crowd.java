@@ -3,18 +3,22 @@ package tsousa01.hw5;
 public class Crowd {
 
 	private Human[] humans;
-	private Room room;
+	private static Room room;
 	private double howLikelyToMove;
 	private double fatal;
+	private double inf;
+	private int duration;
 
 	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick, boolean drawgrid,
-			int fatal) {
+			int fatal, int infectius) {
 		room = new Room(width, length, duration, drawgrid);
 		humans = new Human[people];
 		this.howLikelyToMove = (double) howLikelyToMove / 100;
 		int xpos = 0;
 		int ypos = 0;
 		this.fatal = (double) fatal / 100;
+		this.inf = (double) infectius / 100;
+		this.duration = duration;
 
 		for (int i = 0; i < people; i++) {
 			do {
@@ -77,15 +81,15 @@ public class Crowd {
 						room.occupy(newypos, newypos, 0);
 					}
 
-						
-
-			if (humans[i] instanceof HealthyHuman)
+			if (humans[i] instanceof HealthyHuman) {
 				room.occupy(newypos, newxpos, 1);
-			else if (humans[i] instanceof InfectedHuman)
+				if (possibleInfection(humans[i].getXpos(), humans[i].getYpos()))
+					humans[i] = new InfectedHuman(humans[i].getXpos(), humans[i].getYpos(), duration);
+
+			} else if (humans[i] instanceof InfectedHuman)
 				room.occupy(newypos, newxpos, 2);
 			else if (humans[i] instanceof RecoveredHuman)
 				room.occupy(newypos, newxpos, 3);
-			
 
 		}
 		room.drawGrid();
@@ -95,6 +99,53 @@ public class Crowd {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static boolean possibleInfection(int x, int y) {
+		int surrCount = 0;
+
+		try {
+			if (room.isOccupied(y - 1, x + 1) == 2)
+				surrCount++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y, x + 1) == 2)
+				surrCount++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y + 1, x + 1) == 2)
+				surrCount++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y - 1, x) == 2)
+				surrCount++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y + 1, x) == 2)
+				surrCount++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y - 1, x - 1) == 2)
+				surrCount++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y, x - 1) == 2)
+				surrCount++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y + 1, x - 1) == 2)
+				surrCount++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+
+		return false;
 	}
 
 }

@@ -212,7 +212,7 @@ public class SimulationDriver {
 
 		int howLikelyToMove = 70;
 		int duration = 20; // how much time people need to recover and blocks to be dissinfected
-		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, grid, fatal);
+		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, grid, fatal, infect);
 
 		while (time > 0) {
 			crowd.move();
