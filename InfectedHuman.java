@@ -2,12 +2,14 @@ package tsousa01.hw5;
 
 public class InfectedHuman extends Human {
 
-	int timeLeft;
+	private int timeLeft;
 	static int  total=0;
+	private boolean measures;
 	
 	public InfectedHuman(int xpos, int ypos, int duration, boolean measures) {
 		super(xpos, ypos);
 		timeLeft = duration;
+		this.measures=measures;
 		total++;
 	}
 	
@@ -24,6 +26,9 @@ public class InfectedHuman extends Human {
 		return timeLeft;
 	}
 
+	public boolean takesMeasures() {
+		return measures;
+	}
 
 	public static int getTotalCases() {
 		return total;

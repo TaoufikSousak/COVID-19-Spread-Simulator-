@@ -14,6 +14,7 @@ public class HealthyHuman extends Human{
 		takesMeasures=careful;
 		total++;
 	}
+	
 	public static int getTotalCases() {
 		return total;
 	}
