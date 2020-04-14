@@ -27,4 +27,5 @@ abstract class Human implements Movable {
 		return 0;
 	} // will override in infected
 
+
 }

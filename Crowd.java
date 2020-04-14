@@ -116,25 +116,48 @@ public class Crowd {
 
 	public static boolean noPossibleMove(int x, int y) {
 
-		int cnt=0;
-		
-		if (room.isOccupied(y - 1, x + 1) >0)
-			cnt++;
-		if (room.isOccupied(y, x + 1) >0)
-			cnt++;
-		if (room.isOccupied(y + 1, x + 1) >0)
-			cnt++;
-		if (room.isOccupied(y - 1, x) >0)
-			cnt++;
-		if (room.isOccupied(y + 1, x)>0)
-			cnt++;
-		if (room.isOccupied(y - 1, x - 1) >0)
-			cnt++;
-		if (room.isOccupied(y, x - 1) >0)
-			cnt++;
-		if (room.isOccupied(y + 1, x - 1) >0)
-			cnt++;
-		return (cnt==8);
+		int cnt = 0;
+		try {
+			if (room.isOccupied(y - 1, x + 1) > 0)
+				cnt++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y, x + 1) > 0)
+				cnt++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y + 1, x + 1) > 0)
+				cnt++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y - 1, x) > 0)
+				cnt++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y + 1, x) > 0)
+				cnt++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y - 1, x - 1) > 0)
+				cnt++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y, x - 1) > 0)
+				cnt++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (room.isOccupied(y + 1, x - 1) > 0)
+				cnt++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		return (cnt == 8);
 	}
 
 	public static boolean roomTransmition(int x, int y) {

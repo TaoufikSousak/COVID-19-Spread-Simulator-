@@ -163,9 +163,9 @@ public class SimulationDriver {
 					error = true;
 				}
 			} while (error);
-			
+
 			System.out.println();
-			//do you want the grid to be drawn
+			// do you want the grid to be drawn
 			do {
 				error = false;
 				System.out.print("Draw simulation with/without grid? (1/2): ");
@@ -202,7 +202,7 @@ public class SimulationDriver {
 		else
 			System.out.println(" people");
 		System.out.print("The disease is ");
-		if (fatal>0)
+		if (fatal > 0)
 			System.out.print("non-");
 		System.out.println("fatal and " + infect + "% infetcious");
 
@@ -218,6 +218,10 @@ public class SimulationDriver {
 			crowd.move();
 			time--;
 		}
+
+		System.out.println("\n\nOF THE " + people + " INITIAL PEOPLE:\n" + InfectedHuman.getTotalCases()
+				+ " : GOT INFECTED\n" + RecoveredHuman.getTotalCases() + " : RECOVERED\n"
+				+ DeceasedHuman.getTotalCases() + " : PASSED AWAY\n" + (people-InfectedHuman.getTotalCases()) + " : NEVER GOT INFECTED");
 
 	}
 
