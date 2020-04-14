@@ -18,7 +18,7 @@ public class SimulationDriver {
 		int sick = 0;
 		int choice = 0;
 		boolean grid = true;
-		boolean fatal;
+		int fatal = 0;
 		String input;
 
 		// get length
@@ -133,13 +133,18 @@ public class SimulationDriver {
 			// is the disease fatal
 			do {
 				error = false;
-				System.out.print("Is the disease fatal?(y/n): ");
+				System.out.print("How fatal is the disease?(%): ");
 				input = scan.nextLine();
-				if (!input.equals("Y") && !input.equals("y") && !input.equals("n") && !input.equals("N")) {
+				try {
+					fatal = Integer.parseInt(input);
+					if (fatal > 100 || fatal < 0) {
+						error = true;
+						System.out.println("Must be between 0 and 100");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Must be an integer");
 					error = true;
-					System.out.println("Must be either 'y' or 'n'");
 				}
-
 			} while (error);
 			System.out.println();
 			// get how infectious is the disease
@@ -158,10 +163,7 @@ public class SimulationDriver {
 					error = true;
 				}
 			} while (error);
-			if (input.equals("Y") || input.equals("y"))
-				fatal = true;
-			else
-				fatal = false;
+			
 			System.out.println();
 			//do you want the grid to be drawn
 			do {
@@ -188,7 +190,7 @@ public class SimulationDriver {
 		} else {
 			sick = (int) ((double) people * 0.1);
 			time = 100;
-			fatal = true;
+			fatal = 4;
 			infect = 80;
 		}
 
@@ -200,7 +202,7 @@ public class SimulationDriver {
 		else
 			System.out.println(" people");
 		System.out.print("The disease is ");
-		if (fatal)
+		if (fatal>0)
 			System.out.print("non-");
 		System.out.println("fatal and " + infect + "% infetcious");
 
@@ -210,7 +212,7 @@ public class SimulationDriver {
 
 		int howLikelyToMove = 70;
 		int duration = 20; // how much time people need to recover and blocks to be dissinfected
-		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, grid);
+		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, grid, fatal);
 
 		while (time > 0) {
 			crowd.move();

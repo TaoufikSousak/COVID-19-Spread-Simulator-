@@ -5,13 +5,16 @@ public class Crowd {
 	private Human[] humans;
 	private Room room;
 	private double howLikelyToMove;
+	private double fatal;
 
-	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick, boolean drawgrid) {
+	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick, boolean drawgrid,
+			int fatal) {
 		room = new Room(width, length, duration, drawgrid);
 		humans = new Human[people];
 		this.howLikelyToMove = (double) howLikelyToMove / 100;
 		int xpos = 0;
 		int ypos = 0;
+		this.fatal = (double) fatal / 100;
 
 		for (int i = 0; i < people; i++) {
 			do {
@@ -48,7 +51,8 @@ public class Crowd {
 					newypos = humans[i].getYpos();
 
 					direction = Randomizer.getDirection();
-					// System.out.println("direction: " + direction + " contains u: " +
+					// System.out.println("direction: " + direction + " contains u: " + // only for
+					// testing
 					// direction.contains("u"));
 					if (direction.contains("u") && humans[i].getYpos() != room.getLength() - 1) {
 						newypos++;
@@ -66,7 +70,14 @@ public class Crowd {
 
 			if (humans[i] instanceof InfectedHuman)
 				if (humans[i].getTimeLeft() == 0)
-					humans[i] = new RecoveredHuman(humans[i].getXpos(), humans[i].getYpos());
+					if (!Randomizer.getBoolean(fatal))
+						humans[i] = new RecoveredHuman(humans[i].getXpos(), humans[i].getYpos());
+					else {
+						humans[i] = new DeceasedHuman(humans[i].getXpos(), humans[i].getYpos());
+						room.occupy(newypos, newypos, 0);
+					}
+
+						
 
 			if (humans[i] instanceof HealthyHuman)
 				room.occupy(newypos, newxpos, 1);
@@ -74,6 +85,7 @@ public class Crowd {
 				room.occupy(newypos, newxpos, 2);
 			else if (humans[i] instanceof RecoveredHuman)
 				room.occupy(newypos, newxpos, 3);
+			
 
 		}
 		room.drawGrid();
