@@ -27,6 +27,8 @@ abstract class Human implements Movable {
 		return 0;
 	} // will override in infected
 
-	public abstract boolean takesMeasures();
+	public boolean takesMeasures() {
+		return false;
+	}
 
 }

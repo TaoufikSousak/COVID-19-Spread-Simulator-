@@ -11,12 +11,14 @@ public class Room {
 	private int duration;
 	private boolean drawgrid;
 	private double inf;
+	private boolean measures[][];
 
 	public Room(int width, int length, int duration, boolean drawgrid, int infectious) {
 		this.width = width;
 		this.length = length;
 		occupied = new int[length][width];
 		infected = new int[length][width];
+		measures= new boolean[length][width];
 		this.duration=duration;
 		this.drawgrid = drawgrid;
 		this.inf=(double) infectious/100;
@@ -25,12 +27,21 @@ public class Room {
 			for (int j = 0; j < width; j++) {
 				occupied[i][j] = 0;
 				infected[i][j] = 0;
+				measures[i][j]=false;
 			}
 		}
 		this.gridSetup();
 		this.drawGrid();
 	}
 
+	public void setMeasures(int y, int x, boolean measures) {
+		this.measures[y][x]=measures;
+	}
+	
+	public boolean takesMeasures(int y, int x) {
+		return measures[y][x];
+	}
+	
 	public int getLength() {
 		return length;
 	}
@@ -114,6 +125,9 @@ public class Room {
 					StdDraw.setPenRadius(0.255 / (rad * 0.3));
 					StdDraw.point(x, y);
 				}
+				if(takesMeasures((int) y, (int) x))
+					this.drawMask(y, x);
+					
 
 			}
 		}

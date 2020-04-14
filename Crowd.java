@@ -52,6 +52,7 @@ public class Crowd {
 			String direction = null;
 			if (Randomizer.getBoolean(howLikelyToMove)) {
 				room.occupy(humans[i].getYpos(), humans[i].getXpos(), 0);
+				room.setMeasures(newypos, newxpos, false);
 				do {
 
 					if (noPossibleMove(humans[i].getXpos(), humans[i].getYpos()))
@@ -87,8 +88,11 @@ public class Crowd {
 						room.occupy(newypos, newypos, 0);
 					}
 
-			if (humans[i] instanceof HealthyHuman) {
+			if (humans[i] instanceof HealthyHuman) {	
 				room.occupy(newypos, newxpos, 1);
+				if(humans[i].takesMeasures())
+					room.setMeasures(newypos, newxpos, true);
+				
 				if (possibleInfection(humans[i].getXpos(), humans[i].getYpos(), humans[i].takesMeasures()))
 					humans[i] = new InfectedHuman(humans[i].getXpos(), humans[i].getYpos(), duration);
 
@@ -108,10 +112,10 @@ public class Crowd {
 	}
 
 	public static boolean possibleInfection(int x, int y, boolean measures) {
-		if (humanTransmition(x, y))
+		if (humanTransmition(x, y, measures))
 			return true;
 
-		if (roomTransmition(x, y))
+		if (roomTransmition(x, y, measures))
 			return true;
 
 		return false;
@@ -163,14 +167,21 @@ public class Crowd {
 		return (cnt == 8);
 	}
 
-	public static boolean roomTransmition(int x, int y) {
+	public static boolean roomTransmition(int x, int y, boolean measures) {
+		double chance=inf/2; // because its less likely to get virus from room than human
+		if(measures)
+			chance/=2;	//protective measures lower chance of infection
 		if (room.isInfected(y, x) > 0)
-			if (Randomizer.getBoolean(inf / 2))
+			if (Randomizer.getBoolean(chance))
 				return true;
 		return false;
 	}
 
-	public static boolean humanTransmition(int x, int y) {
+	public static boolean humanTransmition(int x, int y, boolean measures) {
+		
+		double chance=inf;
+		if(measures)
+			chance/=2; //protective measures lower chance of infection
 		try {
 			if (room.isOccupied(y - 1, x + 1) == 2)
 				if (Randomizer.getBoolean(inf))
