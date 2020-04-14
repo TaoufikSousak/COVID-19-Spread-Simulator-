@@ -13,14 +13,13 @@ public class Room {
 	private double inf;
 	private boolean measures[][];
 
-	public Room(int width, int length, int duration, boolean drawgrid, int infectious) {
+	public Room(int width, int length, int duration, int infectious) {
 		this.width = width;
 		this.length = length;
 		occupied = new int[length][width];
 		infected = new int[length][width];
 		measures= new boolean[length][width];
 		this.duration=duration;
-		this.drawgrid = drawgrid;
 		this.inf=(double) infectious/100;
 		inf/=3;		//less likely than human transmition
 		for (int i = 0; i < length; i++) {
@@ -98,7 +97,7 @@ public class Room {
 
 	public void drawGrid() {
 		int rad;
-		StdDraw.show(40);
+		StdDraw.show(80);
 		StdDraw.clear();
 		// draw infected spaces and people
 		for (double y = 0.5; y < length; y++) {
@@ -133,7 +132,6 @@ public class Room {
 		}
 
 		// draw lines
-		if (drawgrid) {
 			StdDraw.setPenColor(StdDraw.GRAY);
 			StdDraw.setPenRadius(0.2 / ((width + length) / 2));
 			for (int y = 0; y <= length; y++) {
@@ -142,7 +140,7 @@ public class Room {
 			for (int x = 0; x <= width; x++) {
 				StdDraw.line(x, 0, x, length);
 			}
-		}
+		
 
 	}
 	

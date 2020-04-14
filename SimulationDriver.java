@@ -17,9 +17,8 @@ public class SimulationDriver {
 		int infect = 0;
 		int sick = 0;
 		int choice = 0;
-		boolean grid = true;
 		int fatal = 0;
-		int careful=0;
+		int careful = 0;
 		String input;
 
 		// get length
@@ -111,11 +110,10 @@ public class SimulationDriver {
 					error = true;
 				}
 			} while (error);
-			
-			
+
 			System.out.println();
-			
-			//get num of people that take measures
+
+			// get num of people that take measures
 			do {
 				error = false;
 				System.out.print("Give the amount that take protective measures(like wear masks): ");
@@ -186,31 +184,10 @@ public class SimulationDriver {
 			} while (error);
 
 			System.out.println();
-			// do you want the grid to be drawn
-			do {
-				error = false;
-				System.out.print("Draw simulation with/without grid? (1/2): ");
-				input = scan.nextLine();
-				try {
-					choice = Integer.parseInt(input);
-					if (choice != 1 && choice != 2) {
-						error = true;
-						System.out.println("Must be either '1' or '2'");
-					}
-
-				} catch (NumberFormatException e) {
-					System.out.println("Must be a positive integer");
-					error = true;
-				}
-
-			} while (error);
-
-			if (choice == 1)
-				grid = true;
 
 		} else {
 			sick = (int) ((double) people * 0.1);
-			careful=(int) ((double) people * 0.1);
+			careful = (int) ((double) people * 0.1);
 			time = 100;
 			fatal = 4;
 			infect = 60;
@@ -234,16 +211,17 @@ public class SimulationDriver {
 
 		int howLikelyToMove = 70;
 		int duration = 50; // how much time people need to recover and blocks to be dissinfected
-		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, grid, fatal, infect, careful);
+		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful);
 
 		while (time > 0) {
 			crowd.move();
 			time--;
 		}
 
-		System.out.println("\n\nOF THE " + people + " INITIAL PEOPLE:\n" + InfectedHuman.getTotalCases()
-				+ " : GOT INFECTED\n" + RecoveredHuman.getTotalCases() + " : RECOVERED\n"
-				+ DeceasedHuman.getTotalCases() + " : PASSED AWAY\n" + (people-InfectedHuman.getTotalCases()) + " : NEVER GOT INFECTED");
+		System.out.println(
+				"\n\nOF THE " + people + " INITIAL PEOPLE:\n" + InfectedHuman.getTotalCases() + " : GOT INFECTED\n"
+						+ RecoveredHuman.getTotalCases() + " : RECOVERED\n" + DeceasedHuman.getTotalCases()
+						+ " : PASSED AWAY\n" + (people - InfectedHuman.getTotalCases()) + " : NEVER GOT INFECTED");
 
 	}
 
