@@ -133,8 +133,9 @@ public class SimulationDriver {
 				input = scan.nextLine();
 				try {
 					careful = Integer.parseInt(input);
-					if (careful > people-sick || careful < 0) {
-						throw new NotPossibleAmountException("Cannot have more than " + (people-sick) + " or less than 0");
+					if (careful > people - sick || careful < 0) {
+						throw new NotPossibleAmountException(
+								"Cannot have more than " + (people - sick) + " or less than 0");
 					}
 				} catch (NumberFormatException e) {
 					System.out.println("Must be a positive integer");
@@ -160,9 +161,9 @@ public class SimulationDriver {
 				} catch (NumberFormatException e) {
 					System.out.println("Must be a positive integer");
 					error = true;
-				}catch(NotPossibleAmountException e) {
+				} catch (NotPossibleAmountException e) {
 					System.out.println(e.getMessage());
-					error=true;
+					error = true;
 				}
 			} while (error);
 			System.out.println();
@@ -179,9 +180,9 @@ public class SimulationDriver {
 				} catch (NumberFormatException e) {
 					System.out.println("Must be an integer");
 					error = true;
-				}catch(NotPossibleAmountException e) {
+				} catch (NotPossibleAmountException e) {
 					System.out.println(e.getMessage());
-					error=true;
+					error = true;
 				}
 			} while (error);
 			System.out.println();
@@ -198,9 +199,9 @@ public class SimulationDriver {
 				} catch (NumberFormatException e) {
 					System.out.println("Must be an integer");
 					error = true;
-				}catch(NotPossibleAmountException e) {
+				} catch (NotPossibleAmountException e) {
 					System.out.println(e.getMessage());
-					error=true;
+					error = true;
 				}
 			} while (error);
 
@@ -221,9 +222,9 @@ public class SimulationDriver {
 			System.out.println(" person");
 		else
 			System.out.println(" people");
-		System.out.print("The disease is "+fatal);
-		
-		System.out.println(" fatal and " + infect + "% infetcious");
+		System.out.print("The disease is " + fatal);
+
+		System.out.println("% fatal and " + infect + "% infetcious");
 
 		System.out.println("Initialy infected people: " + sick);
 
@@ -242,7 +243,7 @@ public class SimulationDriver {
 				"\n\nOF THE " + people + " INITIAL PEOPLE:\n" + InfectedHuman.getTotalCases() + " : GOT INFECTED\n"
 						+ RecoveredHuman.getTotalCases() + " : RECOVERED\n" + DeceasedHuman.getTotalCases()
 						+ " : PASSED AWAY\n" + (people - InfectedHuman.getTotalCases()) + " : NEVER GOT INFECTED");
-
+		scan.close();
 	}
 
 }
