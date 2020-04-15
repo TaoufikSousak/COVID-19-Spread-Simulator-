@@ -242,11 +242,18 @@ public class Crowd {
 		return false;
 	}
 
+	/**
+	 * checks for human to human transmition
+	 * @param x position
+	 * @param y position
+	 * @param measures whether human takes measures
+	 * @return true if should get infected from nearby human
+	 */
 	public static boolean humanTransmition(int x, int y, boolean measures) {
 
 		double chance = inf;
 		if (measures)
-			chance /= 2; // protective measures lower chance of infection
+			chance /= 3; // protective measures lower chance of infection
 		try {
 			if (room.isOccupied(y - 1, x + 1) == 2)
 				if (Randomizer.getBoolean(chance))
