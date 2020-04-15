@@ -35,9 +35,9 @@ public class SimulationDriver {
 			} catch (NumberFormatException e) {
 				System.out.println("Must be an integer");
 				error = true;
-			}catch(NotPossibleAmountException e) {
+			} catch (NotPossibleAmountException e) {
 				System.out.println(e.getMessage());
-				error=true;
+				error = true;
 			}
 		} while (error);
 
@@ -56,9 +56,9 @@ public class SimulationDriver {
 			} catch (NumberFormatException e) {
 				System.out.println("Must be a positive integer");
 				error = true;
-			}catch(NotPossibleAmountException e) {
+			} catch (NotPossibleAmountException e) {
 				System.out.println(e.getMessage());
-				error=true;
+				error = true;
 			}
 		} while (error);
 		System.out.println();
@@ -70,14 +70,15 @@ public class SimulationDriver {
 			try {
 				people = Integer.parseInt(input);
 				if (people > length * width || people < 0) {
-					throw new NotPossibleAmountException("Cannot have more than " + length * width + " people or less than 0");
+					throw new NotPossibleAmountException(
+							"Cannot have more than " + length * width + " people or less than 0");
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("Must be a positive integer");
 				error = true;
-			}catch(NotPossibleAmountException e) {
+			} catch (NotPossibleAmountException e) {
 				System.out.println(e.getMessage());
-				error=true;
+				error = true;
 			}
 		} while (error);
 		System.out.println();
@@ -85,7 +86,7 @@ public class SimulationDriver {
 		// custom settings or not
 		do {
 			error = false;
-			System.out.print("Use default settings / Proceed to advanced (1/2): ");
+			System.out.print("Use default values from trusted sources / Proceed to custom settings (1/2): ");
 			input = scan.nextLine();
 			try {
 				choice = Integer.parseInt(input);
@@ -95,9 +96,9 @@ public class SimulationDriver {
 			} catch (NumberFormatException e) {
 				System.out.println("Can only choose '1' or '2'");
 				error = true;
-			}catch(NotPossibleAmountException e) {
+			} catch (NotPossibleAmountException e) {
 				System.out.println(e.getMessage());
-				error=true;
+				error = true;
 			}
 		} while (error);
 		System.out.println();
@@ -111,14 +112,15 @@ public class SimulationDriver {
 				try {
 					sick = Integer.parseInt(input);
 					if (sick > people || sick < 0) {
-						throw new NotPossibleAmountException("Cannot have more than " + people + " sick people or less than 0");
+						throw new NotPossibleAmountException(
+								"Cannot have more than " + people + " sick people or less than 0");
 					}
 				} catch (NumberFormatException e) {
 					System.out.println("Must be a positive integer");
 					error = true;
-				}catch(NotPossibleAmountException e) {
+				} catch (NotPossibleAmountException e) {
 					System.out.println(e.getMessage());
-					error=true;
+					error = true;
 				}
 			} while (error);
 
@@ -132,11 +134,13 @@ public class SimulationDriver {
 				try {
 					careful = Integer.parseInt(input);
 					if (careful > people || careful < 0) {
-						System.out.println("Cannot have more than " + people + " or less than 0");
-						error = true;
+						throw new NotPossibleAmountException("Cannot have more than " + people + " or less than 0");
 					}
 				} catch (NumberFormatException e) {
 					System.out.println("Must be a positive integer");
+					error = true;
+				} catch (NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
 					error = true;
 				}
 			} while (error);
@@ -150,13 +154,15 @@ public class SimulationDriver {
 				try {
 					time = Integer.parseInt(input);
 					if (time < 0) {
-						error = true;
-						System.out.println("Must be positive");
+						throw new NotPossibleAmountException("Must be positive");
 					}
 
 				} catch (NumberFormatException e) {
 					System.out.println("Must be a positive integer");
 					error = true;
+				}catch(NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
+					error=true;
 				}
 			} while (error);
 			System.out.println();
@@ -168,12 +174,14 @@ public class SimulationDriver {
 				try {
 					fatal = Integer.parseInt(input);
 					if (fatal > 100 || fatal < 0) {
-						error = true;
-						System.out.println("Must be between 0 and 100");
+						throw new NotPossibleAmountException("Must be between 0 and 100");
 					}
 				} catch (NumberFormatException e) {
 					System.out.println("Must be an integer");
 					error = true;
+				}catch(NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
+					error=true;
 				}
 			} while (error);
 			System.out.println();
@@ -185,12 +193,14 @@ public class SimulationDriver {
 				try {
 					infect = Integer.parseInt(input);
 					if (infect > 100 || infect < 0) {
-						error = true;
-						System.out.println("Must be between 0 and 100");
+						throw new NotPossibleAmountException("Must be between 0 and 100");
 					}
 				} catch (NumberFormatException e) {
 					System.out.println("Must be an integer");
 					error = true;
+				}catch(NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
+					error=true;
 				}
 			} while (error);
 
