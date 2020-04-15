@@ -149,7 +149,7 @@ public class SimulationDriver {
 			// get the time
 			do {
 				error = false;
-				System.out.print("Give the time (in minutes) over 55 is recommended: ");
+				System.out.print("Give the time (simulation steps) over 55 is recommended: ");
 				input = scan.nextLine();
 				try {
 					time = Integer.parseInt(input);
@@ -221,10 +221,9 @@ public class SimulationDriver {
 			System.out.println(" person");
 		else
 			System.out.println(" people");
-		System.out.print("The disease is ");
-		if (fatal > 0)
-			System.out.print("non-");
-		System.out.println("fatal and " + infect + "% infetcious");
+		System.out.print("The disease is "+fatal);
+		
+		System.out.println(" fatal and " + infect + "% infetcious");
 
 		System.out.println("Initialy infected people: " + sick);
 
