@@ -12,6 +12,13 @@ public class Room {
 	private double inf;
 	private boolean measures[][];
 
+	/**
+	 * 
+	 * @param width of grid
+	 * @param length of grid
+	 * @param duration is the amount of time required for a person to heal 
+	 * @param infectious how likely is for people to contract the virus from other infected people or spaces
+	 */
 	public Room(int width, int length, int duration, int infectious) {
 		this.width = width;
 		this.length = length;
@@ -20,7 +27,7 @@ public class Room {
 		measures= new boolean[length][width];
 		this.duration=duration;
 		this.inf=(double) infectious/100;
-		inf/=3;		//less likely than human transmition
+		inf/=3;		//less likely than human transmission
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < width; j++) {
 				occupied[i][j] = 0;
@@ -28,45 +35,102 @@ public class Room {
 				measures[i][j]=false;
 			}
 		}
+		//setup of grid
 		this.gridSetup();
 		this.drawGrid();
 	}
 
+	/**
+	 * 
+	 * @param y position
+	 * @param x position
+	 * @param measures sets whether the person on that position is taking protective measures
+	 */
 	public void setMeasures(int y, int x, boolean measures) {
 		this.measures[y][x]=measures;
 	}
 	
+	/**
+	 * 
+	 * @param y position
+	 * @param x position
+	 * @return returns whether the person on that position is taking protective measures
+	 */
 	public boolean takesMeasures(int y, int x) {
 		return measures[y][x];
 	}
 	
+	/**
+	 * 
+	 * @return the length
+	 */
 	public int getLength() {
 		return length;
 	}
 
+	/**
+	 * 
+	 * @return the width
+	 */
 	public int getWidth() {
 		return width;
 	}
 
+	/**
+	 * 
+	 * @param y position
+	 * @param x position
+	 * @return true if the space in that position is infected
+	 */
 	public int isInfected(int y, int x) {
 		return infected[y][x];
 	}
 
+	/**
+	 * 
+	 * @param y position
+	 * @param x position 
+	 * @return true if the space on that position has a person on it
+	 */
 	public int isOccupied(int y, int x) {
 		return occupied[y][x];
 	}
 
+	/**
+	 * 
+	 * @param y position
+	 * @param x position
+	 * 
+	 * Sets specified position to be infected
+	 */
 	public void infect(int y, int x) {
 		infected[y][x] = duration;
 	}
 
+	/**
+	 * 
+	 * @param y position
+	 * @param x position
+	 * 
+	 * Sets specified position to not be infected
+	 */
 	public void disinfect(int y, int x) {
 		infected[y][x]--;
 	}
+	
+	/**
+	 * 
+	 * @param y position
+	 * @param x position
+	 * @param status is set to the specified position
+	 */
 	public void occupy(int y, int x, int status) {
 		occupied[y][x] = status;
 	}
 
+	/**
+	 * Grid setup
+	 */
 	private void gridSetup() {
 		StdDraw.enableDoubleBuffering();
 		StdDraw.setCanvasSize(800, 700);
@@ -74,6 +138,14 @@ public class Room {
 		StdDraw.setYscale(length, 0);
 	}
 
+	/**
+	 * 
+	 * @param y position
+	 * @param x position
+	 * @param size of mask
+	 * 
+	 * Draws a mask on the specified position
+	 */
 	private void drawMask(double y, double x,double size) {
 		StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
 		StdDraw.setPenRadius(size/4);
@@ -85,9 +157,11 @@ public class Room {
 		StdDraw.line(x-0.1, y+0.1, x-0.27, y);
 	}
 
+	/**
+	 * This method draws the updated grid every time it is called 
+	 */
 	public void drawGrid() {
 		double rad;
-		//measures[0][0]=true;//test
 		StdDraw.show(100);
 		StdDraw.clear();
 		// draw infected spaces and people
@@ -98,10 +172,12 @@ public class Room {
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 					this.disinfect((int) y, (int) x);
 				}
+				//pen radius is depended on the smallest of width and length
 				if (length > width)
 					rad = length;
 				else
 					rad = width;
+				//draws people with the color that matches their status
 				if (isOccupied((int) y, (int) x) != 0) {
 					if (isOccupied((int) y, (int) x) == 1)
 						StdDraw.setPenColor(StdDraw.BLUE);
@@ -116,6 +192,7 @@ public class Room {
 					StdDraw.setPenRadius(rad);
 					StdDraw.point(x, y);
 				}
+				//draws mask
 				if(takesMeasures((int) y, (int) x))
 					this.drawMask(y, x,rad);
 					
@@ -136,6 +213,14 @@ public class Room {
 
 	}
 	
+	/**
+	 * 
+	 * @param y position
+	 * @param x position
+	 * 
+	 * This method can possibly infect the specified position when called
+	 * This is dependent of the inf variable and random chance
+	 */
 	public void possibleInfection(int y, int x) {
 		if(Randomizer.getBoolean(inf))
 			this.infect(y, x);

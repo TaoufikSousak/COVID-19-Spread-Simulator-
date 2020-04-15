@@ -19,6 +19,8 @@ public class SimulationDriver {
 		int choice = 0;
 		int fatal = 0;
 		int careful = 0;
+		int duration = 0;
+		int howLikelyToMove = 0;
 		String input;
 
 		// get length
@@ -150,7 +152,7 @@ public class SimulationDriver {
 			// get the time
 			do {
 				error = false;
-				System.out.print("Give the time (simulation steps) over 55 is recommended: ");
+				System.out.print("Give the time (simulation steps) over 100 is recommended: ");
 				input = scan.nextLine();
 				try {
 					time = Integer.parseInt(input);
@@ -189,11 +191,46 @@ public class SimulationDriver {
 			// get how infectious is the disease
 			do {
 				error = false;
-				System.out.print("How infectious is the disease?(%): ");
+				System.out.print("How contageous is the disease?(%): ");
 				input = scan.nextLine();
 				try {
 					infect = Integer.parseInt(input);
 					if (infect > 100 || infect < 0) {
+						throw new NotPossibleAmountException("Must be between 0 and 100");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Must be an integer");
+					error = true;
+				} catch (NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
+					error = true;
+				}
+			} while (error);
+
+			System.out.println();
+
+			// get how long it takes patients to heal
+			do {
+				error = false;
+				System.out.print("How long does it take for a patient to heal? (in simulation steps): ");
+				input = scan.nextLine();
+				try {
+					duration = Integer.parseInt(input);
+				} catch (NumberFormatException e) {
+					System.out.println("Must be an integer");
+					error = true;
+				}
+			} while (error);
+
+			System.out.println();
+			// get how likely is someone to move
+			do {
+				error = false;
+				System.out.print("How likely is it for people to move per simulation step?(%): ");
+				input = scan.nextLine();
+				try {
+					howLikelyToMove = Integer.parseInt(input);
+					if (howLikelyToMove > 100 || howLikelyToMove < 0) {
 						throw new NotPossibleAmountException("Must be between 0 and 100");
 					}
 				} catch (NumberFormatException e) {
@@ -213,6 +250,8 @@ public class SimulationDriver {
 			time = 500;
 			fatal = 4;
 			infect = 60;
+			howLikelyToMove = 70;
+			duration = 50; // how much time people need to recover and blocks to be disinfected
 		}
 
 		// print out the details of the simulation
@@ -230,8 +269,6 @@ public class SimulationDriver {
 
 		System.out.println("The simulation will run for " + time + " steps");
 
-		int howLikelyToMove = 70;
-		int duration = 50; // how much time people need to recover and blocks to be dissinfected
 		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful);
 
 		while (time > 0) {
