@@ -70,7 +70,7 @@ public class Crowd {
 
 	/**
 	 * moves every human individaully, then calls update status to update their
-	 * status and draws the grid
+	 * status and draws the grid.
 	 */
 	public void move() {
 
@@ -127,6 +127,7 @@ public class Crowd {
 	 * @param newypos
 	 */
 	public void updateStatus(int i, int newxpos, int newypos) {
+		//checks if infected human is resady to recover, recoveres or kills if its time
 		if (humans[i] instanceof InfectedHuman)
 			if (humans[i].getTimeLeft() == 0)
 				if (!Randomizer.getBoolean(fatal))
@@ -135,7 +136,7 @@ public class Crowd {
 					humans[i] = new DeceasedHuman(humans[i].getXpos(), humans[i].getYpos());
 					room.occupy(newypos, newxpos, 0);
 				}
-
+		//checks if healthy human should get infected
 		if (humans[i] instanceof HealthyHuman) {
 			room.occupy(newypos, newxpos, 1);
 
@@ -154,7 +155,15 @@ public class Crowd {
 			room.setMeasures(newypos, newxpos, true);
 	}
 
+	/**
+	 * checks if human will get infected 
+	 * @param x position
+	 * @param y poition
+	 * @param measures whether human takes protective measures
+	 * @return true if human should get infected
+	 */
 	public static boolean possibleInfection(int x, int y, boolean measures) {
+		
 		if (humanTransmition(x, y, measures))
 			return true;
 
@@ -164,6 +173,12 @@ public class Crowd {
 		return false;
 	}
 
+	/**
+	 * checks if human is trapped
+	 * @param x position
+	 * @param y position
+	 * @return true if human is trapped
+	 */
 	public static boolean noPossibleMove(int x, int y) {
 
 		int cnt = 0;
@@ -210,6 +225,13 @@ public class Crowd {
 		return (cnt == 8);
 	}
 
+	/**
+	 * 
+	 * @param x position
+	 * @param y position
+	 * @param measures whether human takes protective measures
+	 * @return
+	 */
 	public static boolean roomTransmition(int x, int y, boolean measures) {
 		double chance = inf / 2; // because its less likely to get virus from room than human
 		if (measures)
