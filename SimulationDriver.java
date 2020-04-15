@@ -29,15 +29,18 @@ public class SimulationDriver {
 			try {
 				length = Integer.parseInt(input);
 				if (length <= 0) {
-					error = true;
-					System.out.println("Must be positive");
+					throw new NotPossibleAmountException("Must be over 0");
 				}
 
 			} catch (NumberFormatException e) {
 				System.out.println("Must be an integer");
 				error = true;
+			}catch(NotPossibleAmountException e) {
+				System.out.println(e.getMessage());
+				error=true;
 			}
 		} while (error);
+
 		System.out.println();
 		// get width
 		do {
@@ -47,13 +50,15 @@ public class SimulationDriver {
 			try {
 				width = Integer.parseInt(input);
 				if (width <= 0) {
-					error = true;
-					System.out.println("Must be positive");
+					throw new NotPossibleAmountException("Must be over 0");
 				}
 
 			} catch (NumberFormatException e) {
 				System.out.println("Must be a positive integer");
 				error = true;
+			}catch(NotPossibleAmountException e) {
+				System.out.println(e.getMessage());
+				error=true;
 			}
 		} while (error);
 		System.out.println();
@@ -121,7 +126,7 @@ public class SimulationDriver {
 				try {
 					careful = Integer.parseInt(input);
 					if (careful > people || careful < 0) {
-						System.out.println("Cannot have more than " + people + " sick people or less than 0");
+						System.out.println("Cannot have more than " + people + " or less than 0");
 						error = true;
 					}
 				} catch (NumberFormatException e) {
@@ -134,7 +139,7 @@ public class SimulationDriver {
 			// get the time
 			do {
 				error = false;
-				System.out.print("Give the time (in minutes): ");
+				System.out.print("Give the time (in minutes) over 55 is recommended: ");
 				input = scan.nextLine();
 				try {
 					time = Integer.parseInt(input);
@@ -186,8 +191,8 @@ public class SimulationDriver {
 			System.out.println();
 
 		} else {
-			sick = (int) ((double) people * 0.1);
-			careful = (int) ((double) people * 0.1);
+			sick = 1;
+			careful = (int) ((double) people * 0.5);
 			time = 500;
 			fatal = 4;
 			infect = 60;
