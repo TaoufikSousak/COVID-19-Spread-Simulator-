@@ -133,8 +133,8 @@ public class SimulationDriver {
 				input = scan.nextLine();
 				try {
 					careful = Integer.parseInt(input);
-					if (careful > people || careful < 0) {
-						throw new NotPossibleAmountException("Cannot have more than " + people + " or less than 0");
+					if (careful > people-sick || careful < 0) {
+						throw new NotPossibleAmountException("Cannot have more than " + (people-sick) + " or less than 0");
 					}
 				} catch (NumberFormatException e) {
 					System.out.println("Must be a positive integer");
