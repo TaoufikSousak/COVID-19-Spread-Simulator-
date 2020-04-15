@@ -9,7 +9,6 @@ public class Room {
 	private int occupied[][]; // 0=no | 1=with healthy human | 2=with infected human | 3=with recovered human
 	private int infected[][];
 	private int duration;
-	private boolean drawgrid;
 	private double inf;
 	private boolean measures[][];
 
