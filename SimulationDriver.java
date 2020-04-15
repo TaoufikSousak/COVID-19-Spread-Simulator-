@@ -188,7 +188,7 @@ public class SimulationDriver {
 		} else {
 			sick = (int) ((double) people * 0.1);
 			careful = (int) ((double) people * 0.1);
-			time = 100;
+			time = 500;
 			fatal = 4;
 			infect = 60;
 		}

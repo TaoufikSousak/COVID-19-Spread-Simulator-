@@ -75,29 +75,21 @@ public class Room {
 		StdDraw.setYscale(length, 0);
 	}
 
-	private void drawMask(double y, double x) {
+	private void drawMask(double y, double x,double size) {
 		StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-		double rect_x[] = new double[4];
-		double rect_y[] = new double[4];
-		rect_x[0] = x;
-		rect_y[0] = y;
-
-		rect_x[1] = x + 0.1;
-		rect_y[1] = y - 0.1;
-
-		rect_x[2] = x + 0.2;
-		rect_y[2] = y + 0.1;
-
-		rect_x[3] = x + 0.1;
-		rect_y[3] = y - 0.1;
-		StdDraw.filledRectangle(x, y + 0.12, 0.18, 0.1);
-		StdDraw.filledPolygon(rect_x, rect_y);
-
+		StdDraw.setPenRadius(size/4);
+		StdDraw.line(x-0.1, y+0.12, x+0.1, y+0.12);
+		StdDraw.line(x-0.1, y+0.14, x+0.1, y+0.14);
+		StdDraw.line(x-0.1, y+0.16, x+0.1, y+0.16);
+		StdDraw.setPenRadius(size/12);
+		StdDraw.line(x+0.1, y+0.1, x+0.27, y);
+		StdDraw.line(x-0.1, y+0.1, x-0.27, y);
 	}
 
 	public void drawGrid() {
-		int rad;
-		StdDraw.show(80);
+		double rad;
+		//measures[0][0]=true;//test
+		StdDraw.show(100);
 		StdDraw.clear();
 		// draw infected spaces and people
 		for (double y = 0.5; y < length; y++) {
@@ -121,11 +113,12 @@ public class Room {
 					else if (isOccupied((int) y, (int) x) == 3)
 						StdDraw.setPenColor(StdDraw.GREEN);
 
-					StdDraw.setPenRadius(0.255 / (rad * 0.3));
+					rad=0.255 / (rad * 0.3);
+					StdDraw.setPenRadius(rad);
 					StdDraw.point(x, y);
 				}
 				if(takesMeasures((int) y, (int) x))
-					this.drawMask(y, x);
+					this.drawMask(y, x,rad);
 					
 
 			}
