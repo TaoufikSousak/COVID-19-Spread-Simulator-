@@ -1,5 +1,11 @@
 package tsousa01.hw5;
 
+/**
+ * this interface is a guide of methods all humans should have.
+ * 
+ * @author Taoufik Sousak, Loukas Papalazarou
+ *
+ */
 public interface Movable {
 
 	public int getXpos();
@@ -8,7 +14,6 @@ public interface Movable {
 	
 	public void moveTo(int x, int y);
 	
-	public int getTimeLeft();
-	
+	public boolean takesMeasures();
 	
 }

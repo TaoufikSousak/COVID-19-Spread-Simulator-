@@ -131,7 +131,7 @@ public class Crowd {
 		if (humans[i] instanceof InfectedHuman)
 			if (humans[i].getTimeLeft() == 0)
 				if (!Randomizer.getBoolean(fatal))
-					humans[i] = new RecoveredHuman(humans[i].getXpos(), humans[i].getYpos());
+					humans[i] = new RecoveredHuman(humans[i].getXpos(), humans[i].getYpos(),humans[i].takesMeasures());
 				else {
 					humans[i] = new DeceasedHuman(humans[i].getXpos(), humans[i].getYpos());
 					room.occupy(newypos, newxpos, 0);

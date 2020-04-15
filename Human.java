@@ -35,6 +35,6 @@ abstract class Human implements Movable {
 
 	public boolean takesMeasures() {
 		return false;
-	}
+	}// will override in classes that use it
 
 }

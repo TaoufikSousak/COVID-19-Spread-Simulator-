@@ -1,7 +1,17 @@
 package tsousa01.hw5;
-
+/**
+ * this static class has methods that provide quick random values.
+ * 
+ * @author Taoufik Sousak, Loukas Papalazarou
+ *
+ */
 public class Randomizer {
 
+	/**
+	 * returns random boolean with R chance of returning true
+	 * @param R how likely to return true
+	 * @return true semi-randomly
+	 */
 	public static boolean getBoolean(double R) {
 		if (Math.random() < R)
 			return true;
@@ -9,7 +19,11 @@ public class Randomizer {
 	}
 	
 	
-	
+	/**
+	 * gives random direction with equal chance of each.
+	 * 
+	 * @return u=up, d=down, l=left, r=right, combinations for diagonals
+	 */
 	public static String getDirection() {
 		
 		
