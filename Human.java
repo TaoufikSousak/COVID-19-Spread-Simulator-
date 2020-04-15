@@ -4,7 +4,8 @@ package tsousa01.hw5;
  * 
  * @author Loukas Papalazarou, Taoufik Sousak
  * 
- * This class will be extended by various human types (Healthy, Infected, etc)
+ *         This class will be extended by various human types (Healthy,
+ *         Infected, etc)
  *
  */
 abstract class Human implements Movable {
@@ -15,8 +16,8 @@ abstract class Human implements Movable {
 
 	/**
 	 * 
-	 * @param xpos x-axis position
-	 * @param ypos y-axis position
+	 * @param xpos     x-axis position
+	 * @param ypos     y-axis position
 	 * @param measures whether the person takes protective measures
 	 */
 	public Human(int xpos, int ypos, boolean measures) {
@@ -33,13 +34,13 @@ abstract class Human implements Movable {
 	public Human(int xpos, int ypos) {
 		this(xpos, ypos, false);
 	}
-	
-	//xpos getter
+
+	// xpos getter
 	public int getXpos() {
 		return xpos;
 	}
 
-	//ypos getter
+	// ypos getter
 	public int getYpos() {
 		return ypos;
 	}
@@ -52,9 +53,12 @@ abstract class Human implements Movable {
 		ypos = newypos;
 	}
 
-	
-	public abstract int getTimeLeft();
+	public int getTimeLeft() {
+		return 0;
+	}
 
-	public abstract boolean takesMeasures();
+	public boolean takesMeasures() {
+		return false;
+	}
 
 }
