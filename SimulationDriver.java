@@ -70,12 +70,14 @@ public class SimulationDriver {
 			try {
 				people = Integer.parseInt(input);
 				if (people > length * width || people < 0) {
-					System.out.println("Cannot have more than " + length * width + " people or less than 0");
-					error = true;
+					throw new NotPossibleAmountException("Cannot have more than " + length * width + " people or less than 0");
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("Must be a positive integer");
 				error = true;
+			}catch(NotPossibleAmountException e) {
+				System.out.println(e.getMessage());
+				error=true;
 			}
 		} while (error);
 		System.out.println();
@@ -88,12 +90,14 @@ public class SimulationDriver {
 			try {
 				choice = Integer.parseInt(input);
 				if (choice != 1 && choice != 2) {
-					System.out.println("Can only choose '1' or '2'");
-					error = true;
+					throw new NotPossibleAmountException("Can only choose '1' or '2'");
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("Must be a positive integer");
+				System.out.println("Can only choose '1' or '2'");
 				error = true;
+			}catch(NotPossibleAmountException e) {
+				System.out.println(e.getMessage());
+				error=true;
 			}
 		} while (error);
 		System.out.println();
@@ -107,12 +111,14 @@ public class SimulationDriver {
 				try {
 					sick = Integer.parseInt(input);
 					if (sick > people || sick < 0) {
-						System.out.println("Cannot have more than " + people + " sick people or less than 0");
-						error = true;
+						throw new NotPossibleAmountException("Cannot have more than " + people + " sick people or less than 0");
 					}
 				} catch (NumberFormatException e) {
 					System.out.println("Must be a positive integer");
 					error = true;
+				}catch(NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
+					error=true;
 				}
 			} while (error);
 
