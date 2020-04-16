@@ -271,10 +271,11 @@ public class SimulationDriver {
 
 		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful);
 
-		while (time > 0) {
+		while (time > 0 && people != (DeceasedHuman.getTotalCases() +  RecoveredHuman.getTotalCases())) {
 			crowd.move();
 			time--;
 		}
+		crowd.move();
 
 		System.out.println(
 				"\n\nOF THE " + people + " INITIAL PEOPLE:\n" + InfectedHuman.getTotalCases() + " : GOT INFECTED\n"
