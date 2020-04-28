@@ -10,18 +10,179 @@ public class SimulationDriver {
 		Scanner scan = new Scanner(System.in);
 		boolean error = true;
 
-		int width = 0;
-		int length = 0;
-		int time = 0;
-		int people = 0;
-		int infect = 0;
-		int sick = 0;
-		int choice = 0;
-		int fatal = 0;
-		int careful = 0;
-		int duration = 0;
-		int howLikelyToMove = 0;
-		String input;
+		int cities = 0; // same for all
+		int time = 0; // same for all
+		int infect = 0; // same for all
+		int duration = 0; // same for all
+		int fatal = 0; // same for all
+		int howLikelyToMove = 0; // same for all
+
+		int choice = 0; // helping variable
+		String input; // helping variable
+
+//arraye'd	   int width = 0;
+//arraye'd	   int length = 0;	
+//arraye'd     int people = 0;	
+//arraye'd     int sick = 0;		
+//arraye'd     int careful = 0;
+
+///// new verion ////
+
+		// parameters that are the same of all cities
+		do {
+			error = false;
+			System.out.println("Regarding infectivity, deadliness, likelyness for people to move,");
+			System.out.println("time it takes for a person to heal and simulation steps for every city:\n");
+			System.out.print("Use default values from trusted sources / Proceed to custom settings (1/2): ");
+			input = scan.nextLine();
+			try {
+				choice = Integer.parseInt(input);
+				if (choice != 1 && choice != 2) {
+					throw new NotPossibleAmountException("Can only choose '1' or '2'");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Can only choose '1' or '2'");
+				error = true;
+			} catch (NotPossibleAmountException e) {
+				System.out.println(e.getMessage());
+				error = true;
+			}
+		} while (error);
+		System.out.println();
+
+		if (choice == 1) {
+			sick = 1;
+			time = 500;
+			fatal = 4;
+			infect = 60;
+			howLikelyToMove = 70;
+			duration = 50; // how much time people need to recover and blocks to be disinfected
+		} else {
+			// steps
+			do {
+				error = false;
+				System.out.print("Give the time (simulation steps) over 100 is recommended: ");
+				input = scan.nextLine();
+				try {
+					time = Integer.parseInt(input);
+					if (time < 0) {
+						throw new NotPossibleAmountException("Must be positive");
+					}
+
+				} catch (NumberFormatException e) {
+					System.out.println("Must be a positive integer");
+					error = true;
+				} catch (NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
+					error = true;
+				}
+			} while (error);
+			System.out.println();
+
+			// how fatal
+			do {
+				error = false;
+				System.out.print("How fatal is the disease?(%): ");
+				input = scan.nextLine();
+				try {
+					fatal = Integer.parseInt(input);
+					if (fatal > 100 || fatal < 0) {
+						throw new NotPossibleAmountException("Must be between 0 and 100");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Must be an integer");
+					error = true;
+				} catch (NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
+					error = true;
+				}
+			} while (error);
+			System.out.println();
+
+			// how contageous
+			do {
+				error = false;
+				System.out.print("How contageous is the disease?(%): ");
+				input = scan.nextLine();
+				try {
+					infect = Integer.parseInt(input);
+					if (infect > 100 || infect < 0) {
+						throw new NotPossibleAmountException("Must be between 0 and 100");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Must be an integer");
+					error = true;
+				} catch (NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
+					error = true;
+				}
+			} while (error);
+			System.out.println();
+
+			// get how long it takes patients to heal
+			do {
+				error = false;
+				System.out.print("How long does it take for a patient to heal? (in simulation steps): ");
+				input = scan.nextLine();
+				try {
+					duration = Integer.parseInt(input);
+				} catch (NumberFormatException e) {
+					System.out.println("Must be an integer");
+					error = true;
+				}
+			} while (error);
+			System.out.println();
+
+			// get how likely is someone to move
+			do {
+				error = false;
+				System.out.print("How likely is it for people to move per simulation step?(%): ");
+				input = scan.nextLine();
+				try {
+					howLikelyToMove = Integer.parseInt(input);
+					if (howLikelyToMove > 100 || howLikelyToMove < 0) {
+						throw new NotPossibleAmountException("Must be between 0 and 100");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Must be an integer");
+					error = true;
+				} catch (NotPossibleAmountException e) {
+					System.out.println(e.getMessage());
+					error = true;
+				}
+			} while (error);
+			System.out.println();
+		}
+
+		// ask how many cities
+		do {
+			error = false;
+			System.out.print("How many cities: ");
+			input = scan.nextLine();
+			try {
+				time = Integer.parseInt(input);
+				if (time < 0) {
+					throw new NotPossibleAmountException("Must be positive");
+				}
+
+			} catch (NumberFormatException e) {
+				System.out.println("Must be a positive integer");
+				error = true;
+			} catch (NotPossibleAmountException e) {
+				System.out.println(e.getMessage());
+				error = true;
+			}
+		} while (error);
+		System.out.println();
+
+		// create arrays of elements different for every city
+		int width[] = new int[cities];
+		int length[] = new int[cities];
+		int people[] = new int[cities];
+		int infect[] = new int[cities];
+		int careful[] = new int[cities];
+
+////// old version ////		
 
 		// get length
 		do {
@@ -271,7 +432,7 @@ public class SimulationDriver {
 
 		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful);
 
-		while (time > 0 && people != (DeceasedHuman.getTotalCases() +  RecoveredHuman.getTotalCases())) {
+		while (time > 0 && people != (DeceasedHuman.getTotalCases() + RecoveredHuman.getTotalCases())) {
 			crowd.move();
 			time--;
 		}
