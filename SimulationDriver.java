@@ -348,18 +348,18 @@ public class SimulationDriver {
 		System.out.println("The simulation will run for " + time + " steps\n");
 
 		// different
-		if(cities==1)
-		System.out.println(cities + " city will be simulated\n");
-		else 
+		if (cities == 1)
+			System.out.println(cities + " city will be simulated\n");
+		else
 			System.out.println(cities + " cities will be simulated\n");
 		for (int i = 0; i < cities; i++) {
-			System.out.println("City "+(i+1));
+			System.out.println("City " + (i + 1));
 			System.out.println("----------");
-			System.out.println("Size: "+length[i]+" x "+width[i]);
-			System.out.println("People: "+people[i]);
-			System.out.println("Initialy infected: "+sick[i]);
-			System.out.println("People who takes protective measures: "+careful[i]);
-			System.out.println("Airports: "+airports[i]);
+			System.out.println("Size: " + length[i] + " x " + width[i]);
+			System.out.println("People: " + people[i]);
+			System.out.println("Initialy infected: " + sick[i]);
+			System.out.println("People who takes protective measures: " + careful[i]);
+			System.out.println("Airports: " + airports[i]);
 			System.out.println("\n");
 		}
 
@@ -611,21 +611,28 @@ public class SimulationDriver {
 //
 //		System.out.println("The simulation will run for " + time + " steps");
 
-		
-////// taou from here down ////// <<33
+///////////////////
+		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful, cities);
 
-//		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful);
-//
-//		while (time > 0 && people != (DeceasedHuman.getTotalCases() + RecoveredHuman.getTotalCases())) {
-//			crowd.move();
-//			time--;
-//		}
-//		crowd.move();
+		int toDraw = 0;
+
+		while (time > 0) {
+
+			if (time % 5 == 0 && time!=0)
+				if (toDraw < cities-1 )
+					toDraw++;
+				else
+					toDraw = 0;
+			crowd.move(toDraw);
+			time--;
+		}
+		crowd.move(toDraw);
 //
 //		System.out.println(
 //				"\n\nOF THE " + people + " INITIAL PEOPLE:\n" + InfectedHuman.getTotalCases() + " : GOT INFECTED\n"
 //						+ RecoveredHuman.getTotalCases() + " : RECOVERED\n" + DeceasedHuman.getTotalCases()
 //						+ " : PASSED AWAY\n" + (people - InfectedHuman.getTotalCases()) + " : NEVER GOT INFECTED");
+
 		scan.close();
 	}
 

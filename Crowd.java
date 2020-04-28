@@ -10,14 +10,16 @@ package tsousa01.hw6;
  */
 public class Crowd {
 
-	private Human[] humans;
+	private Human[][] humans;
 	private static Room[] room;
 	private double howLikelyToMove;
 	private double fatal;
 	private static double inf;
 	private int duration;
 
-	private int hmRooms; //how many rooms
+	private int cities; // how many rooms
+	private int[] people;
+
 	/**
 	 * The only constructor, decides where to place each human, creates them and
 	 * places them.
@@ -33,95 +35,104 @@ public class Crowd {
 	 * @param infectius       how inectius is the virus
 	 * @param caref           how many people take protective measures
 	 */
-	public Crowd(int duration, int[] width, int[] length, int[] people, int howLikelyToMove, int sick, int fatal,
-			int infectius, int caref,int hmRooms) {
-		
-		for(int i=0; i<hmRooms; i++)
-		room[i] = new Room(width[i], length[i], duration, infectius);
-		
-		int totalPeople=0;		//calculate total of people in the simulation
-		for(int i=0; i<hmRooms; i++)
-			totalPeople+=people[i];
-		
-		
-		humans = new Human[totalPeople];
+	public Crowd(int duration, int[] width, int[] length, int[] people, int howLikelyToMove, int[] sick, int fatal,
+			int infectius, int[] caref, int hmRooms) {
+
+		cities = hmRooms;
+
+		this.people = people;
+		room = new Room[cities];
+
+		for (int i = 0; i < cities; i++) {
+			room[i] = new Room(width[i], length[i], duration, infectius);
+		}
+		int totalPeople = 0; // calculate total of people in the simulation
+		for (int i = 0; i < cities; i++)
+			totalPeople += people[i];
+
+		humans = new Human[totalPeople][cities];
 		this.howLikelyToMove = (double) howLikelyToMove / 100;
 		int xpos = 0;
 		int ypos = 0;
 		this.fatal = (double) fatal / 100;
 		this.inf = (double) infectius / 100;
 		this.duration = duration;
-		
+
 		// decide where to place human
-		
-		for (int i = 0; i < people; i++) {
-			do {
-				xpos = (int) (Math.random() * ((width)));
-				ypos = (int) (Math.random() * ((length)));
+		for (int j = 0; j < cities; j++) // for every room
+			for (int i = 0; i < people[j]; i++) {
+				do {
+					xpos = (int) (Math.random() * ((width[j])));
+					ypos = (int) (Math.random() * ((length[j])));
 
-			} while (room.isOccupied(ypos, xpos) != 0);
+				} while (room[j].isOccupied(ypos, xpos) != 0);
 
-			// create sick humans
-			if (i < sick) {
+				// create sick humans
+				if (i < sick[j]) {
 
-				humans[i] = new InfectedHuman(xpos, ypos, duration);
-				room.occupy(ypos, xpos, 2);
-			} else {
-				boolean msrs = false;
-				// put masks on specified amount
-				if (i - sick < caref)
-					msrs = true;
-				humans[i] = new HealthyHuman(xpos, ypos, msrs);
-				room.occupy(ypos, xpos, 1);
+					humans[i][j] = new InfectedHuman(xpos, ypos, duration);
+					room[j].occupy(ypos, xpos, 2);
+				} else {
+					boolean msrs = false;
+					// put masks on specified amount
+					if (i - sick[j] < caref[j])
+						msrs = true;
+					humans[i][j] = new HealthyHuman(xpos, ypos, msrs);
+					room[j].occupy(ypos, xpos, 1);
+				}
+				room[j].drawGrid();
+
 			}
-			room.drawGrid();
-
-		}
 	}
 
 	/**
 	 * moves every human individaully, then calls update status to update their
 	 * status and draws the grid.
 	 */
-	public void move() {
+	public void move(int toDraw) {
 
-		for (int i = 0; i < humans.length; i++) {
 
-			int newxpos = humans[i].getXpos();
-			int newypos = humans[i].getYpos();
-			String direction = null;
-			// decide if human will move
-			if (Randomizer.getBoolean(howLikelyToMove)) {
-				room.occupy(humans[i].getYpos(), humans[i].getXpos(), 0);
-				room.setMeasures(newypos, newxpos, false);
-				// choose new available position
-				do {
-					// check if trapped
-					if (noPossibleMove(humans[i].getXpos(), humans[i].getYpos()))
-						break;
+		for (int j = 0; j < cities; j++) {// for every room
 
-					newxpos = humans[i].getXpos();
-					newypos = humans[i].getYpos();
+			for (int i = 0; i < people[j]; i++) {
 
-					direction = Randomizer.getDirection();
+				int newxpos = humans[i][j].getXpos();
+				int newypos = humans[i][j].getYpos();
+				String direction = null;
+				// decide if human will move
+				if (Randomizer.getBoolean(howLikelyToMove)) {
+					room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
+					room[j].setMeasures(newypos, newxpos, false);
+					// choose new available position
+					do {
+						// check if trapped
+						if (noPossibleMove(humans[i][j].getXpos(), humans[i][j].getYpos(), j))
+							break;
 
-					if (direction.contains("u") && humans[i].getYpos() != room.getLength() - 1)
-						newypos++;
-					if (direction.contains("d") && humans[i].getYpos() != 0)
-						newypos--;
-					if (direction.contains("r") && humans[i].getXpos() != room.getWidth() - 1)
-						newxpos++;
-					if (direction.contains("l") && humans[i].getXpos() != 0)
-						newxpos--;
-				} while (room.isOccupied(newypos, newxpos) != 0);
+						newxpos = humans[i][j].getXpos();
+						newypos = humans[i][j].getYpos();
 
-				humans[i].moveTo(newxpos, newypos);
+						direction = Randomizer.getDirection();
 
-				this.updateStatus(i, newxpos, newypos);
+						if (direction.contains("u") && humans[i][j].getYpos() != room[j].getLength() - 1)
+							newypos++;
+						if (direction.contains("d") && humans[i][j].getYpos() != 0)
+							newypos--;
+						if (direction.contains("r") && humans[i][j].getXpos() != room[j].getWidth() - 1)
+							newxpos++;
+						if (direction.contains("l") && humans[i][j].getXpos() != 0)
+							newxpos--;
+					} while (room[j].isOccupied(newypos, newxpos) != 0);
+
+					humans[i][j].moveTo(newxpos, newypos);
+
+					this.updateStatus(i, newxpos, newypos, j);
+				}
 			}
+			
+			
+			room[toDraw].drawGrid();
 		}
-		room.drawGrid();
-
 		try {
 			Thread.sleep(150); // wait a second between every move to represent time passing
 		} catch (InterruptedException e) {
@@ -137,48 +148,50 @@ public class Crowd {
 	 * @param newxpos
 	 * @param newypos
 	 */
-	public void updateStatus(int i, int newxpos, int newypos) {
-		//checks if infected human is resady to recover, recoveres or kills if its time
-		if (humans[i] instanceof InfectedHuman)
-			if (humans[i].getTimeLeft() == 0)
+	public void updateStatus(int i, int newxpos, int newypos, int j) {
+		// checks if infected human is resady to recover, recoveres or kills if its time
+		if (humans[i][j] instanceof InfectedHuman)
+			if (humans[i][j].getTimeLeft() == 0)
 				if (!Randomizer.getBoolean(fatal))
-					humans[i] = new RecoveredHuman(humans[i].getXpos(), humans[i].getYpos(),humans[i].takesMeasures());
+					humans[i][j] = new RecoveredHuman(humans[i][j].getXpos(), humans[i][j].getYpos(),
+							humans[i][j].takesMeasures());
 				else {
-					humans[i] = new DeceasedHuman(humans[i].getXpos(), humans[i].getYpos());
-					room.occupy(newypos, newxpos, 0);
+					humans[i][j] = new DeceasedHuman(humans[i][j].getXpos(), humans[i][j].getYpos());
+					room[j].occupy(newypos, newxpos, 0);
 				}
-		//checks if healthy human should get infected
-		if (humans[i] instanceof HealthyHuman) {
-			room.occupy(newypos, newxpos, 1);
+		// checks if healthy human should get infected
+		if (humans[i][j] instanceof HealthyHuman) {
+			room[j].occupy(newypos, newxpos, 1);
 
-			if (possibleInfection(humans[i].getXpos(), humans[i].getYpos(), humans[i].takesMeasures()))
-				if (humans[i].takesMeasures())
-					humans[i] = new InfectedHuman(humans[i].getXpos(), humans[i].getYpos(), duration, true);
+			if (possibleInfection(humans[i][j].getXpos(), humans[i][j].getYpos(), humans[i][j].takesMeasures(), j))
+				if (humans[i][j].takesMeasures())
+					humans[i][j] = new InfectedHuman(humans[i][j].getXpos(), humans[i][j].getYpos(), duration, true);
 				else
-					humans[i] = new InfectedHuman(humans[i].getXpos(), humans[i].getYpos(), duration);
+					humans[i][j] = new InfectedHuman(humans[i][j].getXpos(), humans[i][j].getYpos(), duration);
 
-		} else if (humans[i] instanceof InfectedHuman)
-			room.occupy(newypos, newxpos, 2);
-		else if (humans[i] instanceof RecoveredHuman)
-			room.occupy(newypos, newxpos, 3);
+		} else if (humans[i][j] instanceof InfectedHuman)
+			room[j].occupy(newypos, newxpos, 2);
+		else if (humans[i][j] instanceof RecoveredHuman)
+			room[j].occupy(newypos, newxpos, 3);
 
-		if (humans[i].takesMeasures())
-			room.setMeasures(newypos, newxpos, true);
+		if (humans[i][j].takesMeasures())
+			room[j].setMeasures(newypos, newxpos, true);
 	}
 
 	/**
-	 * checks if human will get infected 
-	 * @param x position
-	 * @param y poition
+	 * checks if human will get infected
+	 * 
+	 * @param x        position
+	 * @param y        poition
 	 * @param measures whether human takes protective measures
 	 * @return true if human should get infected
 	 */
-	public static boolean possibleInfection(int x, int y, boolean measures) {
-		
-		if (humanTransmition(x, y, measures))
+	public static boolean possibleInfection(int x, int y, boolean measures, int j) {
+
+		if (humanTransmition(x, y, measures, j))
 			return true;
 
-		if (roomTransmition(x, y, measures))
+		if (roomTransmition(x, y, measures, j))
 			return true;
 
 		return false;
@@ -186,50 +199,51 @@ public class Crowd {
 
 	/**
 	 * checks if human is trapped
+	 * 
 	 * @param x position
 	 * @param y position
 	 * @return true if human is trapped
 	 */
-	public static boolean noPossibleMove(int x, int y) {
+	public static boolean noPossibleMove(int x, int y, int j) {
 
 		int cnt = 0;
 		try {
-			if (room.isOccupied(y - 1, x + 1) > 0)
+			if (room[j].isOccupied(y - 1, x + 1) > 0)
 				cnt++;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y, x + 1) > 0)
+			if (room[j].isOccupied(y, x + 1) > 0)
 				cnt++;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y + 1, x + 1) > 0)
+			if (room[j].isOccupied(y + 1, x + 1) > 0)
 				cnt++;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y - 1, x) > 0)
+			if (room[j].isOccupied(y - 1, x) > 0)
 				cnt++;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y + 1, x) > 0)
+			if (room[j].isOccupied(y + 1, x) > 0)
 				cnt++;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y - 1, x - 1) > 0)
+			if (room[j].isOccupied(y - 1, x - 1) > 0)
 				cnt++;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y, x - 1) > 0)
+			if (room[j].isOccupied(y, x - 1) > 0)
 				cnt++;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y + 1, x - 1) > 0)
+			if (room[j].isOccupied(y + 1, x - 1) > 0)
 				cnt++;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
@@ -238,16 +252,16 @@ public class Crowd {
 
 	/**
 	 * 
-	 * @param x position
-	 * @param y position
+	 * @param x        position
+	 * @param y        position
 	 * @param measures whether human takes protective measures
 	 * @return
 	 */
-	public static boolean roomTransmition(int x, int y, boolean measures) {
+	public static boolean roomTransmition(int x, int y, boolean measures, int j) {
 		double chance = inf / 2; // because its less likely to get virus from room than human
 		if (measures)
 			chance /= 2; // protective measures lower chance of infection
-		if (room.isInfected(y, x) > 0)
+		if (room[j].isInfected(y, x) > 0)
 			if (Randomizer.getBoolean(chance))
 				return true;
 		return false;
@@ -255,60 +269,61 @@ public class Crowd {
 
 	/**
 	 * checks for human to human transmition
-	 * @param x position
-	 * @param y position
+	 * 
+	 * @param x        position
+	 * @param y        position
 	 * @param measures whether human takes measures
 	 * @return true if should get infected from nearby human
 	 */
-	public static boolean humanTransmition(int x, int y, boolean measures) {
+	public static boolean humanTransmition(int x, int y, boolean measures, int j) {
 
 		double chance = inf;
 		if (measures)
 			chance /= 9; // protective measures lower chance of infection
 		try {
-			if (room.isOccupied(y - 1, x + 1) == 2)
+			if (room[j].isOccupied(y - 1, x + 1) == 2)
 				if (Randomizer.getBoolean(chance))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y, x + 1) == 2)
+			if (room[j].isOccupied(y, x + 1) == 2)
 				if (Randomizer.getBoolean(chance))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y + 1, x + 1) == 2)
+			if (room[j].isOccupied(y + 1, x + 1) == 2)
 				if (Randomizer.getBoolean(chance))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y - 1, x) == 2)
+			if (room[j].isOccupied(y - 1, x) == 2)
 				if (Randomizer.getBoolean(chance))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y + 1, x) == 2)
+			if (room[j].isOccupied(y + 1, x) == 2)
 				if (Randomizer.getBoolean(chance))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y - 1, x - 1) == 2)
+			if (room[j].isOccupied(y - 1, x - 1) == 2)
 				if (Randomizer.getBoolean(chance))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y, x - 1) == 2)
+			if (room[j].isOccupied(y, x - 1) == 2)
 				if (Randomizer.getBoolean(chance))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			if (room.isOccupied(y + 1, x - 1) == 2)
+			if (room[j].isOccupied(y + 1, x - 1) == 2)
 				if (Randomizer.getBoolean(chance))
 					return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
