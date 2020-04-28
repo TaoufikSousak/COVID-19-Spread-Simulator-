@@ -11,12 +11,13 @@ package tsousa01.hw6;
 public class Crowd {
 
 	private Human[] humans;
-	private static Room room;
+	private static Room[] room;
 	private double howLikelyToMove;
 	private double fatal;
 	private static double inf;
 	private int duration;
 
+	private int hmRooms; //how many rooms
 	/**
 	 * The only constructor, decides where to place each human, creates them and
 	 * places them.
@@ -32,17 +33,27 @@ public class Crowd {
 	 * @param infectius       how inectius is the virus
 	 * @param caref           how many people take protective measures
 	 */
-	public Crowd(int duration, int width, int length, int people, int howLikelyToMove, int sick, int fatal,
-			int infectius, int caref) {
-		room = new Room(width, length, duration, infectius);
-		humans = new Human[people];
+	public Crowd(int duration, int[] width, int[] length, int[] people, int howLikelyToMove, int sick, int fatal,
+			int infectius, int caref,int hmRooms) {
+		
+		for(int i=0; i<hmRooms; i++)
+		room[i] = new Room(width[i], length[i], duration, infectius);
+		
+		int totalPeople=0;		//calculate total of people in the simulation
+		for(int i=0; i<hmRooms; i++)
+			totalPeople+=people[i];
+		
+		
+		humans = new Human[totalPeople];
 		this.howLikelyToMove = (double) howLikelyToMove / 100;
 		int xpos = 0;
 		int ypos = 0;
 		this.fatal = (double) fatal / 100;
 		this.inf = (double) infectius / 100;
 		this.duration = duration;
+		
 		// decide where to place human
+		
 		for (int i = 0; i < people; i++) {
 			do {
 				xpos = (int) (Math.random() * ((width)));
