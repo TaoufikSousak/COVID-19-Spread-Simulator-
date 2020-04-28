@@ -35,8 +35,8 @@ public class SimulationDriver {
 			input = scan.nextLine();
 			try {
 				cities = Integer.parseInt(input);
-				if (cities < 0) {
-					throw new NotPossibleAmountException("Must be positive");
+				if (cities < 1) {
+					throw new NotPossibleAmountException("Must be grater than 0");
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("Must be a positive integer");
@@ -228,7 +228,7 @@ public class SimulationDriver {
 			// get width
 			do {
 				error = false;
-				System.out.print("Give the width for city" + (i + 1) + ": ");
+				System.out.print("Give the width for city " + (i + 1) + ": ");
 				input = scan.nextLine();
 				try {
 					width[i] = Integer.parseInt(input);
@@ -290,7 +290,7 @@ public class SimulationDriver {
 					}
 				} while (error);
 				System.out.println();
-				
+
 				// get number of initially sick people
 				do {
 					error = false;
@@ -312,7 +312,7 @@ public class SimulationDriver {
 				} while (error);
 				System.out.println();
 
-				//get amount of airports
+				// get amount of airports
 				do {
 					error = false;
 					System.out.print("How many airports does city " + (i + 1) + " have? ");
@@ -338,6 +338,29 @@ public class SimulationDriver {
 				airports[i] = (2 * (length[i] + width[i])) / 10;
 			}
 
+		}
+
+		// same for all
+		System.out.println("\nThe disease is " + infect + "% contageous");
+		System.out.println("The disease is " + fatal + "% deadly");
+		System.out.println("People have a " + howLikelyToMove + " % probability of moving");
+		System.out.println("People will recover in " + duration + " simulation steps");
+		System.out.println("The simulation will run for " + time + " steps\n");
+
+		// different
+		if(cities==1)
+		System.out.println(cities + " city will be simulated\n");
+		else 
+			System.out.println(cities + " cities will be simulated\n");
+		for (int i = 0; i < cities; i++) {
+			System.out.println("City "+(i+1));
+			System.out.println("----------");
+			System.out.println("Size: "+length[i]+" x "+width[i]);
+			System.out.println("People: "+people[i]);
+			System.out.println("Initialy infected: "+sick[i]);
+			System.out.println("People who takes protective measures: "+careful[i]);
+			System.out.println("Airports: "+airports[i]);
+			System.out.println("\n");
 		}
 
 ////// old version ////		
@@ -587,7 +610,9 @@ public class SimulationDriver {
 //		System.out.println("Initialy infected people: " + sick);
 //
 //		System.out.println("The simulation will run for " + time + " steps");
-//// taou from here down
+
+		
+////// taou from here down ////// <<33
 
 //		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful);
 //
