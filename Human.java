@@ -1,4 +1,4 @@
-package tsousa01.hw5;
+package tsousa01.hw6;
 
 /**
  * 

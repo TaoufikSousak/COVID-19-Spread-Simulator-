@@ -1,4 +1,4 @@
-package tsousa01.hw5;
+package tsousa01.hw6;
 
 /**
  * The class responsible for connecting the humans wit the room, has move method
