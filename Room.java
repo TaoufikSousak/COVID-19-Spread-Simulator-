@@ -46,37 +46,46 @@ public class Room {
 		this.drawGrid();
 	}
 
+	/**
+	 * sets port array in random edge positions to ports, an integer that refers to where the port leads.
+	 * 
+	 * @param howManyPorts this rooms has
+	 * @param howManyRooms the simulation has
+	 * @param thisRoomNumber number of this room 
+	 */
 	public void assignPorts(int howManyPorts, int howManyRooms, int thisRoomNumber) {
 
 		int xpos = 0, ypos = 0;
 		int whereTo = 0;
 
-		do { // decide where port leads
-			whereTo = Randomizer.getInteger(howManyRooms);
-		} while (whereTo == thisRoomNumber); // repeat if port leads to same city
+		for (int i = 0; i < howManyRooms; i++) {//until all ports are assigned
+			do { // decide where port leads
+				whereTo = Randomizer.getInteger(howManyRooms);
+			} while (whereTo == thisRoomNumber); // repeat if port leads to same city
 
-		do {
-			// decide on which side of room the port will be
-			String side = "error";
-			while (side.length() > 1)
-				side = Randomizer.getDirection();
+			do {
+				// decide on which side of room the port will be
+				String side = "error";
+				while (side.length() > 1)
+					side = Randomizer.getDirection();
 
-			// decide where on said side port will be
-			if (side == "u" || side == "d") {
-				xpos = Randomizer.getInteger(width);
-				if (side == "u")
-					ypos = length;
-				else
-					ypos = 0;
-			} else {
-				ypos = Randomizer.getInteger(length);
-				if (side == "l")
-					xpos = 0;
-				else
-					xpos = width;
-			}
-		} while (this.port[xpos][ypos] != 0);// repeat if a port is already at this position
-
+				// decide where on said side port will be
+				if (side == "u" || side == "d") {
+					xpos = Randomizer.getInteger(width);
+					if (side == "u")
+						ypos = length;
+					else
+						ypos = 0;
+				} else {
+					ypos = Randomizer.getInteger(length);
+					if (side == "l")
+						xpos = 0;
+					else
+						xpos = width;
+				}
+			} while (this.port[xpos][ypos] != 0);// repeat if a port is already at this position
+			this.port[xpos][ypos] = whereTo;
+		}
 	}
 
 	/**
