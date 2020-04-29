@@ -18,6 +18,15 @@ public class Randomizer {
 		return false;
 	}
 	
+	/**
+	 * returns a random integer up to given integer
+	 * @param limit is up to what num int can be
+	 * @return a random int from 0 to parameter
+	 */
+	public static int getInteger(int limit) {
+		return  (int)(Math.random() * ((limit ) + 1));
+	}
+	
 	
 	/**
 	 * gives random direction with equal chance of each.
