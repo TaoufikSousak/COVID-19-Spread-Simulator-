@@ -36,7 +36,7 @@ public class Crowd {
 	 * @param caref           how many people take protective measures
 	 */
 	public Crowd(int duration, int[] width, int[] length, int[] people, int howLikelyToMove, int[] sick, int fatal,
-			int infectius, int[] caref, int hmRooms) {
+			int infectius, int[] caref, int hmRooms, int[] ports) {
 
 		cities = hmRooms;
 
@@ -58,6 +58,10 @@ public class Crowd {
 		this.inf = (double) infectius / 100;
 		this.duration = duration;
 
+		for(int i=0; i<cities; i++)
+			room[i].assignPorts(ports[i], cities, i);
+		
+		
 		// decide where to place human
 		for (int j = 0; j < cities; j++) // for every room
 			for (int i = 0; i < people[j]; i++) {

@@ -66,22 +66,22 @@ public class Room {
 			do {
 				// decide on which side of room the port will be
 				String side = "error";
-				while (side.length() > 1)
+				while (side.length() != 1)
 					side = Randomizer.getDirection();
 
 				// decide where on said side port will be
 				if (side == "u" || side == "d") {
-					xpos = Randomizer.getInteger(width);
+					xpos = Randomizer.getInteger(width-1);
 					if (side == "u")
-						ypos = length;
+						ypos = length-1;
 					else
 						ypos = 0;
 				} else {
-					ypos = Randomizer.getInteger(length);
+					ypos = Randomizer.getInteger(length-1);
 					if (side == "l")
 						xpos = 0;
 					else
-						xpos = width;
+						xpos = width-1;
 				}
 			} while (this.port[xpos][ypos] != 0);// repeat if a port is already at this position
 			this.port[xpos][ypos] = whereTo;

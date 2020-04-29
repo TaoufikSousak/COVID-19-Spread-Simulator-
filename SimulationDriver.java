@@ -612,7 +612,7 @@ public class SimulationDriver {
 //		System.out.println("The simulation will run for " + time + " steps");
 
 ///////////////////
-		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful, cities);
+		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful, cities, airports);
 
 		int toDraw = 0;
 
