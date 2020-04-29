@@ -130,44 +130,44 @@ public class Crowd {
 							if (humans[i][j].getYpos() != room[j].getLength() - 1)
 								newypos++;
 							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
-								destination = (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos())-1);
+								destination = (room[j].getPort(newxpos, newypos)-1);
 
 						if (direction.contains("d"))
 							if (humans[i][j].getYpos() != 0)
 								newypos--;
 							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
-								destination = (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos())-1);
+								destination = (room[j].getPort(newxpos, newypos)-1);
 
 						if (direction.contains("r"))
 							if (humans[i][j].getXpos() != room[j].getWidth() - 1)
 								newxpos++;
 							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
-								destination = (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos())-1);
+								destination = (room[j].getPort(newxpos, newypos)-1);
 
 						if (direction.contains("l"))
 							if (humans[i][j].getXpos() != 0)
 								newxpos--;
 							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
-								destination = (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos())-1);
+								destination = (room[j].getPort(newxpos, newypos)-1);
 
-					} while (room[j].isOccupied(newypos, newxpos) != 0);
+					} while (room[j].isOccupied(newypos, newxpos) != 0 || j!=destination );
 
-					if (destination == j) {
+				//	if (destination == j) {
 						humans[i][j].moveTo(newxpos, newypos);
-						this.updateStatus(i, newxpos, newypos, destination);
-					} else {
-						this.travel(i, j, destination);
-					}
+						this.updateStatus(i, newxpos, newypos, j);
+				//	} else {
+				//		this.travel(i, j, destination);
+				//	}
 				}
 			}
 
 			room[toDraw].drawGrid();
 		}
-//		try {
-//			Thread.sleep(50); // wait a second between every move to represent time passing
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			Thread.sleep(50); // wait a second between every move to represent time passing
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void travel(int i, int j, int destination) {
@@ -180,8 +180,7 @@ public class Crowd {
 		} while (room[destination].isOccupied(ypos, xpos) != 0);
 		
 		
-		room[destination].occupy(ypos, xpos,
-				1);
+		room[destination].occupy(ypos, xpos,1);
 		room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
 		
 		humans[i][destination] = humans[i][j];
