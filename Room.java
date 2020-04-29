@@ -118,6 +118,12 @@ public class Room {
 		return length;
 	}
 	
+	/**
+	 * 
+	 * @param x position
+	 * @param y position 
+	 * @return port at given position 
+	 */
 	public int getPort(int x, int y) {
 		return port[x][y];
 	}

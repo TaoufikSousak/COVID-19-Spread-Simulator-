@@ -58,10 +58,9 @@ public class Crowd {
 		this.inf = (double) infectius / 100;
 		this.duration = duration;
 
-		for(int i=0; i<cities; i++)
+		for (int i = 0; i < cities; i++)
 			room[i].assignPorts(ports[i], cities, i);
-		
-		
+
 		// decide where to place human
 		for (int j = 0; j < cities; j++) // for every room
 			for (int i = 0; i < people[j]; i++) {
@@ -95,7 +94,6 @@ public class Crowd {
 	 */
 	public void move(int toDraw) {
 
-
 		for (int j = 0; j < cities; j++) {// for every room
 
 			for (int i = 0; i < people[j]; i++) {
@@ -110,8 +108,9 @@ public class Crowd {
 					// choose new available position
 					do {
 						// check if trapped
-						if (noPossibleMove(humans[i][j].getXpos(), humans[i][j].getYpos(), j))
-							break;
+						if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) != 0) //dont check for trapped if on a port
+							if (noPossibleMove(humans[i][j].getXpos(), humans[i][j].getYpos(), j))
+								break;
 
 						newxpos = humans[i][j].getXpos();
 						newypos = humans[i][j].getYpos();
@@ -133,8 +132,7 @@ public class Crowd {
 					this.updateStatus(i, newxpos, newypos, j);
 				}
 			}
-			
-			
+
 			room[toDraw].drawGrid();
 		}
 		try {
@@ -209,8 +207,6 @@ public class Crowd {
 	 * @return true if human is trapped
 	 */
 	public static boolean noPossibleMove(int x, int y, int j) {
-		
-		if()
 
 		int cnt = 0;
 		try {
