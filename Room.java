@@ -11,6 +11,8 @@ public class Room {
 	private int duration;
 	private double inf;
 	private boolean measures[][];
+	
+	private int port[][];	//0=not an port, otherwise number represents to which city it leads
 
 	/**
 	 * 
@@ -24,6 +26,9 @@ public class Room {
 		this.length = length;
 		occupied = new int[length][width];
 		infected = new int[length][width];
+		
+		port = new int[length][width];
+		
 		measures= new boolean[length][width];
 		this.duration=duration;
 		this.inf=(double) infectious/100;
@@ -38,6 +43,14 @@ public class Room {
 		//setup of grid
 		this.gridSetup();
 		this.drawGrid();
+	}
+	
+	public void assignPorts(int howManyPorts) {
+		
+		for (int i=0; i<howManyPorts; i++)
+			
+		
+		
 	}
 
 	/**
