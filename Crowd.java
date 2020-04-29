@@ -19,7 +19,9 @@ public class Crowd {
 
 	private int cities; // how many rooms
 	private int[] people;
-
+	private int[] width;
+	private int[] length;
+	
 	/**
 	 * The only constructor, decides where to place each human, creates them and
 	 * places them.
@@ -38,6 +40,8 @@ public class Crowd {
 	public Crowd(int duration, int[] width, int[] length, int[] people, int howLikelyToMove, int[] sick, int fatal,
 			int infectius, int[] caref, int hmRooms, int[] ports) {
 
+		this.width=width;
+		this.length=length;
 		cities = hmRooms;
 
 		this.people = people;
@@ -96,6 +100,9 @@ public class Crowd {
 
 		for (int j = 0; j < cities; j++) {// for every room
 
+			int destination = 0; // to what city human should go
+			destination = j;
+
 			for (int i = 0; i < people[j]; i++) {
 
 				int newxpos = humans[i][j].getXpos();
@@ -108,7 +115,9 @@ public class Crowd {
 					// choose new available position
 					do {
 						// check if trapped
-						if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) != 0) //dont check for trapped if on a port
+						if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) != 0) // dont check for
+																									// trapped if on a
+																									// port
 							if (noPossibleMove(humans[i][j].getXpos(), humans[i][j].getYpos(), j))
 								break;
 
@@ -117,29 +126,67 @@ public class Crowd {
 
 						direction = Randomizer.getDirection();
 
-						if (direction.contains("u") && humans[i][j].getYpos() != room[j].getLength() - 1)
-							newypos++;
-						if (direction.contains("d") && humans[i][j].getYpos() != 0)
-							newypos--;
-						if (direction.contains("r") && humans[i][j].getXpos() != room[j].getWidth() - 1)
-							newxpos++;
-						if (direction.contains("l") && humans[i][j].getXpos() != 0)
-							newxpos--;
+						if (direction.contains("u"))
+							if (humans[i][j].getYpos() != room[j].getLength() - 1)
+								newypos++;
+							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
+								destination = (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos())-1);
+
+						if (direction.contains("d"))
+							if (humans[i][j].getYpos() != 0)
+								newypos--;
+							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
+								destination = (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos())-1);
+
+						if (direction.contains("r"))
+							if (humans[i][j].getXpos() != room[j].getWidth() - 1)
+								newxpos++;
+							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
+								destination = (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos())-1);
+
+						if (direction.contains("l"))
+							if (humans[i][j].getXpos() != 0)
+								newxpos--;
+							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
+								destination = (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos())-1);
+
 					} while (room[j].isOccupied(newypos, newxpos) != 0);
 
-					humans[i][j].moveTo(newxpos, newypos);
-
-					this.updateStatus(i, newxpos, newypos, j);
+					if (destination == j) {
+						humans[i][j].moveTo(newxpos, newypos);
+						this.updateStatus(i, newxpos, newypos, destination);
+					} else {
+						this.travel(i, j, destination);
+					}
 				}
 			}
 
 			room[toDraw].drawGrid();
 		}
-		try {
-			Thread.sleep(150); // wait a second between every move to represent time passing
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(50); // wait a second between every move to represent time passing
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+	}
+
+	public void travel(int i, int j, int destination) {
+		int xpos;
+		int ypos;
+		do {
+			xpos = (int) (Math.random() * ((width[destination])));
+			ypos = (int) (Math.random() * ((length[destination])));
+
+		} while (room[destination].isOccupied(ypos, xpos) != 0);
+		
+		
+		room[destination].occupy(ypos, xpos,
+				1);
+		room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
+		
+		humans[i][destination] = humans[i][j];
+		humans[i][j] = new DeceasedHuman(humans[i][j].getXpos(), humans[i][j].getYpos());
+
 	}
 
 	/**
