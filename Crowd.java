@@ -209,6 +209,8 @@ public class Crowd {
 	 * @return true if human is trapped
 	 */
 	public static boolean noPossibleMove(int x, int y, int j) {
+		
+		if()
 
 		int cnt = 0;
 		try {
