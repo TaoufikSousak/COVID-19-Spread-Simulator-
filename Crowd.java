@@ -124,6 +124,7 @@ public class Crowd {
 						newxpos = humans[i][j].getXpos();
 						newypos = humans[i][j].getYpos();
 
+						destination=j;
 						direction = Randomizer.getDirection();
 
 						if (direction.contains("u"))
@@ -150,14 +151,17 @@ public class Crowd {
 							else if (room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos()) )
 								destination = (room[j].getPort(newxpos, newypos));
 
-					} while (room[j].isOccupied(newypos, newxpos) != 0  );
+					} while (room[j].isOccupied(newypos, newxpos) != 0);
+					
 
-				//	if (destination == j) {
+					if (destination == j) {
 						humans[i][j].moveTo(newxpos, newypos);
 						this.updateStatus(i, newxpos, newypos, j);
-				//	} else {
-				//		this.travel(i, j, destination);
-				//	}
+					} else {
+						this.travel(i, j, destination);
+						this.updateStatus(i, newxpos, newypos, j);
+
+					}
 				}
 			}
 
@@ -183,7 +187,8 @@ public class Crowd {
 		room[destination].occupy(ypos, xpos,1);
 		room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
 		
-		humans[i][destination] = humans[i][j];
+		humans[i][destination] = new HealthyHuman(humans[i][j].getXpos(), humans[i][j].getYpos(),
+				humans[i][j].takesMeasures());
 		humans[i][j] = new DeceasedHuman(humans[i][j].getXpos(), humans[i][j].getYpos());
 
 	}
@@ -197,6 +202,7 @@ public class Crowd {
 	 * @param newypos
 	 */
 	public void updateStatus(int i, int newxpos, int newypos, int j) {
+
 		// checks if infected human is resady to recover, recoveres or kills if its time
 		if (humans[i][j] instanceof InfectedHuman)
 			if (humans[i][j].getTimeLeft() == 0)

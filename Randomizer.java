@@ -25,7 +25,7 @@ public class Randomizer {
 	 * @return a random int from 0 to parameter
 	 */
 	public static int getInteger(int limit) {
-		return  (int)(Math.random() * ((limit ) + 1));
+		return  (int)(Math.random() * ((limit ) ));
 	}
 	
 	
