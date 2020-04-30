@@ -62,9 +62,11 @@ public class Crowd {
 		this.inf = (double) infectius / 100;
 		this.duration = duration;
 
-		for (int i = 0; i < cities; i++)
+		for (int i = 0; i < cities; i++) {
+			System.out.println("city: " + i + " has " + ports[i] + " ports");
 			room[i].assignPorts(ports[i], cities, i);
-
+		}
+		
 		// decide where to place human
 		for (int j = 0; j < cities; j++) // for every room
 			for (int i = 0; i < people[j]; i++) {
@@ -100,8 +102,7 @@ public class Crowd {
 
 		for (int j = 0; j < cities; j++) {// for every room
 
-			int destination = 0; // to what city human should go
-			destination = j;
+			int destination = j; // to what city human should go
 
 			for (int i = 0; i < people[j]; i++) {
 
@@ -150,7 +151,7 @@ public class Crowd {
 							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
 								destination = (room[j].getPort(newxpos, newypos)-1);
 
-					} while (room[j].isOccupied(newypos, newxpos) != 0 || j!=destination );
+					} while (room[j].isOccupied(newypos, newxpos) != 0  );
 
 				//	if (destination == j) {
 						humans[i][j].moveTo(newxpos, newypos);
@@ -164,7 +165,7 @@ public class Crowd {
 			room[toDraw].drawGrid();
 		}
 		try {
-			Thread.sleep(50); // wait a second between every move to represent time passing
+			Thread.sleep(90); // wait a second between every move to represent time passing
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

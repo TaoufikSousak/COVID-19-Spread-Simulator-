@@ -12,8 +12,8 @@ public class Room {
 	private double inf;
 	private boolean measures[][];
 
-	private int port[][]; // 0=not an port, otherwise number represents to which city it leads
-
+	private int port[][]; // number represents to which city it leads
+	private boolean hasPort[][];
 	/**
 	 * 
 	 * @param width      of grid
@@ -29,7 +29,8 @@ public class Room {
 		infected = new int[length][width];
 
 		port = new int[length][width];
-
+		hasPort= new boolean[length][width];
+		
 		measures = new boolean[length][width];
 		this.duration = duration;
 		this.inf = (double) infectious / 100;
@@ -58,9 +59,9 @@ public class Room {
 		int xpos = 0, ypos = 0;
 		int whereTo = 0;
 
-		for (int i = 0; i < howManyRooms; i++) {//until all ports are assigned
+		for (int i = 0; i < howManyPorts; i++) {//until all ports are assigned
 			do { // decide where port leads
-				whereTo = Randomizer.getInteger(howManyRooms);
+				whereTo = Randomizer.getInteger(howManyRooms);  //-1 because arrays start at 0
 			} while (whereTo == thisRoomNumber); // repeat if port leads to same city
 
 			do {
@@ -83,8 +84,9 @@ public class Room {
 					else
 						xpos = width-1;
 				}
-			} while (this.port[xpos][ypos] != 0);// repeat if a port is already at this position
+			} while (this.hasPort[xpos][ypos] == true);// repeat if a port is already at this position
 			this.port[xpos][ypos] = whereTo;
+			this.hasPort[xpos][ypos]=true;
 		}
 	}
 
@@ -179,6 +181,16 @@ public class Room {
 	}
 
 	/**
+	 * getter for hasPort
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean hasPort(int x, int y) {
+		return hasPort[x][y];
+	}
+	
+	/**
 	 * 
 	 * @param y      position
 	 * @param x      position
@@ -227,11 +239,23 @@ public class Room {
 		// draw infected spaces and people
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
-				if (isInfected((int) y, (int) x) > 0) {
+				if (isInfected((int) y, (int) x) > 0 && this.hasPort((int) y, (int) x)==false) {
 					StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE.brighter());
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 					this.disinfect((int) y, (int) x);
 				}
+				
+				////////////temporary port drawing
+				
+				if (this.getPort((int) y, (int) x) > 0) {
+					StdDraw.setPenColor(StdDraw.DARK_GRAY.brighter().brighter().brighter());
+					StdDraw.filledRectangle(x, y, 0.5, 0.5);
+				}
+				
+				////////////////////////////////////
+				
+				
+				
 				// pen radius is depended on the smallest of width and length
 				if (length > width)
 					rad = length;
