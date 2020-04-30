@@ -63,7 +63,6 @@ public class Crowd {
 		this.duration = duration;
 
 		for (int i = 0; i < cities; i++) {
-			System.out.println("city: " + i + " has " + ports[i] + " ports");
 			room[i].assignPorts(ports[i], cities, i);
 		}
 		
@@ -116,7 +115,7 @@ public class Crowd {
 					// choose new available position
 					do {
 						// check if trapped
-						if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) != 0) // dont check for
+						if (room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos())) // dont check for
 																									// trapped if on a
 																									// port
 							if (noPossibleMove(humans[i][j].getXpos(), humans[i][j].getYpos(), j))
@@ -130,26 +129,26 @@ public class Crowd {
 						if (direction.contains("u"))
 							if (humans[i][j].getYpos() != room[j].getLength() - 1)
 								newypos++;
-							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
-								destination = (room[j].getPort(newxpos, newypos)-1);
+							else if (room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos()))
+								destination = (room[j].getPort(newxpos, newypos));
 
 						if (direction.contains("d"))
 							if (humans[i][j].getYpos() != 0)
 								newypos--;
-							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
-								destination = (room[j].getPort(newxpos, newypos)-1);
+							else if (room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos()))
+								destination = (room[j].getPort(newxpos, newypos));
 
 						if (direction.contains("r"))
 							if (humans[i][j].getXpos() != room[j].getWidth() - 1)
 								newxpos++;
-							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
-								destination = (room[j].getPort(newxpos, newypos)-1);
+							else if (room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos()))
+								destination = (room[j].getPort(newxpos, newypos));
 
 						if (direction.contains("l"))
 							if (humans[i][j].getXpos() != 0)
 								newxpos--;
-							else if (room[j].getPort(humans[i][j].getXpos(), humans[i][j].getYpos()) > 0)
-								destination = (room[j].getPort(newxpos, newypos)-1);
+							else if (room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos()) )
+								destination = (room[j].getPort(newxpos, newypos));
 
 					} while (room[j].isOccupied(newypos, newxpos) != 0  );
 

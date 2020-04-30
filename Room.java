@@ -247,7 +247,7 @@ public class Room {
 				
 				////////////temporary port drawing
 				
-				if (this.getPort((int) y, (int) x) > 0) {
+				if (this.hasPort((int) y, (int) x)) {
 					StdDraw.setPenColor(StdDraw.DARK_GRAY.brighter().brighter().brighter());
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 				}
