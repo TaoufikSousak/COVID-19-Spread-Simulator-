@@ -176,6 +176,9 @@ public class Crowd {
 	}
 
 	public void travel(int i, int j, int destination) {
+		System.out.println("entered TRAVEL");
+		humans[i][j] = new DeceasedHuman(humans[i][j].getXpos(), humans[i][j].getYpos() );
+
 		int xpos;
 		int ypos;
 		do {
@@ -187,9 +190,18 @@ public class Crowd {
 		room[destination].occupy(ypos, xpos, 1);
 		room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
 
-//		humans[humans[i].length][destination] = new HealthyHuman(humans[i][j].getXpos(), humans[i][j].getYpos(),
-//				humans[i][j].takesMeasures());
-//		humans[i][j] = null;
+		int avail=0;
+		
+		for(int x=0; x<humans.length;x++)
+			if(humans[x][destination]==null) {
+				System.out.println("entered***********");
+				avail=x;
+				break;
+			}
+				
+		
+		humans[avail][destination] = new HealthyHuman(humans[i][j].getXpos(), humans[i][j].getYpos(),
+				humans[i][j].takesMeasures());
 
 	}
 

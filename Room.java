@@ -244,7 +244,7 @@ public class Room {
 		// draw infected spaces and people
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
-				if (isInfected((int) y, (int) x) > 0 && this.hasPort((int) y, (int) x) == false) {
+				if (isInfected((int) y, (int) x) > 0 && this.hasPort((int) x, (int) y) == false) {
 					StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE.brighter());
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 					this.disinfect((int) y, (int) x);
