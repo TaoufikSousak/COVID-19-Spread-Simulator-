@@ -13,7 +13,8 @@ abstract class Human implements Movable {
 	private int xpos;
 	private int ypos;
 	private boolean measures;
-
+	private static int total=0;
+	
 	/**
 	 * 
 	 * @param xpos     x-axis position
@@ -24,6 +25,12 @@ abstract class Human implements Movable {
 		this.xpos = xpos;
 		this.ypos = ypos;
 		this.measures = measures;
+		total++;
+	}
+	
+	
+	public static int getTotalHumans() {
+		return total;
 	}
 
 	/**

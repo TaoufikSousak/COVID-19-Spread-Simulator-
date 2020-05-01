@@ -54,7 +54,7 @@ public class Crowd {
 		for (int i = 0; i < cities; i++)
 			totalPeople += people[i];
 
-		humans = new Human[totalPeople][cities];
+		humans = new Human[1000][cities];
 		this.howLikelyToMove = (double) howLikelyToMove / 100;
 		int xpos = 0;
 		int ypos = 0;
@@ -115,7 +115,7 @@ public class Crowd {
 					// choose new available position
 					do {
 						// check if trapped
-						if (room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos())) // dont check for
+						if (!room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos())) // dont check for
 																									// trapped if on a
 																									// port
 							if (noPossibleMove(humans[i][j].getXpos(), humans[i][j].getYpos(), j))
@@ -187,7 +187,7 @@ public class Crowd {
 		room[destination].occupy(ypos, xpos,1);
 		room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
 		
-		humans[i][destination] = new HealthyHuman(humans[i][j].getXpos(), humans[i][j].getYpos(),
+		humans[humans[i].length][destination] = new HealthyHuman(humans[i][j].getXpos(), humans[i][j].getYpos(),
 				humans[i][j].takesMeasures());
 		humans[i][j] = new DeceasedHuman(humans[i][j].getXpos(), humans[i][j].getYpos());
 
