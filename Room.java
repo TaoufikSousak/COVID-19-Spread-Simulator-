@@ -29,8 +29,8 @@ public class Room {
 		occupied = new int[length][width];
 		infected = new int[length][width];
 
-		port = new int[length][width];
-		hasPort = new boolean[length][width];
+		port = new int[width][length];
+		hasPort = new boolean[width][length];
 
 		measures = new boolean[length][width];
 		this.duration = duration;
@@ -252,7 +252,7 @@ public class Room {
 
 				//////////// temporary port drawing
 
-				if (this.hasPort((int) y, (int) x)) {
+				if (this.hasPort((int) x, (int) y)) {
 					StdDraw.setPenColor(StdDraw.DARK_GRAY.brighter().brighter().brighter());
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 				}
