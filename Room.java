@@ -14,6 +14,7 @@ public class Room {
 
 	private int port[][]; // number represents to which city it leads
 	private boolean hasPort[][];
+
 	/**
 	 * 
 	 * @param width      of grid
@@ -29,8 +30,8 @@ public class Room {
 		infected = new int[length][width];
 
 		port = new int[length][width];
-		hasPort= new boolean[length][width];
-		
+		hasPort = new boolean[length][width];
+
 		measures = new boolean[length][width];
 		this.duration = duration;
 		this.inf = (double) infectious / 100;
@@ -48,20 +49,23 @@ public class Room {
 	}
 
 	/**
-	 * sets port array in random edge positions to ports, an integer that refers to where the port leads.
+	 * sets port array in random edge positions to ports, an integer that refers to
+	 * where the port leads.
 	 * 
-	 * @param howManyPorts this rooms has
-	 * @param howManyRooms the simulation has
-	 * @param thisRoomNumber number of this room 
+	 * @param howManyPorts   this rooms has
+	 * @param howManyRooms   the simulation has
+	 * @param thisRoomNumber number of this room
 	 */
 	public void assignPorts(int howManyPorts, int howManyRooms, int thisRoomNumber) {
 
 		int xpos = 0, ypos = 0;
-		int whereTo = 0;
 
+		int whereTo = 0;
+		
 		for (int i = 0; i < howManyPorts; i++) {//until all ports are assigned
+
 			do { // decide where port leads
-				whereTo = Randomizer.getInteger(howManyRooms);  //-1 because arrays start at 0
+				whereTo ++;  //-1 because arrays start at 0
 			} while (whereTo == thisRoomNumber); // repeat if port leads to same city
 
 			do {
@@ -119,12 +123,12 @@ public class Room {
 	public int getLength() {
 		return length;
 	}
-	
+
 	/**
 	 * 
 	 * @param x position
-	 * @param y position 
-	 * @return port at given position 
+	 * @param y position
+	 * @return port at given position
 	 */
 	public int getPort(int x, int y) {
 		return port[x][y];
@@ -182,6 +186,7 @@ public class Room {
 
 	/**
 	 * getter for hasPort
+	 * 
 	 * @param x
 	 * @param y
 	 * @return
@@ -189,7 +194,7 @@ public class Room {
 	public boolean hasPort(int x, int y) {
 		return hasPort[x][y];
 	}
-	
+
 	/**
 	 * 
 	 * @param y      position
@@ -239,23 +244,21 @@ public class Room {
 		// draw infected spaces and people
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
-				if (isInfected((int) y, (int) x) > 0 && this.hasPort((int) y, (int) x)==false) {
+				if (isInfected((int) y, (int) x) > 0 && this.hasPort((int) y, (int) x) == false) {
 					StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE.brighter());
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 					this.disinfect((int) y, (int) x);
 				}
-				
-				////////////temporary port drawing
-				
+
+				//////////// temporary port drawing
+
 				if (this.hasPort((int) y, (int) x)) {
 					StdDraw.setPenColor(StdDraw.DARK_GRAY.brighter().brighter().brighter());
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 				}
-				
+
 				////////////////////////////////////
-				
-				
-				
+
 				// pen radius is depended on the smallest of width and length
 				if (length > width)
 					rad = length;

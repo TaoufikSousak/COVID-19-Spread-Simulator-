@@ -154,8 +154,8 @@ public class Crowd {
 					} while (room[j].isOccupied(newypos, newxpos) != 0);
 					
 
+					humans[i][j].moveTo(newxpos, newypos);
 					if (destination == j) {
-						humans[i][j].moveTo(newxpos, newypos);
 						this.updateStatus(i, newxpos, newypos, j);
 					} else {
 						this.travel(i, j, destination);
