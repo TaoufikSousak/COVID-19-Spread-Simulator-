@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import edu.princeton.cs.introcs.StdDraw;
 
-public class Room{
+public class Room {
 
 	private int width;
 	private int length;
@@ -14,6 +14,8 @@ public class Room{
 	private double inf;
 	private boolean measures[][];
 	private Color col;
+	private static Color colors[];
+	private static int count = 0;
 
 	private int port[][]; // number represents to which city it leads
 	private boolean hasPort[][];
@@ -26,7 +28,7 @@ public class Room{
 	 * @param infectious how likely is for people to contract the virus from other
 	 *                   infected people or spaces
 	 */
-	public Room(int width, int length, int duration, int infectious) {
+	public Room(int width, int length, int duration, int infectious, int cities) {
 		this.width = width;
 		this.length = length;
 		occupied = new int[length][width];
@@ -51,19 +53,21 @@ public class Room{
 		} while (!compatible(StdDraw.WHITE, col) && !compatible(StdDraw.LIGHT_GRAY, col)
 				&& !compatible(StdDraw.BLUE, col) && !compatible(StdDraw.RED, col) && !compatible(StdDraw.GREEN, col)
 				&& !compatible(StdDraw.BOOK_LIGHT_BLUE, col) && !compatible(StdDraw.PRINCETON_ORANGE.brighter(), col));
+		if (count == 0)
+			colors = new Color[cities];
+		colors[count] = col;
+		count++;
 		// setup of grid
 		this.gridSetup();
 		this.drawGrid();
 	}
 
-	
-	
 	public Color getColor() {
 		return this.col;
 	}
-	
+
 	/**
-	 *helping methods to assign colors.
+	 * helping methods to assign colors.
 	 * 
 	 * @param c color that we want the lum of.
 	 * @return the luminance
@@ -100,39 +104,46 @@ public class Room{
 
 		int whereTo = 0;
 
-		for (int i = 0; i < howManyPorts; i++) {// until all ports are assigned
+		int randnum = 0;
 
-			do { // decide where port leads
-				whereTo = Randomizer.getInteger(howManyRooms);
-			} while (whereTo == thisRoomNumber); // repeat if port leads to same city
+//		for (int i = 0; i < howManyPorts; i++) {// until all ports are assigned
+//
+//			do { // decide where port leads
+//				whereTo = Randomizer.getInteger(howManyRooms);
+//			} while (whereTo == thisRoomNumber); // repeat if port leads to same city
+//
+//			do {
+//				// decide on which side of room the port will be
+//				String side = "error";
+//				while (side.length() != 1)
+//					side = Randomizer.getDirection();
+//
+//				// decide where on said side port will be
+//				if (side == "u" || side == "d") {
+//					xpos = Randomizer.getInteger(width - 1);
+//					if (side == "u")
+//						ypos = length - 1;
+//					else
+//						ypos = 0;
+//				} else {
+//					ypos = Randomizer.getInteger(length - 1);
+//					if (side == "l")
+//						xpos = 0;
+//					else
+//						xpos = width - 1;
+//				}
+//			} while (this.hasPort[xpos][ypos]);// repeat if a port is already at this position
+//			this.port[xpos][ypos] = whereTo;
+//			this.hasPort[xpos][ypos] = true;
 
-			do {
-				// decide on which side of room the port will be
-				String side = "error";
-				while (side.length() != 1)
-					side = Randomizer.getDirection();
-
-				// decide where on said side port will be
-				if (side == "u" || side == "d") {
-					xpos = Randomizer.getInteger(width - 1);
-					if (side == "u")
-						ypos = length - 1;
-					else
-						ypos = 0;
-				} else {
-					ypos = Randomizer.getInteger(length - 1);
-					if (side == "l")
-						xpos = 0;
-					else
-						xpos = width - 1;
-				}
-			} while (this.hasPort[xpos][ypos]);// repeat if a port is already at this position
-			this.port[xpos][ypos] = whereTo;
-			this.hasPort[xpos][ypos] = true;
+		while (howManyPorts != 0) {
+			
 		}
+
+//		}
+
 	}
 
-	
 	/**
 	 * 
 	 * @param y        position
@@ -292,7 +303,7 @@ public class Room{
 				//////////// temporary port drawing
 
 				if (this.hasPort((int) x, (int) y)) {
-					StdDraw.setPenColor(StdDraw.GRAY.brighter().brighter());
+					StdDraw.setPenColor(colors[getPort((int) x, (int) y)]);
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 				}
 

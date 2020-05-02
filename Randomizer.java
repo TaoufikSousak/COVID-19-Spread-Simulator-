@@ -19,7 +19,7 @@ public class Randomizer {
 	}
 	
 	/**
-	 * returns a random integer up to given integer (inclusive).
+	 * returns a random integer up to given integer (exclusive).
 	 * 
 	 * @param limit is up to what num int can be
 	 * @return a random int from 0 to parameter

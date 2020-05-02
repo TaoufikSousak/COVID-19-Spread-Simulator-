@@ -50,7 +50,7 @@ public class Crowd {
 		room = new Room[cities];
 
 		for (int i = 0; i < cities; i++) {
-			room[i] = new Room(width[i], length[i], duration, infectius);
+			room[i] = new Room(width[i], length[i], duration, infectius,cities);
 		}
 		int totalPeople = 0; // calculate total of people in the simulation
 		for (int i = 0; i < cities; i++)
