@@ -335,7 +335,7 @@ public class SimulationDriver {
 			} else {
 				sick[i] = 1;
 				careful[i] = (int) ((double) people[i] * 0.5);
-				airports[i] = ((2 * (length[i] + width[i])) / 10) + 1;
+				airports[i] = ((2 * (length[i] + width[i])) -4)/5 + 1;
 			}
 
 		}

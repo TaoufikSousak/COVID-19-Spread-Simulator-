@@ -100,12 +100,10 @@ public class Room {
 	 */
 	public void assignPorts(int howManyPorts, int howManyRooms, int thisRoomNumber) {
 
-		int xpos = 0, ypos = 0;
-
-		int whereTo = 0;
+		
 		int cnt = 0;
-		int twr = 0;
-		int hmtr = 0;
+		int toWhichRoom = 0;
+		int howManyToThisRoom = 0;
 
 		int temp = howManyPorts;
 
@@ -113,22 +111,22 @@ public class Room {
 
 		for (int c = howManyPorts; c > 0;) {
 			// System.out.println("loop1");
-			twr++;
-			hmtr = Randomizer.getInteger(temp);
+			toWhichRoom++;
+			howManyToThisRoom = Randomizer.getInteger(temp);
 
-			// if (hmtr==howManyPorts && howManyPorts!=1)
-			// hmtr--;
+			// if (howManyToThisRoom==howManyPorts && howManyPorts!=1)
+			// howManyToThisRoom--;
 
-			temp -= hmtr;
-			if (twr >= howManyRooms - 1)
-				twr = 0;
-			if (twr == thisRoomNumber)
-				twr++;
+			temp -= howManyToThisRoom;
+			if (toWhichRoom >= howManyRooms - 1)
+				toWhichRoom = 0;
+			if (toWhichRoom == thisRoomNumber)
+				toWhichRoom++;
 
-			if (hmtr == 0)
-				hmtr++;
+			if (howManyToThisRoom == 0)
+				howManyToThisRoom++;
 			cnt = 0;
-			while (cnt < hmtr) {
+			while (cnt < howManyToThisRoom) {
 				// System.out.println("loop2");
 				if (i == 0 && j < width - 1) {
 					j++;
@@ -143,7 +141,7 @@ public class Room {
 					i--;
 					System.out.println("i--");
 				}
-				this.port[j][i] = twr;
+				this.port[j][i] = toWhichRoom;
 				this.hasPort[j][i] = true;
 				cnt++;
 				c--;
