@@ -63,7 +63,7 @@ public class Room{
 	}
 	
 	/**
-	 * // helping methods to assign colors.
+	 *helping methods to assign colors.
 	 * 
 	 * @param c color that we want the lum of.
 	 * @return the luminance
@@ -292,8 +292,7 @@ public class Room{
 				//////////// temporary port drawing
 
 				if (this.hasPort((int) x, (int) y)) {
-					Color temcol=room[getPort((int) x, (int) y)].getColor();
-					StdDraw.setPenColor(StdDraw.temcol);
+					StdDraw.setPenColor(StdDraw.GRAY.brighter().brighter());
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 				}
 
