@@ -50,9 +50,9 @@ public class Room {
 		}
 		do {
 			col = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
-		} while (!compatible(StdDraw.WHITE, col) && !compatible(StdDraw.LIGHT_GRAY, col)
-				&& !compatible(StdDraw.BLUE, col) && !compatible(StdDraw.RED, col) && !compatible(StdDraw.GREEN, col)
-				&& !compatible(StdDraw.BOOK_LIGHT_BLUE, col) && !compatible(StdDraw.PRINCETON_ORANGE.brighter(), col));
+		} while (!compatible(StdDraw.WHITE, col) && !compatible(StdDraw.BLUE, col) && !compatible(StdDraw.RED, col)
+				&& !compatible(StdDraw.GREEN, col) && !compatible(StdDraw.BOOK_LIGHT_BLUE, col)
+				&& !compatible(StdDraw.PRINCETON_ORANGE.brighter(), col));
 		if (count == 0)
 			colors = new Color[cities];
 		colors[count] = col;
@@ -87,7 +87,7 @@ public class Room {
 	 * @return true if compatible
 	 */
 	private static boolean compatible(Color a, Color b) {
-		return Math.abs(lum(a) - lum(b)) >= 128.0;
+		return Math.abs(lum(a) - lum(b)) >= 160.0;
 	}
 
 	/**
@@ -120,9 +120,9 @@ public class Room {
 			for (int r = 0; r < checkList.length; r++)
 				if (checkList[r] == false) {
 					toWhichRoom = r;
-					break;}
+					break;
+				}
 
-			
 			checkList[toWhichRoom] = true;
 
 			howManyToThisRoom = Randomizer.getInteger(temp);
@@ -312,7 +312,7 @@ public class Room {
 		for (double y = 0.5; y < length; y++) {
 			for (double x = 0.5; x < width; x++) {
 				if (isInfected((int) y, (int) x) > 0 && this.hasPort((int) x, (int) y) == false) {
-					StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE.brighter());
+					StdDraw.setPenColor(StdDraw.ORANGE);
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 					this.disinfect((int) y, (int) x);
 				}
