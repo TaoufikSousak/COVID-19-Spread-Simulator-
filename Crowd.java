@@ -101,7 +101,6 @@ public class Crowd {
 	 */
 	public void move(int toDraw) {
 
-		int addedPeople=0;
 		int destination;
 		for (int j = 0; j < cities; j++) {// for every room
 
@@ -112,72 +111,75 @@ public class Crowd {
 				int newypos = humans[i][j].getYpos();
 				String direction = null;
 				// decide if human will move
-					if (Randomizer.getBoolean(howLikelyToMove) && !(humans[i][j] instanceof TraveledHuman)) {
-						room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
-						room[j].setMeasures(newypos, newxpos, false);
-						// choose new available position
-						do {
-							// check if trapped
-							if (!room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos())) // dont check for
-																									// trapped if on a
-																									// port
-								if (noPossibleMove(humans[i][j].getXpos(), humans[i][j].getYpos(), j))
-									break;
+				if (Randomizer.getBoolean(howLikelyToMove) && !(humans[i][j] instanceof TraveledHuman) && !(humans[i][j] instanceof DeceasedHuman)) {
+					room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
+					room[j].setMeasures(newypos, newxpos, false);
+					// choose new available position
+					do {
+						// check if trapped
+						if (!room[j].hasPort(humans[i][j].getXpos(), humans[i][j].getYpos())) // dont check for
+																								// trapped if on a
+																								// port
+							if (noPossibleMove(humans[i][j].getXpos(), humans[i][j].getYpos(), j))
+								break;
 
-							newxpos = humans[i][j].getXpos();
-							newypos = humans[i][j].getYpos();
+						newxpos = humans[i][j].getXpos();
+						newypos = humans[i][j].getYpos();
 
-							destination = j;
-							direction = Randomizer.getDirection();
+						destination = j;
+						direction = Randomizer.getDirection();
 
-							if (direction.contains("u"))
-								if (humans[i][j].getYpos() != room[j].getLength() - 1)
-									newypos++;
-								else if (room[j].hasPort(newxpos, newypos)) {
-									destination = (room[j].getPort(newxpos, newypos));
-									System.out.println("entered else if on U with j = " + j + " and destination = " + destination );
-									this.travel(i, j, destination);
-								}
-									
+						if (direction.contains("u"))
+							if (humans[i][j].getYpos() != room[j].getLength() - 1)
+								newypos++;
+							else if (room[j].hasPort(newxpos, newypos)) {
+								destination = (room[j].getPort(newxpos, newypos));
+								System.out.println(
+										"entered else if on U with j = " + j + " and destination = " + destination);
+								this.travel(i, j, destination);
+							}
 
-							if (direction.contains("d"))
-								if (humans[i][j].getYpos() != 0)
-									newypos--;
-								else if (room[j].hasPort(newxpos, newypos)) {
-									destination = (room[j].getPort(newxpos, newypos));
-									System.out.println("entered else if on D with j = " + j + " and destination = " + destination );
+						if (direction.contains("d"))
+							if (humans[i][j].getYpos() != 0)
+								newypos--;
+							else if (room[j].hasPort(newxpos, newypos)) {
+								destination = (room[j].getPort(newxpos, newypos));
+								System.out.println(
+										"entered else if on D with j = " + j + " and destination = " + destination);
 
-									this.travel(i, j, destination);
-								}
+								this.travel(i, j, destination);
+							}
 
-							if (direction.contains("r"))
-								if (humans[i][j].getXpos() != room[j].getWidth() - 1)
-									newxpos++;
-								else if (room[j].hasPort(newxpos, newypos)) {
-									destination = (room[j].getPort(newxpos, newypos));
-									System.out.println("entered else if on R with j = " + j + " and destination = " + destination );
+						if (direction.contains("r"))
+							if (humans[i][j].getXpos() != room[j].getWidth() - 1)
+								newxpos++;
+							else if (room[j].hasPort(newxpos, newypos)) {
+								destination = (room[j].getPort(newxpos, newypos));
+								System.out.println(
+										"entered else if on R with j = " + j + " and destination = " + destination);
 
-									this.travel(i, j, destination);
-								}
+								this.travel(i, j, destination);
+							}
 
-							if (direction.contains("l"))
-								if (humans[i][j].getXpos() != 0)
-									newxpos--;
-								else if (room[j].hasPort(newxpos, newypos)) {
-									destination = (room[j].getPort(newxpos, newypos));
-									System.out.println("entered else if on L with j = " + j + " and destination = " + destination );
+						if (direction.contains("l"))
+							if (humans[i][j].getXpos() != 0)
+								newxpos--;
+							else if (room[j].hasPort(newxpos, newypos)) {
+								destination = (room[j].getPort(newxpos, newypos));
+								System.out.println(
+										"entered else if on L with j = " + j + " and destination = " + destination);
 
-									this.travel(i, j, destination);
-								}
+								this.travel(i, j, destination);
+							}
 
-						} while (room[j].isOccupied(newypos, newxpos) != 0);
+					} while (room[j].isOccupied(newypos, newxpos) != 0);
 
-						if(!(humans[i][j] instanceof TraveledHuman)) {
+					if (!(humans[i][j] instanceof TraveledHuman)) {
 						humans[i][j].moveTo(newxpos, newypos);
 						this.updateStatus(i, newxpos, newypos, j);
-						}
 					}
-				
+				}
+
 			}
 			room[toDraw].drawGrid();
 		}
@@ -191,8 +193,7 @@ public class Crowd {
 	public void travel(int i, int j, int destination) {
 
 		System.out.println("entered TRAVEL: " + destination);
-		humans[i][j] = new TraveledHuman(humans[i][j].getXpos(), humans[i][j].getYpos());
-		//room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
+		// room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
 
 		int xpos;
 		int ypos;
@@ -202,7 +203,7 @@ public class Crowd {
 
 		} while (room[destination].isOccupied(ypos, xpos) != 0);
 
-	//	room[destination].occupy(ypos, xpos, 1);
+		// room[destination].occupy(ypos, xpos, 1);
 
 		int avail = 0;
 
@@ -214,9 +215,18 @@ public class Crowd {
 				break;
 			}
 
-		humans[avail][destination] = new HealthyHuman(xpos, ypos,
-				humans[i][j].takesMeasures());
+		if (humans[i][j] instanceof HealthyHuman)
+			humans[avail][destination] = new HealthyHuman(xpos, ypos, humans[i][j].takesMeasures());
+		else if (humans[i][j] instanceof RecoveredHuman)
+			humans[avail][destination] = new RecoveredHuman(xpos, ypos, humans[i][j].takesMeasures());
+		else if (humans[i][j] instanceof InfectedHuman)
+			humans[avail][destination] = new InfectedHuman(xpos, ypos,humans[i][j].getTimeLeft() , humans[i][j].takesMeasures());
+		else {
+			System.out.println(humans[i][j].getClass().toString());
+		}
+			
 		
+		humans[i][j] = new TraveledHuman(humans[i][j].getXpos(), humans[i][j].getYpos());
 
 	}
 
