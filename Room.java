@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import edu.princeton.cs.introcs.StdDraw;
 
-public class Room {
+public class Room{
 
 	private int width;
 	private int length;
@@ -56,7 +56,18 @@ public class Room {
 		this.drawGrid();
 	}
 
-	// helping methods to assign colors
+	
+	
+	public Color getColor() {
+		return this.col;
+	}
+	
+	/**
+	 * // helping methods to assign colors.
+	 * 
+	 * @param c color that we want the lum of.
+	 * @return the luminance
+	 */
 	private static double lum(Color c) {
 		int r = c.getRed();
 		int g = c.getGreen();
@@ -64,7 +75,13 @@ public class Room {
 		return .299 * r + .587 * g + .114 * b;
 	}
 
-	// helping methods to assign colors
+	/**
+	 * helping methods to assign colors.
+	 * 
+	 * @param a first color
+	 * @param b second color
+	 * @return true if compatible
+	 */
 	private static boolean compatible(Color a, Color b) {
 		return Math.abs(lum(a) - lum(b)) >= 20.0;
 	}
@@ -115,6 +132,7 @@ public class Room {
 		}
 	}
 
+	
 	/**
 	 * 
 	 * @param y        position
@@ -274,7 +292,8 @@ public class Room {
 				//////////// temporary port drawing
 
 				if (this.hasPort((int) x, (int) y)) {
-					StdDraw.setPenColor(StdDraw.DARK_GRAY.brighter().brighter().brighter());
+					Color temcol=room[getPort((int) x, (int) y)].getColor();
+					StdDraw.setPenColor(StdDraw.temcol);
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
 				}
 
