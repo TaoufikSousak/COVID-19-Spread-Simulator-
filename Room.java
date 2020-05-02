@@ -125,7 +125,10 @@ public class Room {
 
 			checkList[toWhichRoom] = true;
 
-			howManyToThisRoom = Randomizer.getInteger(temp);
+			if(c==howManyPorts)
+			howManyToThisRoom = Randomizer.getInteger(temp-temp/howManyRooms);
+			else
+				howManyToThisRoom = Randomizer.getInteger(temp);
 
 			if (howManyToThisRoom == howManyPorts && howManyPorts != 1)
 				howManyToThisRoom--;
