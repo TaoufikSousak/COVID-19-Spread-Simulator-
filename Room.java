@@ -87,7 +87,7 @@ public class Room {
 	 * @return true if compatible
 	 */
 	private static boolean compatible(Color a, Color b) {
-		return Math.abs(lum(a) - lum(b)) >= 20.0;
+		return Math.abs(lum(a) - lum(b)) >= 200.0;
 	}
 
 	/**
@@ -111,10 +111,13 @@ public class Room {
 
 		int i = 0, j = 0;
 
-		for (int c = howManyPorts; c > 0; ) {
-			System.out.println("loop1");
+		for (int c = howManyPorts; c > 0;) {
+			// System.out.println("loop1");
 			twr++;
 			hmtr = Randomizer.getInteger(temp);
+
+			// if (hmtr==howManyPorts && howManyPorts!=1)
+			// hmtr--;
 
 			temp -= hmtr;
 			if (twr >= howManyRooms - 1)
@@ -122,26 +125,30 @@ public class Room {
 			if (twr == thisRoomNumber)
 				twr++;
 
-			if (hmtr==0)
+			if (hmtr == 0)
 				hmtr++;
 			cnt = 0;
 			while (cnt < hmtr) {
-				System.out.println("loop2");
-				if (i==0 && j<width-1)
+				// System.out.println("loop2");
+				if (i == 0 && j < width - 1) {
 					j++;
-				else if (j==width-1 && i<length-1)
+					System.out.println("j++");
+				} else if (j == width - 1 && i < length - 1) {
 					i++;
-				else if (i==length-1 && j>0)
+					System.out.println("i++");
+				} else if (i == length - 1 && j > 0) {
 					j--;
-				else
+					System.out.println("j--");
+				} else {
 					i--;
-
-				this.port[i][j] = twr;
-				this.hasPort[i][j] = true;
+					System.out.println("i--");
+				}
+				this.port[j][i] = twr;
+				this.hasPort[j][i] = true;
 				cnt++;
 				c--;
 			}
-			if(cnt==0)
+			if (cnt == 0)
 				c--;
 		}
 
