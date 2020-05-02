@@ -211,8 +211,6 @@ public class Room {
 	private void gridSetup() {
 		StdDraw.enableDoubleBuffering();
 		StdDraw.setCanvasSize(800, 700);
-		StdDraw.setXscale(0, width);
-		StdDraw.setYscale(length, 0);
 	}
 
 	/**
@@ -238,6 +236,8 @@ public class Room {
 	 * This method draws the updated grid every time it is called
 	 */
 	public void drawGrid() {
+		StdDraw.setXscale(0, width);
+		StdDraw.setYscale(length, 0);
 		double rad;
 		StdDraw.show(100);
 		StdDraw.clear();
