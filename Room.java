@@ -1,5 +1,7 @@
 package tsousa01.hw6;
 
+import java.awt.Color;
+
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Room {
@@ -11,6 +13,7 @@ public class Room {
 	private int duration;
 	private double inf;
 	private boolean measures[][];
+	private Color col;
 
 	private int port[][]; // number represents to which city it leads
 	private boolean hasPort[][];
@@ -43,9 +46,26 @@ public class Room {
 				measures[i][j] = false;
 			}
 		}
+		do {
+			col = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
+		} while (!compatible(StdDraw.WHITE, col) && !compatible(StdDraw.LIGHT_GRAY, col)
+				&& !compatible(StdDraw.BLUE, col) && !compatible(StdDraw.RED, col) && !compatible(StdDraw.GREEN, col));
 		// setup of grid
 		this.gridSetup();
 		this.drawGrid();
+	}
+
+	// helping methods to assign colors
+	private static double lum(Color c) {
+		int r = c.getRed();
+		int g = c.getGreen();
+		int b = c.getBlue();
+		return .299 * r + .587 * g + .114 * b;
+	}
+
+	// helping methods to assign colors
+	private static boolean compatible(Color a, Color b) {
+		return Math.abs(lum(a) - lum(b)) >= 128.0;
 	}
 
 	/**
@@ -61,11 +81,11 @@ public class Room {
 		int xpos = 0, ypos = 0;
 
 		int whereTo = 0;
-		
-		for (int i = 0; i < howManyPorts; i++) {//until all ports are assigned
+
+		for (int i = 0; i < howManyPorts; i++) {// until all ports are assigned
 
 			do { // decide where port leads
-				whereTo=Randomizer.getInteger(howManyRooms);  
+				whereTo = Randomizer.getInteger(howManyRooms);
 			} while (whereTo == thisRoomNumber); // repeat if port leads to same city
 
 			do {
@@ -76,21 +96,21 @@ public class Room {
 
 				// decide where on said side port will be
 				if (side == "u" || side == "d") {
-					xpos = Randomizer.getInteger(width-1);
+					xpos = Randomizer.getInteger(width - 1);
 					if (side == "u")
-						ypos = length-1;
+						ypos = length - 1;
 					else
 						ypos = 0;
 				} else {
-					ypos = Randomizer.getInteger(length-1);
+					ypos = Randomizer.getInteger(length - 1);
 					if (side == "l")
 						xpos = 0;
 					else
-						xpos = width-1;
+						xpos = width - 1;
 				}
 			} while (this.hasPort[xpos][ypos]);// repeat if a port is already at this position
 			this.port[xpos][ypos] = whereTo;
-			this.hasPort[xpos][ypos]=true;
+			this.hasPort[xpos][ypos] = true;
 		}
 	}
 
@@ -286,7 +306,7 @@ public class Room {
 		}
 
 		// draw lines
-		StdDraw.setPenColor(StdDraw.GRAY);
+		StdDraw.setPenColor(col);
 		StdDraw.setPenRadius(0.2 / ((width + length) / 2));
 		for (int y = 0; y <= length; y++) {
 			StdDraw.line(0, y, width, y);

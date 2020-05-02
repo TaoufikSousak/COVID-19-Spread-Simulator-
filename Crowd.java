@@ -223,6 +223,7 @@ public class Crowd {
 			humans[avail][destination] = new InfectedHuman(xpos, ypos,humans[i][j].getTimeLeft() , humans[i][j].takesMeasures());
 		else {
 			System.out.println(humans[i][j].getClass().toString());
+			humans[avail][destination] = new TraveledHuman(xpos, ypos);
 		}
 			
 		
