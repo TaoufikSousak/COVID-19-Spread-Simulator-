@@ -335,7 +335,7 @@ public class SimulationDriver {
 			} else {
 				sick[i] = 1;
 				careful[i] = (int) ((double) people[i] * 0.5);
-				airports[i] = ((2 * (length[i] + width[i])) / 10)+1;
+				airports[i] = ((2 * (length[i] + width[i])) / 10) + 1;
 			}
 
 		}
@@ -612,17 +612,19 @@ public class SimulationDriver {
 //		System.out.println("The simulation will run for " + time + " steps");
 
 ///////////////////
-		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful, cities, airports);
+		Crowd crowd = new Crowd(duration, width, length, people, howLikelyToMove, sick, fatal, infect, careful, cities,
+				airports);
 
 		int toDraw = 0;
 
 		while (time > 0) {
+			if (cities != 1)
 
-			if (time % 5 == 0 && time!=0)
-				if (toDraw < cities-1 )
-					toDraw++;
-				else
-					toDraw = 0;
+				if (time % 5 == 0 && time != 0)
+					if (toDraw < cities - 1)
+						toDraw++;
+					else
+						toDraw = 0;
 			crowd.move(toDraw);
 			time--;
 		}

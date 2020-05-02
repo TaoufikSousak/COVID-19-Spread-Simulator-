@@ -64,6 +64,7 @@ public class Crowd {
 		this.inf = (double) infectius / 100;
 		this.duration = duration;
 
+		if(cities!=1)
 		for (int i = 0; i < cities; i++) {
 			room[i].assignPorts(ports[i], cities, i);
 		}
@@ -134,8 +135,8 @@ public class Crowd {
 								newypos++;
 							else if (room[j].hasPort(newxpos, newypos)) {
 								destination = (room[j].getPort(newxpos, newypos));
-								System.out.println(
-										"entered else if on U with j = " + j + " and destination = " + destination);
+							//	System.out.println(
+							//			"entered else if on U with j = " + j + " and destination = " + destination);
 								this.travel(i, j, destination);
 							}
 
@@ -144,8 +145,8 @@ public class Crowd {
 								newypos--;
 							else if (room[j].hasPort(newxpos, newypos)) {
 								destination = (room[j].getPort(newxpos, newypos));
-								System.out.println(
-										"entered else if on D with j = " + j + " and destination = " + destination);
+							//	System.out.println(
+							//			"entered else if on D with j = " + j + " and destination = " + destination);
 
 								this.travel(i, j, destination);
 							}
@@ -155,8 +156,8 @@ public class Crowd {
 								newxpos++;
 							else if (room[j].hasPort(newxpos, newypos)) {
 								destination = (room[j].getPort(newxpos, newypos));
-								System.out.println(
-										"entered else if on R with j = " + j + " and destination = " + destination);
+							//	System.out.println(
+							//			"entered else if on R with j = " + j + " and destination = " + destination);
 
 								this.travel(i, j, destination);
 							}
@@ -166,8 +167,8 @@ public class Crowd {
 								newxpos--;
 							else if (room[j].hasPort(newxpos, newypos)) {
 								destination = (room[j].getPort(newxpos, newypos));
-								System.out.println(
-										"entered else if on L with j = " + j + " and destination = " + destination);
+							//	System.out.println(
+							//			"entered else if on L with j = " + j + " and destination = " + destination);
 
 								this.travel(i, j, destination);
 							}
@@ -183,16 +184,16 @@ public class Crowd {
 			}
 			room[toDraw].drawGrid();
 		}
-		try {
-			Thread.sleep(90); // wait a second between every move to represent time passing
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(10); // wait a second between every move to represent time passing
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public void travel(int i, int j, int destination) {
 
-		System.out.println("entered TRAVEL: " + destination);
+		//System.out.println("entered TRAVEL: " + destination);
 		// room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
 
 		int xpos;
@@ -209,7 +210,7 @@ public class Crowd {
 
 		for (int x = 0; x < humans.length; x++)
 			if (humans[x][destination] == null) {
-				System.out.println("entered***********");
+			//	System.out.println("entered***********");
 				avail = x;
 				people[destination]++;
 				break;
@@ -222,7 +223,7 @@ public class Crowd {
 		else if (humans[i][j] instanceof InfectedHuman)
 			humans[avail][destination] = new InfectedHuman(xpos, ypos,humans[i][j].getTimeLeft() , humans[i][j].takesMeasures());
 		else {
-			System.out.println(humans[i][j].getClass().toString());
+		//	System.out.println(humans[i][j].getClass().toString());
 			humans[avail][destination] = new TraveledHuman(xpos, ypos);
 		}
 			

@@ -49,7 +49,8 @@ public class Room {
 		do {
 			col = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
 		} while (!compatible(StdDraw.WHITE, col) && !compatible(StdDraw.LIGHT_GRAY, col)
-				&& !compatible(StdDraw.BLUE, col) && !compatible(StdDraw.RED, col) && !compatible(StdDraw.GREEN, col));
+				&& !compatible(StdDraw.BLUE, col) && !compatible(StdDraw.RED, col) && !compatible(StdDraw.GREEN, col)
+				&& !compatible(StdDraw.BOOK_LIGHT_BLUE, col) && !compatible(StdDraw.PRINCETON_ORANGE.brighter(), col));
 		// setup of grid
 		this.gridSetup();
 		this.drawGrid();
@@ -65,7 +66,7 @@ public class Room {
 
 	// helping methods to assign colors
 	private static boolean compatible(Color a, Color b) {
-		return Math.abs(lum(a) - lum(b)) >= 128.0;
+		return Math.abs(lum(a) - lum(b)) >= 20.0;
 	}
 
 	/**
@@ -307,7 +308,7 @@ public class Room {
 
 		// draw lines
 		StdDraw.setPenColor(col);
-		StdDraw.setPenRadius(0.2 / ((width + length) / 2));
+		StdDraw.setPenRadius(0.1 / ((width + length) / 2));
 		for (int y = 0; y <= length; y++) {
 			StdDraw.line(0, y, width, y);
 		}
