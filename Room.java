@@ -65,7 +65,7 @@ public class Room {
 		for (int i = 0; i < howManyPorts; i++) {//until all ports are assigned
 
 			do { // decide where port leads
-				whereTo=Randomizer.getInteger(howManyRooms);  //-1 because arrays start at 0
+				whereTo=Randomizer.getInteger(howManyRooms);  
 			} while (whereTo == thisRoomNumber); // repeat if port leads to same city
 
 			do {
@@ -88,7 +88,7 @@ public class Room {
 					else
 						xpos = width-1;
 				}
-			} while (this.hasPort[xpos][ypos] == true);// repeat if a port is already at this position
+			} while (this.hasPort[xpos][ypos]);// repeat if a port is already at this position
 			this.port[xpos][ypos] = whereTo;
 			this.hasPort[xpos][ypos]=true;
 		}

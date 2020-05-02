@@ -101,16 +101,18 @@ public class Crowd {
 	 */
 	public void move(int toDraw) {
 
+		int addedPeople=0;
+		int destination;
 		for (int j = 0; j < cities; j++) {// for every room
 
-			int destination = j; // to what city human should go
+			destination = j; // to what city human should go
 
 			for (int i = 0; i < people[j]; i++) {
 				int newxpos = humans[i][j].getXpos();
 				int newypos = humans[i][j].getYpos();
 				String direction = null;
 				// decide if human will move
-					if (Randomizer.getBoolean(howLikelyToMove)) {
+					if (Randomizer.getBoolean(howLikelyToMove) && !(humans[i][j] instanceof TraveledHuman)) {
 						room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
 						room[j].setMeasures(newypos, newxpos, false);
 						// choose new available position
@@ -170,9 +172,9 @@ public class Crowd {
 
 						} while (room[j].isOccupied(newypos, newxpos) != 0);
 
+						if(!(humans[i][j] instanceof TraveledHuman)) {
 						humans[i][j].moveTo(newxpos, newypos);
-						if (destination == j) {
-							this.updateStatus(i, newxpos, newypos, j);
+						this.updateStatus(i, newxpos, newypos, j);
 						}
 					}
 				
@@ -190,7 +192,7 @@ public class Crowd {
 
 		System.out.println("entered TRAVEL: " + destination);
 		humans[i][j] = new TraveledHuman(humans[i][j].getXpos(), humans[i][j].getYpos());
-		room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
+		//room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
 
 		int xpos;
 		int ypos;
@@ -200,7 +202,7 @@ public class Crowd {
 
 		} while (room[destination].isOccupied(ypos, xpos) != 0);
 
-		room[destination].occupy(ypos, xpos, 1);
+	//	room[destination].occupy(ypos, xpos, 1);
 
 		int avail = 0;
 
@@ -208,11 +210,13 @@ public class Crowd {
 			if (humans[x][destination] == null) {
 				System.out.println("entered***********");
 				avail = x;
+				people[destination]++;
 				break;
 			}
 
-		humans[avail][destination] = new HealthyHuman(humans[i][j].getXpos(), humans[i][j].getYpos(),
+		humans[avail][destination] = new HealthyHuman(xpos, ypos,
 				humans[i][j].takesMeasures());
+		
 
 	}
 
