@@ -50,9 +50,7 @@ public class Room {
 		}
 		do {
 			col = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
-		} while (!compatible(StdDraw.WHITE, col) && !compatible(StdDraw.BLUE, col) && !compatible(StdDraw.RED, col)
-				&& !compatible(StdDraw.GREEN, col) && !compatible(StdDraw.BOOK_LIGHT_BLUE, col)
-				&& !compatible(StdDraw.PRINCETON_ORANGE.brighter(), col));
+		} while (!compatible(StdDraw.WHITE, col));
 		if (count == 0)
 			colors = new Color[cities];
 		colors[count] = col;
@@ -125,8 +123,8 @@ public class Room {
 
 			checkList[toWhichRoom] = true;
 
-			if(c==howManyPorts)
-			howManyToThisRoom = Randomizer.getInteger(temp-temp/howManyRooms);
+			if (c == howManyPorts)
+				howManyToThisRoom = Randomizer.getInteger(temp - temp / howManyRooms);
 			else
 				howManyToThisRoom = Randomizer.getInteger(temp);
 
@@ -317,6 +315,9 @@ public class Room {
 				if (isInfected((int) y, (int) x) > 0 && this.hasPort((int) x, (int) y) == false) {
 					StdDraw.setPenColor(StdDraw.ORANGE);
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
+					// StdDraw.setPenColor(StdDraw.WHITE);
+					// StdDraw.filledRectangle(x, y, 0.4, 0.4);
+
 					this.disinfect((int) y, (int) x);
 				}
 
@@ -325,6 +326,8 @@ public class Room {
 				if (this.hasPort((int) x, (int) y)) {
 					StdDraw.setPenColor(colors[getPort((int) x, (int) y)]);
 					StdDraw.filledRectangle(x, y, 0.5, 0.5);
+					StdDraw.setPenColor(StdDraw.WHITE);
+					StdDraw.filledRectangle(x, y, 0.3, 0.3);
 				}
 
 				////////////////////////////////////
