@@ -319,9 +319,9 @@ public class SimulationDriver {
 					input = scan.nextLine();
 					try {
 						airports[i] = Integer.parseInt(input);
-						if (airports[i] > 2 * (length[i] + width[i])) {
+						if (airports[i] > (2 * (length[i] + width[i]))-4) {
 							throw new NotPossibleAmountException(
-									"Cannot have more than " + 2 * (length[i] + width[i]) + " airports");
+									"Cannot have more than " + ((2 * (length[i] + width[i]))-4) + " airports");
 						}
 					} catch (NumberFormatException e) {
 						System.out.println("Must be a positive integer");

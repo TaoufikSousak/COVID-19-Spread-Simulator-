@@ -122,6 +122,8 @@ public class Room {
 			if (twr == thisRoomNumber)
 				twr++;
 
+			if (hmtr==0)
+				hmtr++;
 			cnt = 0;
 			while (cnt < hmtr) {
 				System.out.println("loop2");
