@@ -87,7 +87,7 @@ public class Room {
 	 * @return true if compatible
 	 */
 	private static boolean compatible(Color a, Color b) {
-		return Math.abs(lum(a) - lum(b)) >= 200.0;
+		return Math.abs(lum(a) - lum(b)) >= 128.0;
 	}
 
 	/**
@@ -100,9 +100,15 @@ public class Room {
 	 */
 	public void assignPorts(int howManyPorts, int howManyRooms, int thisRoomNumber) {
 
-		
+		boolean[] checkList = new boolean[howManyRooms];
+
+		for (int r = 0; r < checkList.length; r++)
+			checkList[r] = false;
+
+		checkList[thisRoomNumber] = true;
+
 		int cnt = 0;
-		int toWhichRoom = 0;
+		int toWhichRoom = -1;
 		int howManyToThisRoom = 0;
 
 		int temp = howManyPorts;
@@ -111,17 +117,20 @@ public class Room {
 
 		for (int c = howManyPorts; c > 0;) {
 			// System.out.println("loop1");
-			toWhichRoom++;
+			for (int r = 0; r < checkList.length; r++)
+				if (checkList[r] == false) {
+					toWhichRoom = r;
+					break;}
+
+			
+			checkList[toWhichRoom] = true;
+
 			howManyToThisRoom = Randomizer.getInteger(temp);
 
-			// if (howManyToThisRoom==howManyPorts && howManyPorts!=1)
-			// howManyToThisRoom--;
+			if (howManyToThisRoom == howManyPorts && howManyPorts != 1)
+				howManyToThisRoom--;
 
 			temp -= howManyToThisRoom;
-			if (toWhichRoom >= howManyRooms - 1)
-				toWhichRoom = 0;
-			if (toWhichRoom == thisRoomNumber)
-				toWhichRoom++;
 
 			if (howManyToThisRoom == 0)
 				howManyToThisRoom++;
@@ -130,16 +139,16 @@ public class Room {
 				// System.out.println("loop2");
 				if (i == 0 && j < width - 1) {
 					j++;
-					System.out.println("j++");
+					// System.out.println("j++");
 				} else if (j == width - 1 && i < length - 1) {
 					i++;
-					System.out.println("i++");
+					// System.out.println("i++");
 				} else if (i == length - 1 && j > 0) {
 					j--;
-					System.out.println("j--");
+					// System.out.println("j--");
 				} else {
 					i--;
-					System.out.println("i--");
+					// System.out.println("i--");
 				}
 				this.port[j][i] = toWhichRoom;
 				this.hasPort[j][i] = true;
