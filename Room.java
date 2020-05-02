@@ -103,44 +103,45 @@ public class Room {
 		int xpos = 0, ypos = 0;
 
 		int whereTo = 0;
+		int cnt = 0;
+		int twr = 0;
+		int hmtr = 0;
 
-		int randnum = 0;
+		int temp = howManyPorts;
 
-//		for (int i = 0; i < howManyPorts; i++) {// until all ports are assigned
-//
-//			do { // decide where port leads
-//				whereTo = Randomizer.getInteger(howManyRooms);
-//			} while (whereTo == thisRoomNumber); // repeat if port leads to same city
-//
-//			do {
-//				// decide on which side of room the port will be
-//				String side = "error";
-//				while (side.length() != 1)
-//					side = Randomizer.getDirection();
-//
-//				// decide where on said side port will be
-//				if (side == "u" || side == "d") {
-//					xpos = Randomizer.getInteger(width - 1);
-//					if (side == "u")
-//						ypos = length - 1;
-//					else
-//						ypos = 0;
-//				} else {
-//					ypos = Randomizer.getInteger(length - 1);
-//					if (side == "l")
-//						xpos = 0;
-//					else
-//						xpos = width - 1;
-//				}
-//			} while (this.hasPort[xpos][ypos]);// repeat if a port is already at this position
-//			this.port[xpos][ypos] = whereTo;
-//			this.hasPort[xpos][ypos] = true;
+		int i = 0, j = 0;
 
-		while (howManyPorts != 0) {
-			
+		for (int c = howManyPorts; c > 0; ) {
+			System.out.println("loop1");
+			twr++;
+			hmtr = Randomizer.getInteger(temp);
+
+			temp -= hmtr;
+			if (twr >= howManyRooms - 1)
+				twr = 0;
+			if (twr == thisRoomNumber)
+				twr++;
+
+			cnt = 0;
+			while (cnt < hmtr) {
+				System.out.println("loop2");
+				if (i==0 && j<width-1)
+					j++;
+				else if (j==width-1 && i<length-1)
+					i++;
+				else if (i==length-1 && j>0)
+					j--;
+				else
+					i--;
+
+				this.port[i][j] = twr;
+				this.hasPort[i][j] = true;
+				cnt++;
+				c--;
+			}
+			if(cnt==0)
+				c--;
 		}
-
-//		}
 
 	}
 
