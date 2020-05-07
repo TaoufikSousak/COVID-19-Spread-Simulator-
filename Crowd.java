@@ -1,4 +1,4 @@
-package tsousa01.hw6;
+package team7.hw6;
 
 import java.util.ArrayList;
 

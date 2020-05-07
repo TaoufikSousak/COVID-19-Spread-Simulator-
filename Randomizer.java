@@ -1,4 +1,4 @@
-package tsousa01.hw6;
+package team7.hw6;
 /**
  * this static class has methods that provide quick random values.
  * 
