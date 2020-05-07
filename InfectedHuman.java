@@ -20,10 +20,11 @@ public class InfectedHuman extends Human {
 	 * @param duration the time it takes for this human to heal
 	 * @param measures whether the human takes protecrive measures
 	 */
-	public InfectedHuman(int xpos, int ypos, int duration, boolean measures) {
+	public InfectedHuman(int xpos, int ypos, int duration, boolean measures, boolean counts) {
 		super(xpos, ypos);
 		timeLeft = duration;
 		this.measures = measures;
+		if(counts)
 		total++;
 	}
 
@@ -34,7 +35,7 @@ public class InfectedHuman extends Human {
 	 * @param duration the time it takes for this human to heal
 	 */
 	public InfectedHuman(int xpos, int ypos, int duration) {
-		this(xpos, ypos, duration, false);
+		this(xpos, ypos, duration, false, true);
 	}
 
 	/**

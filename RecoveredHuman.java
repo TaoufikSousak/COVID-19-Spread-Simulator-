@@ -18,7 +18,7 @@ public class RecoveredHuman extends Human{
 	 * @param ypos y-axis position
 	 */
 	public RecoveredHuman(int xpos, int ypos) {
-		this(xpos,ypos,false);
+		this(xpos,ypos,false,true);
 	}
 	
 	/**
@@ -27,8 +27,9 @@ public class RecoveredHuman extends Human{
 	 * @param ypos y-axis position
 	 * @param measures whether the person takes protective measures
 	 */
-	public RecoveredHuman(int xpos, int ypos, boolean measures) {
+	public RecoveredHuman(int xpos, int ypos, boolean measures, boolean counts) {
 		super(xpos,ypos);
+		if(counts)
 		total++;
 		takesMeasures=measures;
 	}

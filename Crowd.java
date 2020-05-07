@@ -88,7 +88,7 @@ public class Crowd {
 					// put masks on specified amount
 					if (i - sick[j] < caref[j])
 						msrs = true;
-					humans[i][j] = new HealthyHuman(xpos, ypos, msrs);
+					humans[i][j] = new HealthyHuman(xpos, ypos, msrs,true);
 					room[j].occupy(ypos, xpos, 1);
 				}
 				room[j].drawGrid();
@@ -177,8 +177,8 @@ public class Crowd {
 
 					if (!(humans[i][j] instanceof TraveledHuman)) {
 						humans[i][j].moveTo(newxpos, newypos);
-						this.updateStatus(i, newxpos, newypos, j);
 					}
+					this.updateStatus(i, newxpos, newypos, j);
 				}
 
 			}
@@ -194,7 +194,7 @@ public class Crowd {
 	public void travel(int i, int j, int destination) {
 
 		//System.out.println("entered TRAVEL: " + destination);
-		// room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
+		//room[j].occupy(humans[i][j].getYpos(), humans[i][j].getXpos(), 0);
 
 		int xpos;
 		int ypos;
@@ -216,19 +216,19 @@ public class Crowd {
 				break;
 			}
 
-		if (humans[i][j] instanceof HealthyHuman)
-			humans[avail][destination] = new HealthyHuman(xpos, ypos, humans[i][j].takesMeasures());
+		if (humans[i][j] instanceof HealthyHuman) 
+			humans[avail][destination] = new HealthyHuman(xpos, ypos, humans[i][j].takesMeasures(),false);
 		else if (humans[i][j] instanceof RecoveredHuman)
-			humans[avail][destination] = new RecoveredHuman(xpos, ypos, humans[i][j].takesMeasures());
+			humans[avail][destination] = new RecoveredHuman(xpos, ypos, humans[i][j].takesMeasures(),false);
 		else if (humans[i][j] instanceof InfectedHuman)
-			humans[avail][destination] = new InfectedHuman(xpos, ypos,humans[i][j].getTimeLeft() , humans[i][j].takesMeasures());
+			humans[avail][destination] = new InfectedHuman(xpos, ypos,humans[i][j].getTimeLeft() , humans[i][j].takesMeasures(),false);
 		else {
 		//	System.out.println(humans[i][j].getClass().toString());
-			humans[avail][destination] = new TraveledHuman(xpos, ypos);
+			humans[avail][destination] = new TraveledHuman(xpos, ypos,false);
 		}
 			
 		
-		humans[i][j] = new TraveledHuman(humans[i][j].getXpos(), humans[i][j].getYpos());
+		humans[i][j] = new TraveledHuman(humans[i][j].getXpos(), humans[i][j].getYpos(),true);
 
 	}
 
@@ -241,13 +241,16 @@ public class Crowd {
 	 * @param newypos
 	 */
 	public void updateStatus(int i, int newxpos, int newypos, int j) {
+		
+		if (humans[i][j] instanceof TraveledHuman)
+			room[j].occupy(newypos, newxpos, 0);
 
 		// checks if infected human is resady to recover, recoveres or kills if its time
 		if (humans[i][j] instanceof InfectedHuman)
 			if (humans[i][j].getTimeLeft() == 0)
 				if (!Randomizer.getBoolean(fatal))
 					humans[i][j] = new RecoveredHuman(humans[i][j].getXpos(), humans[i][j].getYpos(),
-							humans[i][j].takesMeasures());
+							humans[i][j].takesMeasures(),true);
 				else {
 					humans[i][j] = new DeceasedHuman(humans[i][j].getXpos(), humans[i][j].getYpos());
 					room[j].occupy(newypos, newxpos, 0);
@@ -258,7 +261,7 @@ public class Crowd {
 
 			if (possibleInfection(humans[i][j].getXpos(), humans[i][j].getYpos(), humans[i][j].takesMeasures(), j))
 				if (humans[i][j].takesMeasures())
-					humans[i][j] = new InfectedHuman(humans[i][j].getXpos(), humans[i][j].getYpos(), duration, true);
+					humans[i][j] = new InfectedHuman(humans[i][j].getXpos(), humans[i][j].getYpos(), duration, true,true);
 				else
 					humans[i][j] = new InfectedHuman(humans[i][j].getXpos(), humans[i][j].getYpos(), duration);
 

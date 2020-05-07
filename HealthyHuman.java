@@ -19,7 +19,7 @@ public class HealthyHuman extends Human {
 	 * @param ypos y-axis position
 	 */
 	public HealthyHuman(int xpos, int ypos) {
-		this(xpos, ypos, false);
+		this(xpos, ypos, false, true);
 	}
 
 	/**
@@ -28,9 +28,10 @@ public class HealthyHuman extends Human {
 	 * @param ypos y-axis position
 	 * @param careful whether the person takes protective measures
 	 */
-	public HealthyHuman(int xpos, int ypos, boolean careful) {
+	public HealthyHuman(int xpos, int ypos, boolean careful, boolean counts) {
 		super(xpos, ypos);
 		takesMeasures = careful;
+		if(counts)
 		total++;
 	}
 

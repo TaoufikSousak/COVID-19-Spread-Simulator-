@@ -21,6 +21,7 @@ public class DeceasedHuman extends Human {
 		super(xpos, ypos);
 		total++;
 	}
+
 	
 	/**
 	 * 
