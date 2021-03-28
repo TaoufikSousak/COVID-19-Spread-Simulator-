@@ -1,4 +1,4 @@
-package team7.hw6;
+
 
 /**
  * this interface is a guide of methods all humans should have.

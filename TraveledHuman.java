@@ -1,4 +1,4 @@
-package team7.hw6;
+
 
 /**
  * placeholder for humans that travel.

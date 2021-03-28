@@ -1,4 +1,4 @@
-package team7.hw6;
+
 
 public class CoronavirusSimulator {
 

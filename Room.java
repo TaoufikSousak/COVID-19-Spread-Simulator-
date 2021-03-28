@@ -1,8 +1,8 @@
-package team7.hw6;
+
 
 import java.awt.Color;
 
-import edu.princeton.cs.introcs.StdDraw;
+
 
 public class Room {
 

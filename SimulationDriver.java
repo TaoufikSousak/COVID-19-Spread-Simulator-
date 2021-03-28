@@ -1,4 +1,4 @@
-package team7.hw6;
+
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
